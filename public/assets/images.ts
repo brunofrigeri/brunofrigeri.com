@@ -24,6 +24,8 @@ enum Images {
   PAYTIME = 'paytime',
   SKILOPAY = 'skilopay',
   V1APP = 'v1app',
+  BRAZIL = 'brazil',
+  USA = 'usa',
 }
 
 type Image = Pick<ImageProps, 'src'>
@@ -97,6 +99,12 @@ const images: { [key in Images]: Image } = {
   },
   [Images.V1APP]: {
     src: '/assets/v1app.svg',
+  },
+  [Images.BRAZIL]: {
+    src: '/assets/brazil.svg',
+  },
+  [Images.USA]: {
+    src: '/assets/usa.svg',
   },
 }
 

@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Image from 'next/image'
 import Head from 'next/head'
 import Link from 'next/link'
 import images from '../../public/assets/images'
 import { useRouter } from 'next/dist/client/router'
 import { useTheme } from 'next-themes'
+import { useTranslation } from 'react-i18next'
 
 interface ContainerProps {
   children?: React.ReactNode[] | React.ReactNode
@@ -20,17 +21,19 @@ export default function Container({ children, ...props }: ContainerProps) {
   const router = useRouter()
   const { theme, setTheme } = useTheme()
 
+  const { t } = useTranslation('common')
+
   const menuOptions: Array<MenuOption> = [
     {
-      name: 'Home',
+      name: t('home'),
       path: '/',
     },
     {
-      name: 'Blog',
+      name: t('blog'),
       path: '/blog',
     },
     {
-      name: 'About me',
+      name: t('about'),
       path: '/about',
     },
   ]
@@ -54,7 +57,7 @@ export default function Container({ children, ...props }: ContainerProps) {
               Bruno Frigeri
             </h2>
             <p className="text-description_light dark:text-description_dark">
-              Mobile and Front End Engineer
+              {t('avatar-description')}
             </p>
           </div>
         </div>
@@ -100,11 +103,23 @@ export default function Container({ children, ...props }: ContainerProps) {
             myself.
           </span>
         </span>
-        <span className="text-xs text-gray-800">
+        <span className="text-xs md-text-sm text-gray-800">
           Illustrations used in this
           <br />
           website by Freepik Storyset
         </span>
+        <div className="flex flex-row items-center">
+          <div className="cursor-pointer px-2">
+            <Link href="/" locale={router.locale === 'en' ? 'pt-BR' : 'en'}>
+              <Image src={images.usa.src} height={30} width={30} />
+            </Link>
+          </div>
+          <div className="cursor-pointer">
+            <Link href="/" locale={router.locale === 'pt-BR' ? 'en' : 'pt-BR'}>
+              <Image src={images.brazil.src} height={30} width={30} />
+            </Link>
+          </div>
+        </div>
       </footer>
     </div>
   )
