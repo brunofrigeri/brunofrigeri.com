@@ -4,9 +4,14 @@ import Post from './Post'
 
 interface PostsProps {
   title: string
+  hasButton?: boolean
 }
 
-export default function Posts({ title, ...props }: PostsProps) {
+export default function Posts({
+  title,
+  hasButton = true,
+  ...props
+}: PostsProps) {
   const posts: Array<{
     title?: string
     description?: string
@@ -41,7 +46,7 @@ export default function Posts({ title, ...props }: PostsProps) {
     <div className="my-8">
       <div className="flex flex-row justify-between">
         <h2 className="md:text-xl text-black dark:text-white">{title}</h2>
-        <Button type="bordered">See all.</Button>
+        {hasButton && <Button type="bordered">See all.</Button>}
       </div>
       {posts?.length &&
         posts.map((post, index) => <Post key={index} {...post} />)}

@@ -345,8 +345,26 @@ html {
   scroll-behavior: smooth;
 }
 
+input[type="search"]::-webkit-search-decoration{
+  display: none
+}
+
+input,
+button,
+select,
+textarea {
+  margin: 0;
+  outline: 0;
+  vertical-align: middle;
+  background-color: transparent;
+}
 button:focus {
   outline: none;
+}
+
+#forgot-password {
+  font-family: 'Inter';
+  font-weight: 300;
 }
 
 #__next {

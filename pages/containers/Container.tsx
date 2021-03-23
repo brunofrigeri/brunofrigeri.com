@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import Image from 'next/image'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -110,13 +110,31 @@ export default function Container({ children, ...props }: ContainerProps) {
         </span>
         <div className="flex flex-row items-center">
           <div className="cursor-pointer px-2">
-            <Link href="/" locale={router.locale === 'en' ? 'pt-BR' : 'en'}>
-              <Image src={images.usa.src} height={30} width={30} />
+            <Link
+              href="/"
+              locale={
+                router.locale === 'en'
+                  ? `pt-BR${router.pathname}`
+                  : `en${router.pathname}`
+              }
+            >
+              <div>
+                <Image src={images.usa.src} height={30} width={30} />
+              </div>
             </Link>
           </div>
           <div className="cursor-pointer">
-            <Link href="/" locale={router.locale === 'pt-BR' ? 'en' : 'pt-BR'}>
-              <Image src={images.brazil.src} height={30} width={30} />
+            <Link
+              href="/"
+              locale={
+                router.locale === 'pt-BR'
+                  ? `en${router.pathname}`
+                  : `pt-BR${router.pathname}`
+              }
+            >
+              <div>
+                <Image src={images.brazil.src} height={30} width={30} />
+              </div>
             </Link>
           </div>
         </div>

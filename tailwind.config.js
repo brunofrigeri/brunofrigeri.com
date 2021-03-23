@@ -14,6 +14,8 @@ module.exports = {
       description_dark: '#DBDBDB',
       light_toggle: "#F6F6F6",
       dark_toggle: '#344159',
+      search_light: '#AAAAAA',
+      search_dark: '#EDEDED',
       current: 'currentColor',
       black: colors.black,
       white: colors.white,
