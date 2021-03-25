@@ -47,6 +47,8 @@ const formatData = (data, content) => {
 export const getAllPosts = (): Array<Post> => {
   const fileNames = fs.readdirSync(postDirectory)
 
+  if (fileNames.length <= 0) return []
+
   const filteredData = fileNames.map((filename) => {
     const slug = filename.replace('.mdx', '')
 
