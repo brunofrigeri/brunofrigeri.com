@@ -6,6 +6,7 @@ import { useTheme } from 'next-themes'
 import React from 'react'
 import { getLatestsPosts, Post } from '../lib/posts'
 import Posts from './components/Posts'
+import { useRouter } from 'next/dist/client/router'
 
 interface HomeProps {
   posts: Array<Post>
@@ -13,10 +14,15 @@ interface HomeProps {
 
 export default function Home({ posts }: HomeProps) {
   const { theme } = useTheme()
+  const router = useRouter()
+
+  const onSeeAllPress = () => {
+    router.replace('/blog')
+  }
 
   return (
     <Container>
-      <div>
+      <div className="w-full">
         <div className="flex flex-row justify-between items-start">
           <div>
             <h1 className="md:text-4xl te xt-black dark:text-white">
@@ -43,13 +49,17 @@ export default function Home({ posts }: HomeProps) {
             />
           </div>
         </div>
-        <Posts title="Latest Writing" posts={posts} />
+        <Posts
+          title="Latest Writing"
+          posts={posts}
+          onSeeAllPress={onSeeAllPress}
+        />
       </div>
     </Container>
   )
 }
 
-export const getStaticProps = async ({ locale }) => {
+export const getStaticProps = async ({}) => {
   const posts = getLatestsPosts()
   return {
     props: {

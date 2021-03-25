@@ -49,17 +49,13 @@ export default function Blog({ posts }: BlogProps) {
           </h4>
         </div>
         <Search value={search} setValue={setSearch} />
-        <Posts
-          title={'Latest Writing'}
-          posts={filteredPosts}
-          hasButton={false}
-        />
+        <Posts title={'All Writing'} posts={filteredPosts} hasButton={false} />
       </div>
     </Container>
   )
 }
 
-export const getStaticProps = async ({ locale }) => {
+export const getStaticProps = async ({}) => {
   const posts = getLatestsPosts()
   return {
     props: {

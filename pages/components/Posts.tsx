@@ -8,6 +8,7 @@ interface PostsProps {
   hasButton?: boolean
   posts: Array<PostType>
   search?: string
+  onSeeAllPress?(): void
 }
 
 export default function Posts({
@@ -15,13 +16,18 @@ export default function Posts({
   hasButton = true,
   posts = [],
   search,
+  onSeeAllPress = () => {},
   ...props
 }: PostsProps) {
   return (
     <div className="my-8">
       <div className="flex flex-row justify-between">
         <h2 className="md:text-xl text-black dark:text-white">{title}</h2>
-        {hasButton && <Button type="bordered">See all.</Button>}
+        {hasButton && (
+          <Button onClick={onSeeAllPress} type="bordered">
+            See all.
+          </Button>
+        )}
       </div>
       {posts?.length ? (
         posts.map((post, index) => (
