@@ -78,6 +78,8 @@ export const getLatestsPosts = (): Array<Post> => {
 export const getAllPostSlugs = () => {
   const fileNames = fs.readdirSync(postDirectory)
 
+  if (fileNames.length <= 0) return []
+
   return fileNames.map((filename) => {
     return {
       params: {
