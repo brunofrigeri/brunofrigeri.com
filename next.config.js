@@ -1,6 +1,6 @@
-const { i18n } = require('./next-i18next.config')
+const withMDX = require("@next/mdx")();
 
-module.exports = {
+module.exports = withMDX({
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
@@ -9,5 +9,5 @@ module.exports = {
 
     return config;
   },
-  i18n,
-};
+  pageExtensions: ["js", "jsx", "ts", "tsx", "mdx"]
+});

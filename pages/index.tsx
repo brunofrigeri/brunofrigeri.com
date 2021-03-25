@@ -1,37 +1,35 @@
 import Image from 'next/image'
 import images from '../public/assets/images'
 import Button from './components/Button'
-import Posts from './components/Posts'
 import Container from './containers/Container'
 import { useTheme } from 'next-themes'
-import { useTranslation } from 'react-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React from 'react'
+import { getLatestsPosts, Post } from '../lib/posts'
+import Posts from './components/Posts'
 
-export default function Home() {
+interface HomeProps {
+  posts: Array<Post>
+}
+
+export default function Home({ posts }: HomeProps) {
   const { theme } = useTheme()
-
-  const { t } = useTranslation('index')
 
   return (
     <Container>
       <div>
         <div className="flex flex-row justify-between items-start">
           <div>
-            <h1 className="md:text-4xl text-black dark:text-white">
-              {t('presentation-title')
-                .split('\n')
-                .map((item, index) => (
-                  <React.Fragment key={index}>
-                    <br />
-                    {item}
-                  </React.Fragment>
-                ))}
+            <h1 className="md:text-4xl te xt-black dark:text-white">
+              Hey, I'm Bruno.
+              <br />
+              Nice to meet you!
             </h1>
-            <h4 className="md:text-lg my-2 mb-8 text-description_light dark:text-description_dark">
-              {t('presentation-description')}
-            </h4>
-            <Button>{t('meeting')}</Button>
+            <h2 className="md:text-lg font-light my-2 mb-8 text-description_light dark:text-description_dark">
+              I'm a software developer, writer and
+              <br />
+              passionate about traveling from Brazil.
+            </h2>
+            <Button>Book a meeting with me!</Button>
           </div>
           <div id="presentation">
             <Image
@@ -45,14 +43,17 @@ export default function Home() {
             />
           </div>
         </div>
-        <Posts title="Most Popular Writing" />
+        <Posts title="Latest Writing" posts={posts} />
       </div>
     </Container>
   )
 }
 
-export const getStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common', 'index'])),
-  },
-})
+export const getStaticProps = async ({ locale }) => {
+  const posts = getLatestsPosts()
+  return {
+    props: {
+      posts,
+    },
+  }
+}

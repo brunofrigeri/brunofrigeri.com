@@ -21,8 +21,13 @@ module.exports = {
       white: colors.white,
       gray: colors.trueGray,
       indigo: colors.indigo,
-      red: colors.rose,
-      yellow: colors.amber,
+      red: '#FB3D62',
+      yellow: '#D1A24E',
+      blue: '#7096FF',
+      purple: '#B677E3',
+      green: '#ABD56F',
+      green_text: '#63A8A4',
+      pink: colors.pink
     },
     extend: {
       fontFamily: {
@@ -33,12 +38,13 @@ module.exports = {
   plugins: [
     plugin(function({ addBase, theme }) {
       addBase({
-        'h1': { fontFamily: 'Inter', fontWeight: 800, fontSize: theme('fontSize.2xl')},
-        'h2': { fontFamily: 'Inter', fontWeight: 600, fontSize: theme('fontSize.lg')},
-        'h3': { fontFamily: 'Inter', fontWeight: 500, fontSize: theme('fontSize.base')},
-        'h4': { fontFamily: 'Inter', fontWeight: 300, fontSize: theme('fontSize.sm')},
-        'h5': { fontFamily: 'Inter', fontWeight: 300, fontSize: theme('fontSize.xs')},
-        'p': { fontFamily: 'Inter', fontWeight: 300, fontSize: theme('fontSize.sm')},
+        'h1': { fontWeight: 800, fontSize: theme('fontSize.2xl')},
+        'h2': { fontWeight: 600, fontSize: theme('fontSize.lg')},
+        'h3': { fontWeight: 500, fontSize: theme('fontSize.base')},
+        'h4': { fontWeight: 300, fontSize: theme('fontSize.sm')},
+        'h5': { fontWeight: 300, fontSize: theme('fontSize.xs')},
+        'p': { fontWeight: 300, fontSize: theme('fontSize.sm')},
+        'li': { fontWeight: 300, fontSize: theme('fontSize.sm')},
       })
     }),
   ]

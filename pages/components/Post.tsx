@@ -1,43 +1,49 @@
 import React from 'react'
 
 interface PostProps {
+  slug: string
   title?: string
-  description?: string
+  reading_time?: string
+  excerpt?: string
   date?: string
-  minutesOfRead?: number
+  search?: string
 }
 
 export default function Post({
+  slug,
   title,
-  description,
+  excerpt,
   date,
-  minutesOfRead,
+  reading_time,
+  search,
 }: PostProps) {
   return (
-    <div className="my-8">
-      {title && (
-        <h3 className="md:text-lg text-black dark:text-white">{title}</h3>
-      )}
-      {description && (
-        <h5 className="md:text-sm my-1 text-description_light dark:text-description_dark">
-          {description}
-        </h5>
-      )}
-      <div className="flex flex-row my-4">
-        {date && (
-          <h5 className="text-xs text-description_light dark:text-description_dark">
-            {date}
+    <a href={`/blog/${slug}`}>
+      <div className="my-8">
+        {title && (
+          <h3 className="md:text-lg text-black dark:text-white">{title}</h3>
+        )}
+        {excerpt && (
+          <h5 className="md:text-sm my-1 text-description_light dark:text-description_dark">
+            {excerpt}
           </h5>
         )}
-        <h5 className="text-xs text-description_light dark:text-description_dark">
-          &nbsp;&nbsp;|&nbsp;&nbsp;
-        </h5>
-        {minutesOfRead && (
+        <div className="flex flex-row my-4">
+          {date && (
+            <h5 className="text-xs text-description_light dark:text-description_dark">
+              {date}
+            </h5>
+          )}
           <h5 className="text-xs text-description_light dark:text-description_dark">
-            {minutesOfRead}&nbsp;min. read
+            &nbsp;&nbsp;|&nbsp;&nbsp;
           </h5>
-        )}
+          {reading_time && (
+            <h5 className="text-xs text-description_light dark:text-description_dark">
+              {reading_time}
+            </h5>
+          )}
+        </div>
       </div>
-    </div>
+    </a>
   )
 }

@@ -5,7 +5,6 @@ import Link from 'next/link'
 import images from '../../public/assets/images'
 import { useRouter } from 'next/dist/client/router'
 import { useTheme } from 'next-themes'
-import { useTranslation } from 'react-i18next'
 
 interface ContainerProps {
   children?: React.ReactNode[] | React.ReactNode
@@ -21,19 +20,17 @@ export default function Container({ children, ...props }: ContainerProps) {
   const router = useRouter()
   const { theme, setTheme } = useTheme()
 
-  const { t } = useTranslation('common')
-
   const menuOptions: Array<MenuOption> = [
     {
-      name: t('home'),
+      name: 'Home',
       path: '/',
     },
     {
-      name: t('blog'),
+      name: 'Blog',
       path: '/blog',
     },
     {
-      name: t('about'),
+      name: 'About',
       path: '/about',
     },
   ]
@@ -42,6 +39,11 @@ export default function Container({ children, ...props }: ContainerProps) {
     <div id="container" className="bg-white dark:bg-black">
       <Head>
         <title>Bruno Frigeri</title>
+        <meta
+          name="description"
+          property="og:description"
+          content={'Bruno Frigeri'}
+        />
         <link rel="icon" href="/assets/avatar.jpg" />
       </Head>
       <nav className="max-w-4xl flex flex-row justify-between bg-white dark:bg-black mx-auto items-center w-full my-8">
@@ -49,6 +51,7 @@ export default function Container({ children, ...props }: ContainerProps) {
           <Image
             className="rounded-full"
             src={images.avatar.src}
+            alt="BF"
             height={60}
             width={60}
           />
@@ -57,7 +60,7 @@ export default function Container({ children, ...props }: ContainerProps) {
               Bruno Frigeri
             </h2>
             <p className="text-description_light dark:text-description_dark">
-              {t('avatar-description')}
+              Mobile and Frontend developer
             </p>
           </div>
         </div>
@@ -86,6 +89,7 @@ export default function Container({ children, ...props }: ContainerProps) {
             className="w-7 h-7 bg-light_toggle dark:bg-dark_toggle rounded mx-8 flex justify-center items-center focus:outline-none"
           >
             <Image
+              alt="ChangeTheme"
               src={theme === 'light' ? images.moon.src : images.sun.src}
               width={15}
               height={15}
@@ -93,7 +97,7 @@ export default function Container({ children, ...props }: ContainerProps) {
           </button>
         </div>
       </nav>
-      <main className="max-w-3xl flex w-full mx-auto bg-white dark:bg-black">
+      <main className="max-w-3xl flex mx-auto bg-white dark:bg-black">
         {children}
       </main>
       <footer className="max-w-4xl flex flex-row justify-between text-black dark:text-white mx-auto items-center w-full my-8">
@@ -108,36 +112,6 @@ export default function Container({ children, ...props }: ContainerProps) {
           <br />
           website by Freepik Storyset
         </span>
-        <div className="flex flex-row items-center">
-          <div className="cursor-pointer px-2">
-            <Link
-              href="/"
-              locale={
-                router.locale === 'en'
-                  ? `pt-BR${router.pathname}`
-                  : `en${router.pathname}`
-              }
-            >
-              <div>
-                <Image src={images.usa.src} height={30} width={30} />
-              </div>
-            </Link>
-          </div>
-          <div className="cursor-pointer">
-            <Link
-              href="/"
-              locale={
-                router.locale === 'pt-BR'
-                  ? `en${router.pathname}`
-                  : `pt-BR${router.pathname}`
-              }
-            >
-              <div>
-                <Image src={images.brazil.src} height={30} width={30} />
-              </div>
-            </Link>
-          </div>
-        </div>
       </footer>
     </div>
   )
