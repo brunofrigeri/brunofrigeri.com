@@ -28,6 +28,8 @@ export async function getStaticPaths() {
 
   if (!paths)
     return {
+      paths: [],
+      fallback: false,
       notFound: true,
     }
 
