@@ -26,6 +26,11 @@ export default function Slug({ post, source }: SlugProps) {
 export async function getStaticPaths() {
   const paths = getAllPostSlugs()
 
+  if (paths.length <= 0)
+    return {
+      notFound: true,
+    }
+
   return {
     paths,
     fallback: false,
