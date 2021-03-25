@@ -1,5 +1,5 @@
 import React from 'react'
-import { getAllPostSlugs, getPostBySlug, Post } from '../../lib/posts'
+import { getAllPosts, getPostBySlug, Post } from '../../lib/posts'
 import renderToString from 'next-mdx-remote/render-to-string'
 import hydrate from 'next-mdx-remote/hydrate'
 import { MdxRemote } from 'next-mdx-remote/types'
@@ -24,7 +24,7 @@ export default function Slug({ post, source }: SlugProps) {
 }
 
 export async function getStaticPaths() {
-  const paths = getAllPostSlugs()
+  const paths = getAllPosts()
 
   return {
     paths,

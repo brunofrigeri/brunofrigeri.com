@@ -1,5 +1,5 @@
-const fs = require('fs')
-const path = require('path')
+import fs from 'fs'
+import { join } from 'path'
 import matter from 'gray-matter'
 import readingTime from 'reading-time'
 
@@ -21,7 +21,7 @@ export type Post = {
   featured_image?: string
 }
 
-const postDirectory = path.join(process.cwd(), 'posts')
+const postDirectory = join(process.cwd(), 'posts')
 
 const formatData = (data, content) => {
   const reading_time = readingTime(content)
@@ -44,60 +44,23 @@ const formatData = (data, content) => {
   }
 }
 
-export const getLatestsPosts = (): Array<Post> => {
-  const fileNames = fs.readdirSync(postDirectory)
+export function getPostBySlug(slug) {
+  const realSlug = slug.replace(/\.md$/, '')
+  const fullPath = join(postDirectory, realSlug)
+  const fileContents = fs.readFileSync(fullPath, 'utf8')
+  const { data, content } = matter(fileContents)
+  const frontMatter = formatData(data, content)
 
-  const filteredData = fileNames
-    .map((filename) => {
-      const slug = filename.replace('.mdx', '')
-
-      const fullPath = path.join(postDirectory, filename)
-
-      const fileContents = fs.readFileSync(fullPath, 'utf8')
-      const { data, content } = matter(fileContents)
-      const front_matter = formatData(data, content)
-
-      return {
-        slug,
-        ...front_matter,
-      }
-    })
-    .filter((_, index) => index < 3)
-
-  return filteredData.sort((a, b) => {
-    if (new Date(a.date) < new Date(b.date)) {
-      return 1
-    } else {
-      return -1
-    }
-  })
+  return { slug: realSlug, ...frontMatter }
 }
 
-export const getAllPostSlugs = () => {
-  const fileNames = fs.readdirSync(postDirectory)
+export function getAllPosts() {
+  const slugs = fs.readdirSync(postDirectory)
+  const posts = slugs.map((slug) => getPostBySlug(slug))
 
-  return fileNames.length > 0
-    ? fileNames.map((filename) => {
-        return {
-          params: {
-            slug: filename.replace('.mdx', ''),
-          },
-        }
-      })
-    : []
+  return posts
 }
 
-//Get Post based on Slug
-export const getPostBySlug = async (slug: string) => {
-  const fullPath = path.join(postDirectory, `${slug}.mdx`)
-  const postContent = fs.readFileSync(fullPath, 'utf8')
-
-  const { data, content } = matter(postContent)
-
-  const front_matter = formatData(data, content)
-
-  return {
-    slug,
-    ...front_matter,
-  }
+export function getLatestsPosts() {
+  return getAllPosts().filter((_, index) => index < 3)
 }

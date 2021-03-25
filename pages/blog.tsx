@@ -3,7 +3,7 @@ import Fuse from 'fuse.js'
 import Posts from './components/Posts'
 import Search from './components/Search'
 import Container from './containers/Container'
-import { getLatestsPosts, Post } from '../lib/posts'
+import { getAllPosts, Post } from '../lib/posts'
 
 interface BlogProps {
   posts: Array<Post>
@@ -56,7 +56,8 @@ export default function Blog({ posts }: BlogProps) {
 }
 
 export const getStaticProps = async ({}) => {
-  const posts = getLatestsPosts()
+  // const posts = getLatestsPosts()
+  const posts = getAllPosts()
   return {
     props: {
       posts,
