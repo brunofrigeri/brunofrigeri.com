@@ -44,40 +44,19 @@ const formatData = (data, content) => {
   }
 }
 
-export const getAllPosts = (): Array<Post> => {
-  const fileNames = fs.readdirSync(postDirectory)
-
-  if (fileNames.length <= 0) return []
-
-  const filteredData = fileNames.map((filename) => {
-    const slug = filename.replace('.mdx', '')
-
-    const fullPath = path.join(postDirectory, filename)
-
-    const fileContents = fs.readFileSync(fullPath, 'utf8')
-    const { data, content } = matter(fileContents)
-    const front_matter = formatData(data, content)
-
-    return {
-      slug,
-      ...front_matter,
-    }
-  })
-
-  return filteredData.sort((a, b) => {
-    if (new Date(a.date) < new Date(b.date)) {
-      return 1
-    } else {
-      return -1
-    }
+export const isDirEmpty = (dirname) => {
+  return fs.promises.readdir(dirname).then((files) => {
+    return files.length === 0
   })
 }
 
-export const getLatestsPosts = (): Array<Post> => {
-  const fileNames = fs.readdirSync(postDirectory)
+export const getAllPosts = (): Array<Post> => {
+  if (!isDirEmpty(postDirectory)) {
+    const fileNames = fs.readdirSync(postDirectory)
 
-  const filteredData = fileNames
-    .map((filename) => {
+    if (fileNames.length <= 0) return []
+
+    const filteredData = fileNames.map((filename) => {
       const slug = filename.replace('.mdx', '')
 
       const fullPath = path.join(postDirectory, filename)
@@ -91,21 +70,46 @@ export const getLatestsPosts = (): Array<Post> => {
         ...front_matter,
       }
     })
-    .filter((_, index) => index < 3)
 
-  return filteredData.sort((a, b) => {
-    if (new Date(a.date) < new Date(b.date)) {
-      return 1
-    } else {
-      return -1
-    }
-  })
+    return filteredData.sort((a, b) => {
+      if (new Date(a.date) < new Date(b.date)) {
+        return 1
+      } else {
+        return -1
+      }
+    })
+  }
 }
 
-export const isDirEmpty = (dirname) => {
-  return fs.promises.readdir(dirname).then((files) => {
-    return files.length === 0
-  })
+export const getLatestsPosts = (): Array<Post> => {
+  if (!isDirEmpty(postDirectory)) {
+    const fileNames = fs.readdirSync(postDirectory)
+
+    const filteredData = fileNames
+      .map((filename) => {
+        const slug = filename.replace('.mdx', '')
+
+        const fullPath = path.join(postDirectory, filename)
+
+        const fileContents = fs.readFileSync(fullPath, 'utf8')
+        const { data, content } = matter(fileContents)
+        const front_matter = formatData(data, content)
+
+        return {
+          slug,
+          ...front_matter,
+        }
+      })
+      .filter((_, index) => index < 3)
+
+    return filteredData.sort((a, b) => {
+      if (new Date(a.date) < new Date(b.date)) {
+        return 1
+      } else {
+        return -1
+      }
+    })
+  }
 }
 
 export const getAllPostSlugs = () => {
