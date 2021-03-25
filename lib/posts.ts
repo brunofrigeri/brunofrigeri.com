@@ -102,18 +102,26 @@ export const getLatestsPosts = (): Array<Post> => {
   })
 }
 
-export const getAllPostSlugs = () => {
-  const fileNames = fs.readdirSync(postDirectory)
+export const isDirEmpty = (dirname) => {
+  return fs.promises.readdir(dirname).then((files) => {
+    return files.length === 0
+  })
+}
 
-  return fileNames.length > 0
-    ? fileNames.map((filename) => {
-        return {
-          params: {
-            slug: filename.replace('.mdx', ''),
-          },
-        }
-      })
-    : []
+export const getAllPostSlugs = () => {
+  if (!isDirEmpty(postDirectory)) {
+    const fileNames = fs.readdirSync(postDirectory)
+
+    return fileNames.length > 0
+      ? fileNames.map((filename) => {
+          return {
+            params: {
+              slug: filename.replace('.mdx', ''),
+            },
+          }
+        })
+      : []
+  }
 }
 
 export const getPostBySlug = async (slug: string) => {
