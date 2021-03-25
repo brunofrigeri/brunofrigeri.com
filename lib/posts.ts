@@ -72,7 +72,7 @@ export const getAllPosts = (): Array<Post> => {
         return -1
       }
     })
-  }
+  } else return []
 }
 
 export const getLatestsPosts = (): Array<Post> => {
@@ -103,7 +103,7 @@ export const getLatestsPosts = (): Array<Post> => {
         return -1
       }
     })
-  }
+  } else return []
 }
 
 export const getAllPostSlugs = () => {
@@ -117,6 +117,8 @@ export const getAllPostSlugs = () => {
         },
       }
     })
+  } else {
+    return []
   }
 }
 
