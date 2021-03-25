@@ -112,15 +112,13 @@ export const getAllPostSlugs = () => {
   if (!isDirEmpty(postDirectory)) {
     const fileNames = fs.readdirSync(postDirectory)
 
-    return fileNames.length > 0
-      ? fileNames.map((filename) => {
-          return {
-            params: {
-              slug: filename.replace('.mdx', ''),
-            },
-          }
-        })
-      : []
+    return fileNames.map((filename) => {
+      return {
+        params: {
+          slug: filename.replace('.mdx', ''),
+        },
+      }
+    })
   }
 }
 
