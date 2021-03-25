@@ -4,7 +4,7 @@ import Button from './components/Button'
 import Container from './containers/Container'
 import { useTheme } from 'next-themes'
 import React from 'react'
-import { getAllPosts, getLatestsPosts, Post } from '../lib/posts'
+import { getLatestsPosts, Post } from '../lib/posts'
 import Posts from './components/Posts'
 import { useRouter } from 'next/dist/client/router'
 

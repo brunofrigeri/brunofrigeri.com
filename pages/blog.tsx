@@ -56,7 +56,6 @@ export default function Blog({ posts }: BlogProps) {
 }
 
 export const getStaticProps = async ({}) => {
-  // const posts = getLatestsPosts()
   const posts = getAllPosts()
   return {
     props: {
