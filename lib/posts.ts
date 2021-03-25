@@ -21,7 +21,6 @@ export type Post = {
   featured_image?: string
 }
 
-//Finding directory named "posts" from the current working directory of Node.
 const postDirectory = path.join(process.cwd(), 'posts')
 
 const formatData = (data, content) => {
@@ -46,7 +45,6 @@ const formatData = (data, content) => {
 }
 
 export const getLatestsPosts = (): Array<Post> => {
-  //Reads all the files in the post directory
   const fileNames = fs.readdirSync(postDirectory)
 
   const filteredData = fileNames
@@ -78,15 +76,15 @@ export const getLatestsPosts = (): Array<Post> => {
 export const getAllPostSlugs = () => {
   const fileNames = fs.readdirSync(postDirectory)
 
-  if (fileNames.length <= 0) return []
-
-  return fileNames.map((filename) => {
-    return {
-      params: {
-        slug: filename.replace('.mdx', ''),
-      },
-    }
-  })
+  return fileNames.length > 0
+    ? fileNames.map((filename) => {
+        return {
+          params: {
+            slug: filename.replace('.mdx', ''),
+          },
+        }
+      })
+    : []
 }
 
 //Get Post based on Slug
