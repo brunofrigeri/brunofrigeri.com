@@ -4,7 +4,7 @@ import Posts from './components/Posts'
 import Search from './components/Search'
 import Container from './containers/Container'
 import { getAllPosts, Post } from '../lib/posts'
-
+import firebase from 'firebase'
 interface BlogProps {
   posts: Array<Post>
 }

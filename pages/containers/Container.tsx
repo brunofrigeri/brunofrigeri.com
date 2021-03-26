@@ -36,14 +36,13 @@ export default function Container({ children, ...props }: ContainerProps) {
   ]
 
   return (
-    <div id="container" className="bg-white dark:bg-black">
+    <div
+      id="container"
+      className="flex flex-col min-h-screen bg-white dark:bg-black"
+    >
       <Head>
         <title>Bruno Frigeri</title>
-        <meta
-          name="description"
-          property="og:description"
-          content={'Bruno Frigeri'}
-        />
+        <meta name="description" content={'Bruno Frigeri'} />
         <link rel="icon" href="/assets/avatar.jpg" />
       </Head>
       <nav className="max-w-4xl flex flex-row justify-between bg-white dark:bg-black mx-auto items-center w-full my-8">
@@ -97,17 +96,17 @@ export default function Container({ children, ...props }: ContainerProps) {
           </button>
         </div>
       </nav>
-      <main className="max-w-3xl flex mx-auto bg-white dark:bg-black">
+      <main className="flex-grow mx-auto max-w-3xl bg-white dark:bg-black">
         {children}
       </main>
       <footer className="max-w-4xl flex flex-row justify-between text-black dark:text-white mx-auto items-center w-full my-8">
-        <span className="text-sm md:text-base">
-          {currentYear}. Made by&nbsp;{' '}
-          <span className="text-sm md:text-base text-highlight_light dark:text-highlight_dark">
+        <span className="text-xs md:text-sm">
+          © {currentYear}. Made by&nbsp;
+          <span className="text-xs md:text-sm text-highlight_light dark:text-highlight_dark">
             myself.
           </span>
         </span>
-        <span className="text-xs md-text-sm text-gray-800">
+        <span className="text-xs md-text-xs text-gray-800">
           Illustrations used in this
           <br />
           website by Freepik Storyset

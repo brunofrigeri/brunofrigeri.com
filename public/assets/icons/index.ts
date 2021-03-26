@@ -4,6 +4,7 @@ enum Icons {
   SEARCH_ICON = 'searchIcon',
   PROFILE_ICON = 'profileIcon',
   LOCK_ICON = 'lockIcon',
+  REACTION_ICON = 'reactionIcon',
 }
 
 type Icon = Pick<ImageProps, 'src'>
@@ -17,6 +18,9 @@ const icons: { [key in Icons]: Icon } = {
   },
   [Icons.LOCK_ICON]: {
     src: '/assets/icons/Lock.svg',
+  },
+  [Icons.REACTION_ICON]: {
+    src: '/assets/icons/Reaction.svg',
   },
 }
 

@@ -26,6 +26,7 @@ enum Images {
   V1APP = 'v1app',
   BRAZIL = 'brazil',
   USA = 'usa',
+  NORWAY = 'norway',
 }
 
 type Image = Pick<ImageProps, 'src'>
@@ -105,6 +106,9 @@ const images: { [key in Images]: Image } = {
   },
   [Images.USA]: {
     src: '/assets/usa.svg',
+  },
+  [Images.NORWAY]: {
+    src: '/assets/norway.jpeg',
   },
 }
 

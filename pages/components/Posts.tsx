@@ -7,7 +7,6 @@ interface PostsProps {
   title: string
   hasButton?: boolean
   posts: Array<PostType>
-  search?: string
   onSeeAllPress?(): void
 }
 
@@ -15,7 +14,6 @@ export default function Posts({
   title,
   hasButton = true,
   posts = [],
-  search,
   onSeeAllPress = () => {},
   ...props
 }: PostsProps) {

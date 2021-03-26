@@ -19,6 +19,7 @@ export type Post = {
   reading_time: IReadTimeResults
   slug: string
   featured_image?: string
+  views?: number
 }
 
 const postDirectory = path.join(process.cwd(), 'posts')

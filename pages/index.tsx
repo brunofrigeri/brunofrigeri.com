@@ -22,7 +22,7 @@ export default function Home({ posts }: HomeProps) {
 
   return (
     <Container>
-      <div className="w-full">
+      <div>
         <div className="flex flex-row justify-between items-start">
           <div>
             <h1 className="md:text-4xl te xt-black dark:text-white">
