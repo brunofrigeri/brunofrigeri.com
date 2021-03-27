@@ -47,6 +47,7 @@ export async function getStaticProps({ params }) {
         require('remark-autolink-headings'),
         require('remark-slug'),
         require('remark-code-titles'),
+        require('remark-copy-linked-files'),
       ],
       rehypePlugins: [require('mdx-prism')],
     },

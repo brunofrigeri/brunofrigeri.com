@@ -20,9 +20,15 @@ export default function Home({ posts }: HomeProps) {
     router.replace('/blog')
   }
 
+  const onEmailSentPress = () => {
+    const email = 'bpiraja97@gmail.com'
+
+    window.location.href = `mailto:${email}`
+  }
+
   return (
     <Container>
-      <div>
+      <div className="min-w-full">
         <div className="flex flex-row justify-between items-start">
           <div>
             <h1 className="md:text-4xl te xt-black dark:text-white">
@@ -35,7 +41,7 @@ export default function Home({ posts }: HomeProps) {
               <br />
               passionate about traveling from Brazil.
             </h2>
-            <Button>Book a meeting with me!</Button>
+            <Button onClick={onEmailSentPress}>Book a meeting with me!</Button>
           </div>
           <div id="presentation">
             <Image

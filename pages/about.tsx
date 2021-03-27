@@ -3,6 +3,7 @@ import Container from './containers/Container'
 import Image, { ImageProps } from 'next/image'
 import images from '../public/assets/images'
 import { useTheme } from 'next-themes'
+import Button from './components/Button'
 
 export default function About({}) {
   const { theme } = useTheme()
@@ -97,6 +98,12 @@ export default function About({}) {
     },
   ]
 
+  const onEmailSentPress = () => {
+    const email = 'bpiraja97@gmail.com'
+
+    window.location.href = `mailto:${email}`
+  }
+
   return (
     <Container>
       <div>
@@ -107,6 +114,7 @@ export default function About({}) {
             be responsible for the companies that I worked with, achieve their
             goals through an application or website.
           </h2>
+          <Button onClick={onEmailSentPress}>Let's book a meeting</Button>
         </div>
         <div className="py-8">
           <h1 className="text-black dark:text-white">

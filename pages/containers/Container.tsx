@@ -36,10 +36,7 @@ export default function Container({ children, ...props }: ContainerProps) {
   ]
 
   return (
-    <div
-      id="container"
-      className="flex flex-col min-h-screen bg-white dark:bg-black"
-    >
+    <div id="container" className="bg-white dark:bg-black">
       <Head>
         <title>Bruno Frigeri</title>
         <meta name="description" content={'Bruno Frigeri'} />
@@ -96,7 +93,7 @@ export default function Container({ children, ...props }: ContainerProps) {
           </button>
         </div>
       </nav>
-      <main className="flex-grow mx-auto max-w-3xl bg-white dark:bg-black">
+      <main className="mx-auto max-w-3xl bg-white dark:bg-black">
         {children}
       </main>
       <footer className="max-w-4xl flex flex-row justify-between text-black dark:text-white mx-auto items-center w-full my-8">

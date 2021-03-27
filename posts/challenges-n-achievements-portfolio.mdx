@@ -1,0 +1,49 @@
+---
+title: 'Challenges and Achievements on Portfolio Built'
+excerpt: 'Analyze my path from scratch to the final portfolio result.'
+date: '03/26/2021'
+author: 'Bruno Frigeri'
+---
+This year I make some promises with myself to start been more active in the community, helping other peoples, writing articles and eventually build a portfolio.
+
+After few years working with React/React Native, my obviously path was build the portfolio using some React framework such as CRA, Gatsby and NextJs.
+
+## Which Framework to use
+The first and I could say easy decision (we can argue about that later) was to choose NextJs above the others, for reasons like I was trying to get a SSR (Server Side Rendering) portfolio that would work wonderfully with my nested blog in it.
+
+**Ps**: I know Gatsby could be a really good path to go with but I realize that Gatsby could be a better solution for a Static Website, that was something I didn't wanted at the time.
+
+## Designing the Solution
+
+The second and most difficult part of the whole project was to design it. Me, just a developer, running Dribbble and Behance apart, searching for ideas that could be simple and clean, and of course possible for implementation. At this time, I decide to do with something more clean, so I built a design based on [Lee Robinson blog](https://leerob.io/), but with more images and more interactions for to user be able to reach me on my email through buttons.
+You guys can check it out the whole design project (all made by myself, don't judge my poor work haha).
+
+[Figma Link](https://www.figma.com/file/ESOrpbORXLKhCiU2JYsqcy/brunofrigeri.com?node-id=66%3A57)
+
+## Implementation
+
+At first I started to read Next documentation, and we can discuss that in another article, but the concept about `[slug]` and `api/[slug]`are a really awesome approach.
+
+My brainstorm on how to implement my solution was following:
+
+1. Setup the basic configuration of NextJs, themes defined on my design to the code and chosen font in to the project and define which CSS framework to use;
+2. Started to built my atomic talking small components, such as button and input. And then start to get all together in the pages.
+3. Last but not least, integrate my blog with some API getting my posts (at this time I was completely convinced that I needed to built a whole panel, so I could be able to open a Admin panel in my own blog and write my articles, saving them in some cloud), obviously that idea was underneath.
+
+Once I finish the configuration and define [TailwindCSS](https://tailwindcss.com/) as my StyleGuide. For those who doesn't know [TailwindCSS](https://tailwindcss.com/), check their website, but basically is a really good CSS framework that make easier to work with CSS in the same JS  file.
+
+<img src={'/static/TailwindCSS.png'} />
+
+I guess the main problem that I could have with next would be if I was using just css files, here in my laptop, the compilation of css files on a next project is real slow. So [TailwindCSS](https://tailwindcss.com/) really help to built my components/containers and pages more quickly.
+
+Then, start to brainstorm again, I thought, as good Brazilian, I could have a double language website with English and PT-BR languages, so everyone from my circle could choose the preferred language to read the articles.
+
+The major problem about this was a really problem with perfomance towards the Blog, but I'll definitely work on a better solution in the next days.
+
+The last part about the blog was change mind about having a Admin Panel and choose to go with the simple solution, work with MDX and Markdown, saving all my articles in my project, reading and creating slugs with it. Works really smooth btw. This part was my biggest challenge by far talking about implementation because work with StaticProps and StaticPaths with NextJs for the first was a bit confusing.
+
+Anyway, today I finally finished my blog, of course, have somethings to improve, but I believe is ready to you guys check it out.
+
+**Ps:** If you are in my website, welcome and really happy and hope you like, anything you wan't to know about the process, problems, tips, just reach me on email or any social media.
+
+Thank you for listening and being part of my experience!

@@ -59,13 +59,15 @@ export default function Post({
           <ViewCounter slug={slug} />
         </div>
       </div>
-      <Image
-        alt={'thumbnail'}
-        className="rounded-r-lg"
-        src={featured_image}
-        width={300}
-        height={100}
-      />
+      {featured_image && (
+        <Image
+          alt={'thumbnail'}
+          className="rounded-r-lg"
+          src={featured_image}
+          width={300}
+          height={100}
+        />
+      )}
     </a>
   )
 }
