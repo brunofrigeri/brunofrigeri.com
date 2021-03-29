@@ -4,6 +4,7 @@ import renderToString from 'next-mdx-remote/render-to-string'
 import hydrate from 'next-mdx-remote/hydrate'
 import { MdxRemote } from 'next-mdx-remote/types'
 import Container from '../containers/Container'
+import Tags from '../components/Tags'
 
 interface SlugProps {
   post: Post
@@ -17,7 +18,8 @@ export default function Slug({ post, source }: SlugProps) {
     <Container>
       <article>
         <div className="max-w-3xl mx-auto">
-          <h1 className="my-6 text-black dark:text-white">{post.title}</h1>
+          <h1 className="mt-6 text-black dark:text-white">{post.title}</h1>
+          <Tags stacks={post.stacks} />
           <h2 className="my-6 text-description_light text-xs md:text-sm dark:text-description_dark">
             {post.date}
           </h2>

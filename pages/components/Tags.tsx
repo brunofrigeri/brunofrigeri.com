@@ -17,7 +17,7 @@ export default function Tags({ stacks }: TagsProps) {
         stacks.map((stack, index) => (
           <div
             key={index}
-            className={`border border-gray-400 dark:border-gray-600 0 p-1 rounded-lg mr-2`}
+            className={`border border-gray-400 dark:border-gray-600 p-1 rounded-lg mr-2`}
           >
             <p
               key={index}

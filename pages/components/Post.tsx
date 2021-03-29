@@ -20,7 +20,6 @@ export default function Post({
   date,
   reading_time,
   featured_image,
-  stacks,
 }: PostProps) {
   const onPostPress = () => {
     fetch(`/api/views/${slug}`, {
@@ -38,7 +37,6 @@ export default function Post({
         {title && (
           <h3 className="md:text-lg text-black dark:text-white">{title}</h3>
         )}
-        {stacks && <Tags stacks={stacks} />}
         {excerpt && (
           <h5 className="md:text-sm my-1 text-description_light dark:text-description_dark">
             {excerpt}
