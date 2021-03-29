@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
+import Tags from './Tags'
 import ViewCounter from './ViewCounter'
 
 interface PostProps {
@@ -8,6 +9,7 @@ interface PostProps {
   reading_time?: string
   excerpt?: string
   date?: string
+  stacks?: Array<string>
   featured_image?: string
 }
 
@@ -18,6 +20,7 @@ export default function Post({
   date,
   reading_time,
   featured_image,
+  stacks,
 }: PostProps) {
   const onPostPress = () => {
     fetch(`/api/views/${slug}`, {
@@ -35,6 +38,7 @@ export default function Post({
         {title && (
           <h3 className="md:text-lg text-black dark:text-white">{title}</h3>
         )}
+        {stacks && <Tags stacks={stacks} />}
         {excerpt && (
           <h5 className="md:text-sm my-1 text-description_light dark:text-description_dark">
             {excerpt}
@@ -59,7 +63,7 @@ export default function Post({
           <ViewCounter slug={slug} />
         </div>
       </div>
-      {featured_image && (
+      {featured_image ? (
         <Image
           alt={'thumbnail'}
           className="rounded-r-lg"
@@ -67,7 +71,7 @@ export default function Post({
           width={300}
           height={100}
         />
-      )}
+      ) : null}
     </a>
   )
 }

@@ -19,6 +19,7 @@ export type Post = {
   reading_time: IReadTimeResults
   slug: string
   featured_image?: string
+  stacks: Array<string>
   views?: number
 }
 
@@ -38,6 +39,7 @@ const formatData = (data, content) => {
     author: data.author,
     content,
     title: data.title,
+    stacks: data.stacks,
     excerpt: data.excerpt,
     date: formattedDate,
     featured_image: data.featuredImage || '',

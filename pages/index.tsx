@@ -41,7 +41,13 @@ export default function Home({ posts }: HomeProps) {
               <br />
               passionate about traveling from Brazil.
             </h2>
-            <Button onClick={onEmailSentPress}>Book a meeting with me!</Button>
+            <Button
+              target={'_blank'}
+              rel={'noreferrer noopener'}
+              onClick={onEmailSentPress}
+            >
+              Book a meeting with me!
+            </Button>
           </div>
           <div id="presentation">
             <Image

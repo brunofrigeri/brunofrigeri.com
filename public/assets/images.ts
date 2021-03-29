@@ -17,16 +17,8 @@ enum Images {
   DARK_APOLLO = 'darkApollo',
   DARK_NEXT = 'darkNext',
   DARK_NODE = 'darkNode',
-  DARK_GLOBALSYS = 'darkGlobalsys',
-  GLOBALSYS = 'globalsys',
-  G2I = 'g2i',
-  MULTICAST = 'multicast',
-  PAYTIME = 'paytime',
-  SKILOPAY = 'skilopay',
-  V1APP = 'v1app',
   BRAZIL = 'brazil',
   USA = 'usa',
-  NORWAY = 'norway',
 }
 
 type Image = Pick<ImageProps, 'src'>
@@ -77,38 +69,14 @@ const images: { [key in Images]: Image } = {
   [Images.DARK_NEXT]: {
     src: '/assets/dark_next.svg',
   },
-  [Images.DARK_GLOBALSYS]: {
-    src: '/assets/dark_globalsys.svg',
-  },
-  [Images.GLOBALSYS]: {
-    src: '/assets/globalsys.svg',
-  },
-  [Images.G2I]: {
-    src: '/assets/g2i.svg',
-  },
-  [Images.MULTICAST]: {
-    src: '/assets/multicast.svg',
-  },
-  [Images.PAYTIME]: {
-    src: '/assets/paytime.svg',
-  },
   [Images.DARK_NODE]: {
     src: '/assets/dark_nodejs.svg',
-  },
-  [Images.SKILOPAY]: {
-    src: '/assets/skilopay.svg',
-  },
-  [Images.V1APP]: {
-    src: '/assets/v1app.svg',
   },
   [Images.BRAZIL]: {
     src: '/assets/brazil.svg',
   },
   [Images.USA]: {
     src: '/assets/usa.svg',
-  },
-  [Images.NORWAY]: {
-    src: '/assets/norway.jpeg',
   },
 }
 

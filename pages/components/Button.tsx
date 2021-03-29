@@ -6,6 +6,8 @@ interface ButtonProps {
   type?: 'fill' | 'bordered'
   className?: string
   buttonType?: 'button' | 'submit'
+  target?: '_blank'
+  rel?: 'noreferrer noopener'
 }
 
 export default function Button({
@@ -14,17 +16,21 @@ export default function Button({
   type = 'fill',
   className,
   buttonType = 'button',
+  target,
+  rel,
   ...props
 }: ButtonProps) {
   return (
-    <button
+    <a
       type={buttonType}
+      target={target}
+      rel={rel}
       className={
-        `${
+        `px-4 ${
           type === 'bordered'
-            ? 'border bg-white dark:bg-black border-highlight_light dark:border-highlight_dark py-1'
-            : 'bg-highlight_light dark:bg-highlight_dark border-0 py-2'
-        } px-4 rounded-md ` + className
+            ? 'border bg-white dark:bg-black border-highlight_light dark:border-highlight_dark py-1 '
+            : 'bg-highlight_light dark:bg-highlight_dark border-0 py-2 '
+        } cursor-pointer rounded-md px-4` + className
       }
       onClick={onClick}
     >
@@ -37,6 +43,6 @@ export default function Button({
       >
         {children}
       </span>
-    </button>
+    </a>
   )
 }
