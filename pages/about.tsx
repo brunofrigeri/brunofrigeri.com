@@ -97,10 +97,6 @@ export default function About({}) {
             </div>
           )}
         </div>
-        <div className="py-8">
-          <h1 className="text-black dark:text-white">Experiences</h1>
-          <Resume />
-        </div>
       </div>
     </Container>
   )

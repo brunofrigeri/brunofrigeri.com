@@ -15,13 +15,15 @@ export default function Slug({ post, source }: SlugProps) {
 
   return (
     <Container>
-      <div className="max-w-3xl mx-auto">
-        <h1 className="my-6 text-black dark:text-white">{post.title}</h1>
-        <h2 className="my-6 text-description_light text-xs md:text-sm dark:text-description_dark">
-          {post.date}
-        </h2>
-        <div className="prose dark:prose-dark">{content}</div>
-      </div>
+      <article>
+        <div className="max-w-3xl mx-auto">
+          <h1 className="my-6 text-black dark:text-white">{post.title}</h1>
+          <h2 className="my-6 text-description_light text-xs md:text-sm dark:text-description_dark">
+            {post.date}
+          </h2>
+          <div className="prose dark:prose-dark">{content}</div>
+        </div>
+      </article>
     </Container>
   )
 }

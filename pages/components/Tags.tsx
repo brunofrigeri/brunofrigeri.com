@@ -21,7 +21,7 @@ export default function Tags({ stacks }: TagsProps) {
           >
             <p
               key={index}
-              className="text-xs font-semibold md:text-xs text-gray-400 dark:text-gray-600"
+              className="text-xs font-semibold text-gray-400 dark:text-gray-600"
             >
               #{getTagName(stack)}
             </p>

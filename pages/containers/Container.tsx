@@ -36,7 +36,10 @@ export default function Container({ children, ...props }: ContainerProps) {
   ]
 
   return (
-    <div id="container" className="bg-white dark:bg-black">
+    <div
+      id="container"
+      className="flex flex-col min-h-screen bg-white dark:bg-black"
+    >
       <Head>
         <title>Bruno Frigeri</title>
         <meta name="description" content={'Bruno Frigeri'} />
@@ -93,7 +96,7 @@ export default function Container({ children, ...props }: ContainerProps) {
           </button>
         </div>
       </nav>
-      <main className="mx-auto max-w-3xl bg-white dark:bg-black">
+      <main className="flex-grow mx-auto max-w-3xl bg-white dark:bg-black">
         {children}
       </main>
       <footer className="max-w-4xl flex flex-row justify-between text-black dark:text-white mx-auto items-center w-full my-8">
@@ -102,11 +105,6 @@ export default function Container({ children, ...props }: ContainerProps) {
           <span className="text-xs md:text-sm text-highlight_light dark:text-highlight_dark">
             myself.
           </span>
-        </span>
-        <span className="text-xs md-text-xs text-gray-800">
-          Illustrations used in this
-          <br />
-          website by Freepik Storyset
         </span>
       </footer>
     </div>

@@ -11,6 +11,10 @@ input[type="search"]::-webkit-search-decoration{
   display: none
 }
 
+button, [type="button"], [type="reset"], [type="submit"] {
+  -webkit-appearance: none;
+}
+
 input,
 button,
 select,
