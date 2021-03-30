@@ -4,8 +4,6 @@ import Image, { ImageProps } from 'next/image'
 import images from '../public/assets/images'
 import { useTheme } from 'next-themes'
 import Button from './components/Button'
-import ResumeTopic from './components/ResumeTopic'
-import Resume from './components/Resume'
 
 export default function About({}) {
   const { theme } = useTheme()
@@ -96,6 +94,16 @@ export default function About({}) {
               ))}
             </div>
           )}
+        </div>
+        <div className="py-8">
+          <h1 className="text-black dark:text-white">Resume</h1>
+          <h2 className="text-sm font-light my-2 mb-8 text-description_light dark:text-description_dark">
+            Want to know more about my experience, projects, jobs and companies
+            that I already work with? You can saw my Resume in the link above.
+          </h2>
+          <Button href={'/cv.pdf'} target={'_blank'} type={'bordered'}>
+            See Resume
+          </Button>
         </div>
       </div>
     </Container>

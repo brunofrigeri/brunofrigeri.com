@@ -8,6 +8,7 @@ interface ButtonProps {
   buttonType?: 'button' | 'submit'
   target?: '_blank'
   rel?: 'noreferrer noopener'
+  href?: string
 }
 
 export default function Button({
@@ -17,12 +18,14 @@ export default function Button({
   className,
   buttonType = 'button',
   target,
+  href,
   rel,
   ...props
 }: ButtonProps) {
   return (
     <a
       type={buttonType}
+      href={href}
       target={target}
       rel={rel}
       className={
