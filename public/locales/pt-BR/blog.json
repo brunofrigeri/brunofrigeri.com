@@ -1,0 +1,6 @@
+{
+    "description": "Eu passei a escrever nesse blog sobre as coisas mais importantes que experienciei nas tecnologias que trabalho e/ou conheço. Nesse momento temos {{ numberOfPosts }} artigos sobre diferentes assuntos. Dê uma olhada.",
+    "notfound": "Desculpe, mas não encontrei nenhum artigo.",
+    "allWriting": "Todos os artigos",
+    "search": "Procurar por algum artigo."
+}

@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import icons from '../../public/assets/icons'
 
 interface SearchProps {
@@ -8,6 +9,8 @@ interface SearchProps {
 }
 
 export default function Search({ value, setValue }: SearchProps) {
+  const { t } = useTranslation('blog')
+
   return (
     <div className="flex flex-row items-center w-full bg-opacity-10 rounded-lg bg-highlight_light dark:bg-highlight_dark dark:bg-opacity-10">
       <div className="flex p-2">
@@ -17,7 +20,7 @@ export default function Search({ value, setValue }: SearchProps) {
         value={value}
         onChange={(e) => setValue(e.currentTarget.value)}
         className="w-full font-custom text-search_light dark:text-search_dark"
-        placeholder="Search for some article."
+        placeholder={t('search')}
       ></input>
     </div>
   )

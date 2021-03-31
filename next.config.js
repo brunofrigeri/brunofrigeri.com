@@ -1,4 +1,5 @@
 const withMDX = require("@next/mdx")();
+const { i18n } = require('./next-i18next.config')
 
 module.exports = withMDX({
   webpack(config) {
@@ -10,4 +11,5 @@ module.exports = withMDX({
     return config;
   },
   pageExtensions: ["js", "jsx", "ts", "tsx", "mdx"],
+  i18n,
 });

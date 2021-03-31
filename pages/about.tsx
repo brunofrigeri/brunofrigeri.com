@@ -4,6 +4,8 @@ import Image, { ImageProps } from 'next/image'
 import images from '../public/assets/images'
 import { useTheme } from 'next-themes'
 import Button from './components/Button'
+import { useTranslation } from 'react-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 export default function About({}) {
   const { theme } = useTheme()
@@ -65,28 +67,26 @@ export default function About({}) {
     window.location.href = `mailto:${email}`
   }
 
+  const { t } = useTranslation('about')
+
   return (
     <Container>
       <div>
         <div>
-          <h1 className="text-black dark:text-white">Who am I?</h1>
+          <h1 className="text-black dark:text-white">{t('introduction')}</h1>
           <h2 className="text-sm font-light my-2 mb-8 text-description_light dark:text-description_dark">
-            I'm Bruno, software engineer for the past 3 years, working always to
-            be responsible for the companies that I worked with, achieve their
-            goals through an application or website.
+            {t('intro-description')}
           </h2>
           <Button
             target={'_blank'}
             rel={'noreferrer noopener'}
             onClick={onEmailSentPress}
           >
-            Let's book a meeting
+            {t('schedule')}
           </Button>
         </div>
         <div className="py-8">
-          <h1 className="text-black dark:text-white">
-            Skills and Technologies
-          </h1>
+          <h1 className="text-black dark:text-white">{t('skills')}</h1>
           {skills?.length && (
             <div className="py-6 grid grid-flow-col grid-rows-2 gap-4 md:grid-flow-col md:grid-rows-1">
               {skills.map((skill, index) => (
@@ -96,16 +96,23 @@ export default function About({}) {
           )}
         </div>
         <div className="py-8">
-          <h1 className="text-black dark:text-white">Resume</h1>
+          <h1 className="text-black dark:text-white">{t('resume-title')}</h1>
           <h2 className="text-sm font-light my-2 mb-8 text-description_light dark:text-description_dark">
-            Want to know more about my experience, projects, jobs and companies
-            that I already work with? You can saw my Resume in the link above.
+            {t('experiences')}
           </h2>
           <Button href={'/cv.pdf'} target={'_blank'} type={'bordered'}>
-            See Resume
+            {t('resume')}
           </Button>
         </div>
       </div>
     </Container>
   )
+}
+
+export const getStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common', 'about'])),
+    },
+  }
 }

@@ -4,6 +4,8 @@ import React from 'react'
 import { getLatestsPosts, Post } from '../lib/posts'
 import Posts from './components/Posts'
 import { useRouter } from 'next/dist/client/router'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'react-i18next'
 
 interface HomeProps {
   posts: Array<Post>
@@ -22,28 +24,28 @@ export default function Home({ posts }: HomeProps) {
     window.location.href = `mailto:${email}`
   }
 
+  const { t } = useTranslation('home')
+
   return (
     <Container>
       <div className="flex flex-col">
         <div className="pb-8">
           <h1 className="md:text-4xl text-black dark:text-white">
-            Hey, I'm Bruno. Nice to meet you!
+            {t('title')}
           </h1>
           <h2 className="md:text-lg font-light my-2 mb-8 text-description_light dark:text-description_dark">
-            I'm a software developer, writer and passionate about traveling from
-            Brazil. Always trying to learn more about my work and improve
-            everyday.
+            {t('description')}
           </h2>
           <Button
             target={'_blank'}
             rel={'noreferrer noopener'}
             onClick={onEmailSentPress}
           >
-            Book a meeting with me!
+            {t('schedule')}
           </Button>
         </div>
         <Posts
-          title={'Latest Writing'}
+          title={t('latests')}
           posts={posts}
           onSeeAllPress={onSeeAllPress}
         />
@@ -52,12 +54,13 @@ export default function Home({ posts }: HomeProps) {
   )
 }
 
-export const getStaticProps = async ({}) => {
-  const posts = getLatestsPosts()
+export const getStaticProps = async ({ locale }) => {
+  const posts = getLatestsPosts(locale)
 
   return {
     props: {
       posts,
+      ...(await serverSideTranslations(locale, ['common', 'home'])),
     },
   }
 }

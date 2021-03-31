@@ -5,7 +5,7 @@ import Link from 'next/link'
 import images from '../../public/assets/images'
 import { useRouter } from 'next/dist/client/router'
 import { useTheme } from 'next-themes'
-
+import { useTranslation } from 'react-i18next'
 interface ContainerProps {
   children?: React.ReactNode[] | React.ReactNode
 }
@@ -20,17 +20,19 @@ export default function Container({ children, ...props }: ContainerProps) {
   const router = useRouter()
   const { theme, setTheme } = useTheme()
 
+  const { t } = useTranslation('common')
+
   const menuOptions: Array<MenuOption> = [
     {
-      name: 'Home',
+      name: t('home'),
       path: '/',
     },
     {
-      name: 'Blog',
+      name: t('blog'),
       path: '/blog',
     },
     {
-      name: 'About',
+      name: t('about'),
       path: '/about',
     },
   ]
@@ -59,7 +61,7 @@ export default function Container({ children, ...props }: ContainerProps) {
               Bruno Frigeri
             </h2>
             <p className="text-description_light dark:text-description_dark">
-              Mobile and Frontend developer
+              {t('description')}
             </p>
           </div>
         </div>
@@ -106,6 +108,18 @@ export default function Container({ children, ...props }: ContainerProps) {
             myself.
           </span>
         </span>
+        <div className="flex flex-row">
+          <div className="cursor-pointer mx-2">
+            <Link href={'/'} locale={'pt-BR'}>
+              <Image src={images.brazil.src} width={30} height={30} />
+            </Link>
+          </div>
+          <div className="cursor-pointer">
+            <Link href={'/'} locale={'en'}>
+              <Image src={images.usa.src} width={30} height={30} />
+            </Link>
+          </div>
+        </div>
       </footer>
     </div>
   )

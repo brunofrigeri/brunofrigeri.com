@@ -5,6 +5,8 @@ import Search from './components/Search'
 import Container from './containers/Container'
 import { getAllPosts, Post } from '../lib/posts'
 import firebase from 'firebase'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'react-i18next'
 interface BlogProps {
   posts: Array<Post>
 }
@@ -19,6 +21,8 @@ const options = {
 export default function Blog({ posts }: BlogProps) {
   const [search, setSearch] = useState<string>('')
   const [filteredPosts, setFilteredPosts] = useState<Array<Post>>([])
+
+  const { t } = useTranslation('blog')
 
   useEffect(() => {
     if (filteredPosts) {
@@ -43,24 +47,27 @@ export default function Blog({ posts }: BlogProps) {
         <div>
           <h1 className="text-black dark:text-white">Blog</h1>
           <h4 className="my-2 mb-8 text-description_light dark:text-description_dark">
-            {`I started to writing in this blog about the most important
-            technologies challenges that I've experienced. At this time I have
-            ${posts.length} articles about different subjects. Check it out.`}
+            {t('description', { numberOfPosts: posts.length })}
           </h4>
         </div>
         <Search value={search} setValue={setSearch} />
-        <Posts title={'All Writing'} posts={filteredPosts} hasButton={false} />
+        <Posts
+          title={t('allWriting')}
+          posts={filteredPosts}
+          hasButton={false}
+        />
       </div>
     </Container>
   )
 }
 
-export const getStaticProps = async ({}) => {
-  const posts = getAllPosts()
+export const getStaticProps = async ({ locale }) => {
+  const posts = getAllPosts(locale)
 
   return {
     props: {
       posts,
+      ...(await serverSideTranslations(locale, ['common', 'blog'])),
     },
   }
 }

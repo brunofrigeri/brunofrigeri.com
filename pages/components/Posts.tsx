@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Post as PostType } from '../../lib/posts'
 import Button from './Button'
 import Post from './Post'
@@ -17,13 +18,15 @@ export default function Posts({
   onSeeAllPress = () => {},
   ...props
 }: PostsProps) {
+  const { t } = useTranslation(hasButton ? 'home' : 'blog')
+
   return (
     <div className="my-8">
       <div className="flex flex-row justify-between">
         <h2 className="md:text-xl text-black dark:text-white">{title}</h2>
         {hasButton && (
           <Button onClick={onSeeAllPress} type="bordered">
-            See all.
+            {t('all')}
           </Button>
         )}
       </div>
@@ -33,7 +36,7 @@ export default function Posts({
         ))
       ) : (
         <h4 className="my-2 mb-8 text-description_light dark:text-description_dark">
-          Sorry, but I couldn't found an article.
+          {t('notfound')}
         </h4>
       )}
     </div>

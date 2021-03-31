@@ -1,0 +1,48 @@
+---
+title: 'Desafios e Realizações ao desenvolver um Portfolio'
+excerpt: 'Analisando todo o caminho do zero ao resultado final do portfolio.'
+date: '03/26/2021'
+author: 'Bruno Frigeri'
+stacks: ['REACT', 'NEXT', 'TYPESCRIPT']
+---
+Nesse ano eu prometi a mim mesmo que passaria a ser mais ativo na comunidade, ajudando outras pessoas, escrevendo artigos e eventualmente construindo um portfolio.
+
+Depois de alguns anos (2-3 anos para ser mais específico) trabalhando com React/React Native, meu óbvio caminho a seguir no desenvolvimento do portfolio seria usar alguma framework com React, como CRA, Gatsby ou NextJs.
+
+## Qual Framework utilizar?
+A primeira e mais fácil decisão (podemos discutir sobre isso em outro momento) foi de escolher Next.Js sobre as outras duas (CRA e Gatsby), lendo a documentação e entendendo, percebi que para o tipo de portfolio que eu estava desenvolvendo, a melhor alternativa seria um SSR (Server Side Rendering) que funcionaria muito bem com as ferramentas que o Next.Js dispõe.
+
+**Ps**: Eu sei que o Gatsby pode ser um ótimo caminho também, porém, nesse momento percebi que o Next.Js possui mais vantagens para o desenvolvimento, tanto em velocidade como em confiabilidade, além disso, o Gatsby pudesse ser melhor escolhido para uma aplicação totalmente estática.
+
+## Desenvolvendo o Design da Solução
+
+Essa foi, sem dúvidas, a parte mais difícil de todo o projeto. Eu, apenas um desenvolvedor, percorrendo o Dribbble e o Behance de cabeça para baixo, procurando por ideas que pudessem ser simples e limpas ao mesmo tempo, e que pudesse ser facilmente implementada. Nesse momento, decidi optar por algo bem simples, então desenvolvi algo baseado no design do site [Lee Robinson blog](https://leerob.io/), porém, focando em mais interações, em mostrar mais botões ao usuário, para que pudesse também saber minhas habilidades e experiências.
+Vocês podem dar uma olhada inteiramente no design feito por mim pelo link abaixo:
+
+[Figma Link](https://www.figma.com/file/ESOrpbORXLKhCiU2JYsqcy/brunofrigeri.com?node-id=66%3A57)
+
+## Implementação
+
+No primeiro momento, comecei a ler a documentação do Next.Js, buscando entender ao máximo como funcionaria os conceitos de `getStaticProps`, `getStaticPaths`, além do conceito magnífico de `[slug]` e `api/[slug]`, porém, podemos discutir isso mais a fundo em outro artigo.
+
+Após entender o processo, fixei alguns pontos em ordem que poderiam me ajudar a desenvolver:
+
+1. Setup da configuração básica do Next.Js, definição de temas (já definidos em meu design), escolha de uma fonte (ainda não consegui decidir uma fonte que eu ache perfeita) e definição de alguma framework para facilitar a utilização de CSS.
+2. Início da construção dos componentes "atomicos", iniciando pelos menos, como botões e inputs, e prosseguindo para maiores até as páginas.
+3. Por fim, mas não menos importante, passaria a integrar o blog com meus posts (nesse momento, eu estava totalmente convencido de que a melhor abordagem para isso, seria ter um dashboard preparado para um CRUD de posts, porém acabou ficando mais complicado).
+
+No momento em que finalizei a configuração e defini [TailwindCSS](https://tailwindcss.com/) como minha StyleGuide. Para aqueles que não conhecem [TailwindCSS](https://tailwindcss.com/), deem uma olhada no website, basicamente é uma ótima forma de estilizar nossos componentes de maneira fácil, e que melhora em rapidez, uma vez que aprendemos a utilizar, o desenvolvimento.
+
+<img src={'/static/TailwindCSS.png'} />
+
+Eu acredito que o problema principal que eu tive com o Next foi a demora na compilação de arquivos CSS após modificações. Para isso [TailwindCSS](https://tailwindcss.com/) salvou minha vida, permitindo que a estilização fosse simples e fácil.
+
+Então, passei por um brainstorm denovo, e então decidi que seria uma ótima decisão criar uma forma de ter multi-linguagens em meu website, já que sou brasileiro, porém buscando trabalhos fora do país, seria uma ótima maneira de meus usuários poderem escolher a linguagem que gostariam de ler meus artigos ou os textos.
+
+Por fim, passei a estudar melhores soluções para utilizar como alternativa para uma dashboard com um CRUD de posts. Nesse momento, vi um artigo muito interessante do Lee Robinson sobre MDX e Markdowns, e passei a utilizar essa solução, mantendo os posts no repositório do github. Precisei aprender a utilizar as funções `getStaticProps` e `getStaticPaths, já mencionadas anteriormente, inicialmente foi um pouco confuso, porém consegui passar por esse problema e chegar uma solução.
+
+De qualquer forma, hoje finalizei, enfim, meu portfolio/blog, com um sentimento de dever cumprido. Algumas coisas podem ser melhoras, algumas coisas podem ser adicionadas, mas acredito que é o momento de subir.
+
+**Ps:** Se você está lendo esse artigo pelo site, bem-vindo, estou muito feliz que a solução funcionou. Espero que goste da experiência. Quaisquer problemas, sugestões ou dicas, apenas me chame pelas minhas mídias socias ou email.
+
+Obrigado por ler e ser uma parte muito importante dessa experiência.

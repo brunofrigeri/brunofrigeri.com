@@ -5,6 +5,7 @@ import hydrate from 'next-mdx-remote/hydrate'
 import { MdxRemote } from 'next-mdx-remote/types'
 import Container from '../containers/Container'
 import Tags from '../components/Tags'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 interface SlugProps {
   post: Post
@@ -45,8 +46,8 @@ export async function getStaticPaths() {
   }
 }
 
-export async function getStaticProps({ params }) {
-  const data: Post = await getPostBySlug(params.slug)
+export async function getStaticProps({ params, locale }) {
+  const data: Post = await getPostBySlug(params.slug, locale)
   const mdxSource = await renderToString(data.content, {
     components: null,
     mdxOptions: {
@@ -64,6 +65,7 @@ export async function getStaticProps({ params }) {
     props: {
       post: data,
       source: mdxSource,
+      ...(await serverSideTranslations(locale, ['common'])),
     },
   }
 }
