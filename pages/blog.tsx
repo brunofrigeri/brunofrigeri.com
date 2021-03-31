@@ -30,8 +30,6 @@ export default function Blog({ posts }: BlogProps) {
         const fuse = new Fuse(posts, options)
         const postsFound = fuse.search(search)
 
-        console.log(search, postsFound)
-
         setFilteredPosts(
           postsFound.length > 0 ? postsFound.map((post) => post.item) : []
         )

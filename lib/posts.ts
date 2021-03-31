@@ -145,7 +145,6 @@ export const getPostBySlug = async (slug: string, locale: string) => {
   const fullSlug = `${slug}${
     locale === 'pt-BR' ? locale.toLocaleLowerCase().replace('-', '') : ''
   }`
-  console.log(fullSlug)
   const fullPath = path.join(postDirectory, `${slug}.mdx`)
   const postContent = fs.readFileSync(fullPath, 'utf8')
 
