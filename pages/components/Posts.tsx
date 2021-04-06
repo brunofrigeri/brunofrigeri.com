@@ -18,7 +18,7 @@ export default function Posts({
   onSeeAllPress = () => {},
   ...props
 }: PostsProps) {
-  const { t } = useTranslation(hasButton ? 'home' : 'blog')
+  const { t } = useTranslation('home')
 
   return (
     <div className="my-8">

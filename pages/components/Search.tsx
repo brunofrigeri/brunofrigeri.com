@@ -9,7 +9,7 @@ interface SearchProps {
 }
 
 export default function Search({ value, setValue }: SearchProps) {
-  const { t } = useTranslation('blog')
+  const { t } = useTranslation('home')
 
   return (
     <div className="flex flex-row items-center w-full bg-opacity-10 rounded-lg bg-highlight_light dark:bg-highlight_dark dark:bg-opacity-10">

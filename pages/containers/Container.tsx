@@ -33,10 +33,6 @@ export default function Container({
       path: '/',
     },
     {
-      name: t('blog'),
-      path: '/blog',
-    },
-    {
       name: t('about'),
       path: '/about',
     },

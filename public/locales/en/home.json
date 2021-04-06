@@ -3,5 +3,9 @@
     "description": "I'm a software developer, writer and passionate about traveling from Brazil. Always trying to learn more about my work and improve everyday.",
     "schedule": "Book a meeting with me!",
     "latests": "Latest Writing",
-    "all": "See all"
+    "all": "See all",
+    "blogDescription": "I started to writing in this blog about the most important technologies challenges that I've experienced. At this time I have {{ numberOfPosts }} articles about different subjects. Check it out.",
+    "notfound": "Sorry, but I couldn't found an article.",
+    "allWriting": "All Writing",
+    "search": "Search for some article."
 }
