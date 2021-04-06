@@ -112,14 +112,14 @@ export default function Container({ children, ...props }: ContainerProps) {
           <div className="cursor-pointer mx-2">
             <Link href={'/'} locale={'pt-BR'}>
               <a>
-                <Image src={images.brazil.src} width={30} height={30} />
+                <Image alt="br" src={images.brazil.src} width={30} height={30} />
               </a>
             </Link>
           </div>
           <div className="cursor-pointer">
             <Link href={'/'} locale={'en'}>
               <a>
-                <Image src={images.usa.src} width={30} height={30} />
+                <Image alt="usa" src={images.usa.src} width={30} height={30} />
               </a>
             </Link>
           </div>
