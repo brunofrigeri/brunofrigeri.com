@@ -44,7 +44,14 @@ export default function Container({ children, ...props }: ContainerProps) {
     >
       <Head>
         <title>Bruno Frigeri</title>
-        <meta name="description" content={'Bruno Frigeri'} />
+        <meta
+          name="description"
+          content={
+            "I'm a software developer, writer and passionate about traveling from Brazil. Always trying to learn more about my work and improve everyday."
+          }
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charSet="UTF-8" />
         <link rel="icon" href="/assets/avatar.jpg" />
       </Head>
       <nav className="max-w-4xl flex flex-row justify-between bg-white dark:bg-black mx-auto items-center w-full my-8">
@@ -112,7 +119,12 @@ export default function Container({ children, ...props }: ContainerProps) {
           <div className="cursor-pointer mx-2">
             <Link href={'/'} locale={'pt-BR'}>
               <a>
-                <Image alt="br" src={images.brazil.src} width={30} height={30} />
+                <Image
+                  alt="br"
+                  src={images.brazil.src}
+                  width={30}
+                  height={30}
+                />
               </a>
             </Link>
           </div>
