@@ -4,6 +4,7 @@
     "schedule": "Marque uma reunião comigo!",
     "latests": "Últimos artigos",
     "all": "Ver todos",
+    "blogTitle": "Artigos",
     "blogDescription": "Eu passei a escrever nesse blog sobre as coisas mais importantes que experienciei nas tecnologias que trabalho e/ou conheço. Nesse momento temos {{ numberOfPosts }} artigos sobre diferentes assuntos. Dê uma olhada.",
     "notfound": "Desculpe, mas não encontrei nenhum artigo.",
     "allWriting": "Todos os artigos",
