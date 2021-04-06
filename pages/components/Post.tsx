@@ -57,11 +57,14 @@ export default function Post({
                 {reading_time}
               </h5>
             )}
+            <h5 className="text-xs text-description_light dark:text-description_dark">
+              &nbsp;&nbsp;|&nbsp;&nbsp;
+            </h5>
+            <ViewCounter slug={slug} />
           </div>
-          <ViewCounter slug={slug} />
         </div>
       </div>
-      {featured_image ? (
+      {/* {featured_image ? (
         <Image
           alt={'thumbnail'}
           className="rounded-r-lg"
@@ -69,7 +72,7 @@ export default function Post({
           width={300}
           height={100}
         />
-      ) : null}
+      ) : null} */}
     </a>
   )
 }

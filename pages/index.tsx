@@ -67,7 +67,7 @@ export default function Home({ posts }: HomeProps) {
         </div>
         <div className="flex flex-col">
           <div>
-            <h1 className="text-black dark:text-white">Blog</h1>
+            <h1 className="text-black dark:text-white">Writing</h1>
             <h4 className="my-2 mb-8 text-description_light dark:text-description_dark">
               {t('blogDescription', { numberOfPosts: posts.length })}
             </h4>
