@@ -8,6 +8,7 @@ import { useTheme } from 'next-themes'
 import { useTranslation } from 'react-i18next'
 interface ContainerProps {
   children?: React.ReactNode[] | React.ReactNode
+  meta_description?: string
 }
 
 type MenuOption = {
@@ -15,7 +16,11 @@ type MenuOption = {
   path: string
 }
 
-export default function Container({ children, ...props }: ContainerProps) {
+export default function Container({
+  children,
+  meta_description,
+  ...props
+}: ContainerProps) {
   const currentYear = new Date().getFullYear()
   const router = useRouter()
   const { theme, setTheme } = useTheme()
@@ -47,6 +52,7 @@ export default function Container({ children, ...props }: ContainerProps) {
         <meta
           name="description"
           content={
+            meta_description ||
             "I'm a software developer, writer and passionate about traveling from Brazil. Always trying to learn more about my work and improve everyday."
           }
         />

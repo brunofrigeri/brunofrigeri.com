@@ -40,7 +40,9 @@ export default function Blog({ posts }: BlogProps) {
   }, [search])
 
   return (
-    <Container>
+    <Container
+      meta_description={t('description', { numberOfPosts: posts.length })}
+    >
       <div className="flex flex-col">
         <div>
           <h1 className="text-black dark:text-white">Blog</h1>

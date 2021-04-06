@@ -70,7 +70,7 @@ export default function About({}) {
   const { t } = useTranslation('about')
 
   return (
-    <Container>
+    <Container meta_description={t('intro-description')}>
       <div>
         <div>
           <h1 className="text-black dark:text-white">{t('introduction')}</h1>

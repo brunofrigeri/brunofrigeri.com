@@ -16,7 +16,7 @@ export default function Slug({ post, source }: SlugProps) {
   const content = hydrate(source)
 
   return (
-    <Container>
+    <Container meta_description={post.title}>
       <article>
         <div className="max-w-3xl mx-auto">
           <h1 className="mt-6 text-black dark:text-white">{post.title}</h1>
