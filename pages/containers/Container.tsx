@@ -54,6 +54,21 @@ export default function Container({
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta charSet="UTF-8" />
+        <meta name="robots" content="follow, index" />
+        <meta property="og:type" content={'website'} />
+        <meta property="og:site_name" content="Bruno Frigeri" />
+        <meta
+          property="og:description"
+          content={
+            meta_description ||
+            "I'm a software developer, writer and passionate about traveling from Brazil. Always trying to learn more about my work and improve everyday."
+          }
+        />
+        <meta
+          property="og:title"
+          content={'Bruno Frigeri - Portfolio/Article Writer'}
+        />
+        <meta property="og:image" content={images.avatar.src} />
         <link rel="icon" href="/assets/avatar.jpg" />
       </Head>
       <nav className="max-w-4xl flex flex-row justify-between bg-white dark:bg-black mx-auto items-center w-full my-8">
