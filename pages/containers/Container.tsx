@@ -44,7 +44,7 @@ export default function Container({
       className="flex flex-col min-h-screen bg-white dark:bg-black"
     >
       <Head>
-        <title>Bruno Frigeri</title>
+        <title>Bruno Frigeri - Software Developer</title>
         <meta
           name="description"
           content={
