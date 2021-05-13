@@ -21,7 +21,7 @@ export default async (req, res) => {
     const views = value.val()
 
     return res.status(200).json({
-      total: views,
+      total: views || 0,
     })
   }
 }

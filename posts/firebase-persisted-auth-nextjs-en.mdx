@@ -1,0 +1,400 @@
+---
+title: 'Firebase Persisted Authentication with Next.js'
+excerpt: 'Build a Next.js application with Firebase Authentication and Avoid URL Unauthorized access'
+date: '05/13/2021'
+author: 'Bruno Frigeri'
+stacks: ['REACT', 'NEXT', 'JAVASCRIPT']
+---
+
+
+In the last few weeks I started to look into Cloud services just like Firebase and AWS, and start to test things with Next. My most difficult path was to try use Firebase with Next and authenticating without using next-firebase-auth (that's nothing wrong with this lib, that is basically named by Next docs itself).
+
+Authenticate is not the real problem of it, but we can talk about using cookies or just using states in React. In this article I'll be leading you on how to authenticate using different auth methods in Firebase, as well we'll learning on how to persist our authentication using ContextAPI.
+
+## Getting Started
+
+First we need to create our Next app, in this case, I'll be using Next with TailwindCSS and Typescript:
+
+```bash
+npx create-next-app -e with-tailwindcss with-firebase-auth
+```
+
+With our project setup we'll need to install firebase dependencies:
+
+```bash
+yarn add firebase firebase-admin
+```
+
+Now we're ready to move forward.
+
+## Introduction
+
+### Setting up Firebase in Console
+
+At this point we need to create our firebase project in the [Firebase Console](https://console.firebase.google.com/).
+
+After open the Firebase Console we'll create a new project as following:
+
+1 - Click on Add Project;
+2 - Enter the name of your project, in my case will be 'with-firebase-auth';
+3 - At this point Firebase will ask if you want to connect to Analytics, I'll denied this;
+
+Let's do it. With our project created and with all access to Firebase Console we need to get the Service Account JSON, to do that we'll need to do the following:
+
+1 - Click on Engine Icon;
+2 - Project Settings;
+3 - Service Accounts;
+4 - Generate Private Keys;
+
+This will download a JSON file in your machine, that is really important, so keep it safe and don't lose it, because we'll need it soon.
+
+Now we need to Get Started with Authentication in the Firebase Console:
+
+1 - Click on Authentication in the sidebar;
+2 - Get Started;
+
+Okay, now we'll enable the Authentication services that we want to use, in my case I'll enable just Email/Password.
+
+With all that done. We can start coding.
+
+### Setting up Firebase in the Code
+
+The first thing we need to do is create a `.env.local` file with that look:
+
+```javascript
+NEXT_PUBLIC_FIREBASE_API_KEY=**********
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=**********
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=**********
+FIREBASE_PRIVATE_KEY='"-----BEGIN PRIVATE KEY-----\YOUR_KEY\n-----END PRIVATE KEY-----\n"'
+FIREBASE_CLIENT_EMAIL=**********
+FIREBASE_DATABASE_URL=**********
+```
+
+In each of this variables we'll be filling out with the informations gather in the JSON file that we download it.
+
+PS: !important - It's important to have the FIREBASE_PRIVATE_KEY in exactly that form.
+
+Now let's go the code itself. The first think we need to do is create a `lib/firebase.ts` and `lib/firebase-admin.ts` files to initialize Firebase:
+
+```javascript
+// lib/firebase.ts
+import firebase from 'firebase/app'
+import 'firebase/auth'
+
+if (!firebase.apps.length) {
+  firebase.initializeApp({
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  })
+}
+
+export default firebase
+
+```
+
+```javascript
+// lib/firebase-admin.ts
+import admin from 'firebase-admin'
+
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY
+        ? JSON.parse(process.env.FIREBASE_PRIVATE_KEY)
+        : null,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+    }),
+    databaseURL: process.env.FIREBASE_DATABASE_URL,
+  })
+}
+const auth = admin.auth()
+
+export { auth }
+
+```
+
+In the `lib/firebase.ts` it's important to import every service that you're willing to use, as I'll only use firebase authentication I only imported `import 'firebase/auth'`.
+
+## Creating the AuthContext
+
+Here, we'll create a simple context with some Auth and loading state, just to warm up:
+
+```javascript
+
+const authContext = createContext({
+  auth: null,
+  loading: false,
+})
+
+export function AuthProvider({ children }) {
+  const [auth, setAuth] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  return <authContext.Provider value={{ auth, loading }}>{children}</authContext.Provider>
+}
+
+export const useAuth = () => useContext(authContext)
+
+```
+
+Now, let's add this provider into our `_app.js`
+
+```javascript
+// {...}
+function MyApp({ Component, pageProps }: AppProps) {
+  return (
+    <AuthProvider>
+      <Component {...pageProps} />
+    </AuthProvider>
+  )
+}
+// {...}
+```
+
+### IMPORTANT: Adding authentication methods and listeners in our context
+
+Okay, we reach, to me, the most important part of our article, handling the authentications itself and listening changes on Authentication.
+
+First we'll need to `import firebase from 'lib/firebase.ts'` in our context. And then we'll need two basic functions (or more, that depends on how much authentications you want in your app, in my case are just two).
+
+1 - signInWithEmailAndPassword;
+2 - signOut;
+
+This are my two basics functions for authentication, so lets added it on our context:
+
+```javascript
+import firebase from 'lib/firebase'
+
+const authContext = createContext({
+  auth: null,
+  loading: false,
+  signInWithEmailAndPassword: () => {},
+  signOut: () => {},
+})
+
+export function AuthProvider({ children }) {
+  const [auth, setAuth] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  const signInWithEmailAndPassword = async (email, password) => {
+    setLoading(true)
+    return firebase.auth().signInWithEmailAndPassword(email, password)
+  }
+
+  const signOut = () => {
+   return firebase.auth().signOut()
+  }
+
+  return <authContext.Provider value={{ auth, loading, signInWithEmailAndPassword, signOut }}>{children}</authContext.Provider>
+}
+
+export const useAuth = () => useContext(authContext)
+
+```
+
+Okay, now we need to understand something, firebase has a listener function that can be accessed with `firebase.auth().onAuthStateChanged(FUNC)`. Every time we have a change in our Authentication state, firebase calls this listener, so let's add this listener in our code and implement a FUNC that handle this data.
+
+```javascript
+import firebase from 'lib/firebase'
+
+const authContext = createContext({
+  auth: null,
+  loading: false,
+  signInWithEmailAndPassword: () => {},
+  signOut: () => {},
+})
+
+export function AuthProvider({ children }) {
+  const [auth, setAuth] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  const onAuthStateChanged = async (user) => {
+    if (user) {
+      const authUser = user
+      authUser.token = await user.getIdToken()
+
+      setAuth(authUser)
+      setLoading(false)
+    } else {
+      setAuth(null)
+      setLoading(false)
+    }
+  }
+
+  const signInWithEmailAndPassword = async (email, password) => {
+    setLoading(true)
+    return firebase.auth().signInWithEmailAndPassword(email, password)
+  }
+
+  const signOut = () => {
+   return firebase.auth().signOut()
+  }
+
+  useEffect(() => {
+    const listener = firebase.auth().onAuthStateChanged(onAuthStateChanged)
+
+    return () => listener()
+  }, [])
+
+  return <authContext.Provider value={{ auth, loading, signInWithEmailAndPassword, signOut }}>{children}</authContext.Provider>
+}
+
+export const useAuth = () => useContext(authContext)
+
+```
+
+So, basically, you could be asking you, why we had to create a const to store our user state, and get the token separately. Once the user state changes we haven't yet the token stored, so we need to access getIdToken method in the user response to have the token.
+
+Okay, with all that setup, we now can access our `useAuth` hook in our components and try to login. But at this point we still can't persist a user in some screen, so let's go pursue this solution.
+
+## Avoiding URL Unauthorized access
+
+My brainstorm in how to handle this matter was to create a HOC (High Order Component) that needs to be used in all components even in routes as Login and SignUp for redirecting if the user tries to access other routes in the URL. Forget the talk and let's go to the code.
+
+I created a file `hoc/withAuth.ts` with the following structure:
+
+```javascript
+export default function withAuth(Component: any) {
+  return (props: any) => {
+    return <Component {...props} />
+  }
+}
+```
+
+Now, we need to access our `useAuth` hook and access the router to have the pathname:
+
+```javascript
+export default function withAuth(Component: any) {
+  return (props: any) => {
+    const { auth } = useAuth()
+    const router = useRouter()
+
+    return <Component {...props} />
+  }
+}
+```
+
+Now, we'll go to the important topic. I created 3 major constants:
+
+1 - isAuthenticated (Boolean if user is logged or not);
+2 - shouldRedirectToApp (If the user is already logged in, and is trying to access Login/SignUp routes)
+3 - shouldRedirectToLogin (If the user is not logged in, and is trying to access protected routes, in my case, protected routes init with /auth)
+
+With this in hand, we need to do the following:
+
+```javascript
+export default function withAuth(Component: any) {
+  return (props: any) => {
+    const { auth } = useAuth()
+    const router = useRouter()
+
+    const isAuthenticated = !!auth?.uid
+
+    const shouldRedirectToApp =
+      isAuthenticated && !router.pathname.startsWith('/auth')
+
+    const shouldRedirectToLogin =
+      !isAuthenticated && router.pathname.startsWith('/auth')
+
+    const redirectToApp = useCallback(() => {
+      const appRedirectDestination = '/auth'
+
+      if (!appRedirectDestination) {
+        throw new Error('The appDestinationToApp was not found.')
+      }
+
+      router.replace(appRedirectDestination)
+    }, [router, auth])
+
+    const redirectToLogin = useCallback(() => {
+      const appRedirectDestination = '/'
+
+      if (!appRedirectDestination) {
+        throw new Error('The appDestinationToLogin was not found.')
+      }
+
+      router.replace(appRedirectDestination)
+    }, [router, auth])
+
+    useEffect(() => {
+      if (shouldRedirectToApp) {
+        redirectToApp()
+      } else if (shouldRedirectToLogin) {
+        redirectToLogin()
+      }
+    }, [
+      shouldRedirectToLogin,
+      shouldRedirectToApp,
+      redirectToLogin,
+      redirectToApp,
+    ])
+
+    return <Component {...props} />
+  }
+}
+```
+
+In this point, you maybe are getting a the pages flicking, every time you redirect, for solve that, you can create a LoaderComponent, that will be render only if some redirect is happening, so we can do:
+
+```javascript
+export default function withAuth(Component: any) {
+  return (props: any) => {
+    const { auth } = useAuth()
+    const router = useRouter()
+
+    const isAuthenticated = !!auth?.uid
+
+    const shouldRedirectToApp =
+      isAuthenticated && !router.pathname.startsWith('/auth')
+
+    const shouldRedirectToLogin =
+      !isAuthenticated && router.pathname.startsWith('/auth')
+
+    const redirectToApp = useCallback(() => {
+      const appRedirectDestination = '/auth'
+
+      if (!appRedirectDestination) {
+        throw new Error('The appDestinationToApp was not found.')
+      }
+
+      router.replace(appRedirectDestination)
+    }, [router, auth])
+
+    const redirectToLogin = useCallback(() => {
+      const appRedirectDestination = '/'
+
+      if (!appRedirectDestination) {
+        throw new Error('The appDestinationToLogin was not found.')
+      }
+
+      router.replace(appRedirectDestination)
+    }, [router, auth])
+
+    useEffect(() => {
+      if (shouldRedirectToApp) {
+        redirectToApp()
+      } else if (shouldRedirectToLogin) {
+        redirectToLogin()
+      }
+    }, [
+      shouldRedirectToLogin,
+      shouldRedirectToApp,
+      redirectToLogin,
+      redirectToApp,
+    ])
+
+    if (shouldRedirectToLogin || shouldRedirectToApp) return <LoaderComponent />
+
+    return <Component {...props} />
+  }
+}
+```
+
+
+## Conclusion
+
+And voilá my friends, hope is clear to read and easy to understand, any doubts or questions, please don't be afraid to reach me, and we can discuss about it. Below I have the repository for a realtime chat that I'm building, with that Firebase Authentication, so feel free to see.
+
+[Repository example](https://github.com/brunofrigeri/nextjs-realtime-chat)
