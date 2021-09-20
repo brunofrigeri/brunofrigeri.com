@@ -12,7 +12,7 @@ module.exports = {
       highlight_dark: '#7D95C2',
       description_light: '#626262',
       description_dark: '#DBDBDB',
-      light_toggle: "#F6F6F6",
+      light_toggle: '#F6F6F6',
       dark_toggle: '#344159',
       search_light: '#AAAAAA',
       search_dark: '#EDEDED',
@@ -27,25 +27,25 @@ module.exports = {
       purple: '#B677E3',
       green: '#ABD56F',
       green_text: '#63A8A4',
-      pink: colors.pink
+      pink: colors.pink,
     },
     extend: {
       fontFamily: {
-        custom: ['Inter', 'sans-serif']
+        custom: ['Inter', 'sans-serif'],
       },
     },
   },
   plugins: [
-    plugin(function({ addBase, theme }) {
+    plugin(function ({ addBase, theme }) {
       addBase({
-        'h1': { fontWeight: 800, fontSize: theme('fontSize.2xl')},
-        'h2': { fontWeight: 600, fontSize: theme('fontSize.lg')},
-        'h3': { fontWeight: 500, fontSize: theme('fontSize.base')},
-        'h4': { fontWeight: 300, fontSize: theme('fontSize.sm')},
-        'h5': { fontWeight: 300, fontSize: theme('fontSize.xs')},
-        'p': { fontWeight: 300, fontSize: theme('fontSize.sm')},
-        'li': { fontWeight: 300, fontSize: theme('fontSize.sm')},
+        h1: { fontWeight: 700, fontSize: theme('fontSize.3xl') },
+        h2: { fontWeight: 600, fontSize: theme('fontSize.lg') },
+        h3: { fontWeight: 500, fontSize: theme('fontSize.lg') },
+        h4: { fontWeight: 300, fontSize: theme('fontSize.base') },
+        h5: { fontWeight: 300, fontSize: theme('fontSize.sm') },
+        p: { fontWeight: 300, fontSize: theme('fontSize.sm') },
+        li: { fontWeight: 300, fontSize: theme('fontSize.sm') },
       })
     }),
-  ]
+  ],
 }

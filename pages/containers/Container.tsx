@@ -96,7 +96,7 @@ export default function Container({
               return (
                 <div key={index}>
                   <Link href={option.path}>
-                    <a className="text-sm md:text-base mx-2 text-black dark:text-white">
+                    <a className="md:text-base mx-2 text-black dark:text-white">
                       {option.name}
                     </a>
                   </Link>
@@ -127,9 +127,9 @@ export default function Container({
         {children}
       </main>
       <footer className="max-w-4xl flex flex-row justify-between text-black dark:text-white mx-auto items-center w-full my-8">
-        <span className="text-xs md:text-sm">
+        <span className="md:text-sm">
           © {currentYear}. Made by&nbsp;
-          <span className="text-xs md:text-sm text-highlight_light dark:text-highlight_dark">
+          <span className="md:text-sm text-highlight_light dark:text-highlight_dark">
             myself.
           </span>
         </span>

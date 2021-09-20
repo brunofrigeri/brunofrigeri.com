@@ -74,7 +74,7 @@ export default function About({}) {
       <div>
         <div>
           <h1 className="text-black dark:text-white">{t('introduction')}</h1>
-          <h2 className="text-sm font-light my-2 mb-8 text-description_light dark:text-description_dark">
+          <h2 className="font-light my-2 mb-8 text-description_light dark:text-description_dark">
             {t('intro-description')}
           </h2>
           <Button
@@ -97,7 +97,7 @@ export default function About({}) {
         </div>
         <div className="py-8">
           <h1 className="text-black dark:text-white">{t('resume-title')}</h1>
-          <h2 className="text-sm font-light my-2 mb-8 text-description_light dark:text-description_dark">
+          <h2 className="font-light my-2 mb-8 text-description_light dark:text-description_dark">
             {t('experiences')}
           </h2>
           <Button href={'/cv.pdf'} target={'_blank'} type={'bordered'}>

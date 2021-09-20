@@ -38,7 +38,7 @@ export default function Button({
       onClick={onClick}
     >
       <span
-        className={`text-sm md:text-base ${
+        className={`${
           type === 'bordered'
             ? 'text-highlight_light dark:text-highlight_dark'
             : 'text-white'

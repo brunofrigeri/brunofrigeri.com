@@ -34,45 +34,34 @@ export default function Post({
       className="flex flex-row my-8"
     >
       <div className="mx-6">
-        {title && (
-          <h3 className="md:text-lg text-black dark:text-white">{title}</h3>
-        )}
+        {title && <h3 className="text-black dark:text-white">{title}</h3>}
         {excerpt && (
-          <h5 className="md:text-sm my-1 text-description_light dark:text-description_dark">
+          <h4 className="my-1 text-description_light dark:text-description_dark">
             {excerpt}
-          </h5>
+          </h4>
         )}
         <div className="flex flex-row justify-between items-center my-4">
           <div className="flex flex-row">
             {date && (
-              <h5 className="text-xs text-description_light dark:text-description_dark">
+              <h5 className="text-description_light dark:text-description_dark">
                 {date}
               </h5>
             )}
-            <h5 className="text-xs text-description_light dark:text-description_dark">
+            <h5 className="text-description_light dark:text-description_dark">
               &nbsp;&nbsp;|&nbsp;&nbsp;
             </h5>
             {reading_time && (
-              <h5 className="text-xs text-description_light dark:text-description_dark">
+              <h5 className="text-description_light dark:text-description_dark">
                 {reading_time}
               </h5>
             )}
-            <h5 className="text-xs text-description_light dark:text-description_dark">
+            <h5 className="text-description_light dark:text-description_dark">
               &nbsp;&nbsp;|&nbsp;&nbsp;
             </h5>
             <ViewCounter slug={slug} />
           </div>
         </div>
       </div>
-      {/* {featured_image ? (
-        <Image
-          alt={'thumbnail'}
-          className="rounded-r-lg"
-          src={featured_image}
-          width={300}
-          height={100}
-        />
-      ) : null} */}
     </a>
   )
 }

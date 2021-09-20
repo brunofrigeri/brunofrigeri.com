@@ -21,10 +21,10 @@ export default function Slug({ post, source }: SlugProps) {
         <div className="max-w-3xl mx-auto">
           <h1 className="mt-6 text-black dark:text-white">{post.title}</h1>
           <Tags stacks={post.stacks} />
-          <h2 className="my-6 text-description_light text-xs md:text-sm dark:text-description_dark">
+          <h4 className="my-6 text-description_light dark:text-description_dark">
             {post.date}
-          </h2>
-          <div className="prose dark:prose-dark">{content}</div>
+          </h4>
+          <div className="prose dark:prose-dark text-base">{content}</div>
         </div>
       </article>
     </Container>
