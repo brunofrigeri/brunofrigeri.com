@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Post as PostType } from '../../lib/posts'
+import { Post as PostType } from '../lib/posts'
 import Button from './Button'
 import Post from './Post'
 
