@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import icons from '../../public/assets/icons'
+import icons from '../public/assets/icons'
 
 interface SearchProps {
   value?: string

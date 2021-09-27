@@ -1,9 +1,9 @@
 import React from 'react'
-import Container from './containers/Container'
+import Container from '../containers/Container'
 import Image, { ImageProps } from 'next/image'
 import images from '../public/assets/images'
 import { useTheme } from 'next-themes'
-import Button from './components/Button'
+import Button from '../components/Button'
 import { useTranslation } from 'react-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 

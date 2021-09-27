@@ -3,8 +3,8 @@ import { getAllPostSlugs, getPostBySlug, Post } from '../../lib/posts'
 import renderToString from 'next-mdx-remote/render-to-string'
 import hydrate from 'next-mdx-remote/hydrate'
 import { MdxRemote } from 'next-mdx-remote/types'
-import Container from '../containers/Container'
-import Tags from '../components/Tags'
+import Container from '../../containers/Container'
+import Tags from '../../components/Tags'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 interface SlugProps {
