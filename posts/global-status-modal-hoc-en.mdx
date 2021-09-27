@@ -1,0 +1,350 @@
+---
+title: 'Global Status Modal HOC'
+excerpt: 'How to create a withStatus HOC, that wrap multiple screens'
+date: '09/27/2021'
+author: 'Bruno Frigeri'
+stacks: ['REACT', 'REACT-NATIVE', 'JAVASCRIPT', 'TYPESCRIPT']
+---
+
+Last week, I was having a problem in my current job, that basically we were refactoring stuffs in our code, and one of them was the Status Screen.
+The previous developer left to us a linear navigation (using react-navigation), that basically works without different stacks (not differing auth and app). With that in mint, one of our screens was the Status one, that basically could be navigated towards all the application.
+After I start the refactor of the navigation, and update the navigation from a linear one to a navigation by stack, based on the authentication flows from react-navigation, we start to have a problem:
+
+**How to have a global Status for our API responses, without to have it as a Screen?**
+
+The response takes a bit to come for me, but, at evening the light came, why not use a High Order Component to get around this problem?!
+
+So, let's start doing it, first and formals, we are going to use React Native (Expo Bare-Workflow), to be able to get our results more quickly, but the same can be achieved using React Native CLI.
+
+### Getting Started
+First, we're going to init our project, as I'm using Expo, I'll do:
+
+```bash
+expo init
+```
+
+After that, I'm going to select my workflow, based on expo. So I'll select:
+
+```bash
+minimal (TypeScript)  same as minimal but with TypeScript configuration 
+```
+
+### Creating our Context
+Okay, with our code ready to start, we're going to create our context, in my case, the StatusContext.
+
+Inside the source of our code, create a `contexts` folder, and inside it, create: `index.ts`, `provider.tsx` and `types.ts`.
+
+#### types.ts
+In this file, we need to create all types that we're going to need in our context:
+
+1) *STATUS*: responsible for been a status state, to render or not, our Status Modal;
+2) *StatusScreen*: all different statuses, that can be called in our components;
+This type will be really important to be used, because, in my case I have tons of different requests that has different responses, so, I need to be able to specify my status modal and, perhaps, their options.
+
+3) *StatusContextType*: our context types, all properties that can be used from the components that knows our context.
+
+```javascript
+export enum STATUS {
+  SUCCESS,
+  ERROR,
+}
+
+export type StatusScreen = 'status_one' | 'status_two' | undefined
+
+export type StatusContextType = {
+  status: STATUS | false
+  statusScreen: StatusScreen | undefined
+  setStatus(status: STATUS | false): void
+  setStatusScreen(statusScreen: StatusScreen | undefined): void
+  clearState(): void
+  statusOptions: any
+}
+```
+
+
+#### provider.tsx
+
+Okay, in this file we'll create our context himself. My StatusProvider will work as following:
+
+```javascript
+import React, { createContext, useEffect, useState } from 'react'
+import { STATUS, StatusContextType, StatusScreen } from './types'
+
+export const StatusContext = createContext<StatusContextType>(
+  {} as StatusContextType
+)
+
+export default function StatusProvider({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  const [status, setStatus] = useState<STATUS | false>(false)
+  const [statusScreen, setStatusScreen] = useState<StatusScreen | undefined>(
+    undefined
+  )
+
+  const [statusOptions, setStatusOptions] = useState<any>(undefined)
+
+  const clearState = () => {
+    setStatus(false)
+    setStatusScreen(undefined)
+    setStatusOptions(undefined)
+  }
+
+  const getStatusScreenProps = () => {
+    if (statusScreen) {
+      switch (statusScreen) {
+        case 'status_one':
+          return {
+            title: 'TITLE OF SCREEN ONE',
+            description: 'This is the description of screen one',
+          }
+        case 'status_two':
+          return {
+            title: 'TITLE OF SCREEN TWO',
+            description: 'This is the description of screen two',
+          }
+
+        default:
+          break
+      }
+    }
+  }
+
+  useEffect(() => {
+    setStatusOptions(getStatusScreenProps())
+  }, [status, statusScreen])
+
+  return (
+    <StatusContext.Provider
+      value={{
+        status,
+        statusScreen,
+        setStatus,
+        setStatusScreen,
+        statusOptions,
+        clearState,
+      }}
+    >
+      {children}
+    </StatusContext.Provider>
+  )
+}
+
+```
+
+Is really important to remember that the `getStatusScreenProps` function is something that will be used for my purposes, BUT, can also be inexistent.
+In my case, I need to have a chance to render the same status modal, just changing the options, WITHOUT using this contexts in different statuses file.
+
+I could create a `Status.tsx` component in each of my Screens, but them, at some point, with a possible redesign, I would to change all my components. Creating just a StatusCustom, we can concentrate our efforts in just one file with a Custom Settings.
+
+#### index.ts
+In here we're just creating our Hook and exporting it.
+
+```javascript
+import { useContext } from 'react'
+import { StatusContext } from './provider'
+import { StatusContextType } from './types'
+
+export const useStatus = (): StatusContextType => {
+  return useContext(StatusContext)
+}
+```
+
+#### Provider
+Last but not least, we need to put our Provider above all our application (or above the Components we need to use).
+
+To do that, I created a `Welcome.tsx` file in the root, for testing purposes, and, in the `App.tsx` I did:
+
+```javascript
+import React from 'react'
+import StatusProvider from './contexts/provider'
+import Welcome from './pages/Welcome'
+
+export default function App() {
+  return (
+    <StatusProvider>
+      <Welcome />
+    </StatusProvider>
+  )
+}
+
+```
+
+Now, our entire App can use the Status Context, including the Welcome Component.
+
+### Creating the Status Component and Welcome Page
+Now, we need to create our Status Component, as I already said, I'll create my Status as a Modal, so, let's do it:
+
+```javascript
+import React, { useEffect, useState } from 'react'
+import { View, Modal, Text, TouchableOpacity } from 'react-native'
+import { STATUS } from '../../contexts/types'
+
+interface StatusProps {
+  title?: string
+  description?: string
+  clearState(): void
+  status: STATUS | false
+}
+
+const Status = ({ title, description, status, clearState }: StatusProps) => {
+  const [visible, setVisible] = useState<boolean>(false)
+
+  useEffect(() => {
+    setVisible(status !== false)
+  }, [status])
+
+  return (
+    <View>
+      <Modal visible={visible}>
+        <View>
+          <Text>{title}</Text>
+          <Text>{description}</Text>
+          <TouchableOpacity onPress={clearState}>
+            <Text>Close modal</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+    </View>
+  )
+}
+
+export default Status
+```
+
+Okay. You can notice that this file is really reusable, that's totally the thought. We have a really simple and custom Status, that receives all props from the Parent Component who calls.
+
+#### Welcome.tsx
+This file is just a really playground for our tests.
+
+```javascript
+import React, { useEffect } from 'react'
+import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import Status from '../components/Status'
+import { useStatus } from '../contexts'
+import { STATUS } from '../contexts/types'
+import withStatus from '../hoc/withStatus'
+
+function Welcome() {
+  const { status, statusScreen, setStatus, setStatusScreen } = useStatus()
+
+  const onPressFirstStatus = () => {
+    setStatus(STATUS.SUCCESS)
+    setStatusScreen('screen_one')
+  }
+
+  const onPressSecondStatus = () => {
+    setStatus(STATUS.SUCCESS)
+    setStatusScreen('screen_two')
+  }
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <TouchableOpacity onPress={onPressFirstStatus}>
+        <Text>OPEN MODAL 1</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{ marginTop: 100 }}
+        onPress={onPressSecondStatus}
+      >
+        <Text>OPEN MODAL 2</Text>
+    </SafeAreaView>
+  )
+}
+
+export default Welcome
+```
+
+Here, I created two different buttons for render the modals, but we can see, that once we clicked in the Button, nothing happens. That's because we didn't have the Status Component included in our code yet.
+
+Some code examples, could do like:
+
+```javascript
+function Welcome() {
+  {...}
+
+  if (status !== false) {
+    return (
+     <Status {...statusOptions} status={status} clearState={clearState} />
+    )
+  }
+
+  return (
+    ...
+  )
+}
+
+export default Welcome
+```
+
+And, we have no problem with that solution, BUT. Remember that we want to have this Status in multiple Components, imagine to put this condition inside 100 different files, wouldn't that be a rough task?!
+
+### HOC - High Order Component
+
+So, now we reach the focus point of this article. My major problem was how to use a HOC to achieve my goal. So, I have multiple screens that needs to render a Status Modal once we have a response from API. 
+**IMPORTANT**: Just explaining a HOC, really simple, a High Order Component is a technique in React to reuse logic for multiple components. A HOC receives, on a raw manner, a Component, and returns other Component. 
+
+That is the most important thing here, we can do whatever we want above the Component that is coming to us, and the following code is what we're going to do:
+
+```javascript
+import React from 'react'
+import Status from '../components/Status'
+import { useStatus } from '../contexts'
+import { STATUS } from '../contexts/types'
+
+const withStatus = (Component: any) => {
+  return function WithStatus({ children }: any) {
+    const { status, statusOptions, clearState } = useStatus()
+
+    if (status !== false) {
+      return (
+        <Status {...statusOptions} status={status} clearState={clearState} />
+      )
+    }
+
+    return <Component>{children}</Component>
+  }
+}
+export default withStatus
+
+```
+
+Here, we have a `withStatus` HOC, that are a Component, and we're putting a condition inside it, DEPENDING on our Status hook. If we have a Status (remember that we're returning in our hook a `status` state, that returns to us if is SUCCESS or ERROR) the Status Modal needs to be shown.
+
+#### Updating Welcome.tsx
+
+Now that we have our withStatus HOC, we need to update the `Welcome.tsx` file, so the Modal can be finally rendered.
+
+```javascript
+{...}
+
+function Welcome() {
+  {...}
+}
+
+ADDED -> export default withStatus(Welcome)
+```
+
+We added the withStatus above our Welcome Component, and now, the Component is Wrapped by the Status Modal, and will be listening for all changes in the StatusContext and rerender whenever is needed.
+
+Now, this is the result:
+
+**Welcome Page**:
+![IMG_7834](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/87ps6man6vdo2pb841xt.PNG)
+
+**Status - status_one (after click on onPressFirstStatus)**:
+![IMG_7835](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/rucfbx4gmdveipt04x3o.PNG)
+
+**Status - status_two (after click on onPressSecondStatus)**
+![IMG_7836](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/936nl6ml72nyi65t0ich.PNG)
+   
+
+
+### Finish
+So, this is everything guys, hope you enjoy to read it, and get all the knowledge I try to pass here. This was my workaround for a problem that I found myself trapped in. If
+you think something could get better, please let me know, let's talk about that, thanks for reading it.
+
+Here's the repository link: [Repository Link](https://github.com/brunofrigeri/hoc-with-status)
+   
