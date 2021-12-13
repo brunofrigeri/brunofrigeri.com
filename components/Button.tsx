@@ -33,7 +33,7 @@ export default function Button({
           type === 'bordered'
             ? 'border bg-white dark:bg-black border-highlight_light dark:border-highlight_dark py-1 '
             : 'bg-highlight_light dark:bg-highlight_dark border-0 py-2 '
-        } cursor-pointer rounded-md px-4` + className
+        } cursor-pointer rounded px-4` + className
       }
       onClick={onClick}
     >

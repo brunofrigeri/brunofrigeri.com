@@ -21,7 +21,7 @@ module.exports = {
       search_light: '#AAAAAA',
       search_dark: '#EDEDED',
       current: 'currentColor',
-      black: colors.black,
+      black: '#191919',
       white: colors.white,
       gray: colors.trueGray,
       indigo: colors.indigo,

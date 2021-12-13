@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Head from 'next/head'
 import Link from 'next/link'
 import images from '../public/assets/images'
+import { FaMoon, FaSun } from 'react-icons/fa'
 import { useRouter } from 'next/dist/client/router'
 import { useTheme } from 'next-themes'
 import { useTranslation } from 'react-i18next'
@@ -68,7 +69,7 @@ export default function Container({
         />
         <meta
           property="og:title"
-          content={'Bruno Frigeri - Portfolio/Article Writer'}
+          content={'Bruno Frigeri - Software Developer'}
         />
         <meta property="og:image" content={images.avatar.src} />
       </Head>
@@ -78,8 +79,8 @@ export default function Container({
             className="rounded-full"
             src={images.avatar.src}
             alt="BF"
-            height={60}
-            width={60}
+            height={48}
+            width={48}
           />
           <div id="avatar-description" className="flex flex-col px-4">
             <h2 className="text-lg text-black dark:text-white">
@@ -114,12 +115,7 @@ export default function Container({
             onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
             className="w-7 h-7 bg-light_toggle dark:bg-dark_toggle rounded mx-8 flex justify-center items-center focus:outline-none"
           >
-            <Image
-              alt="ChangeTheme"
-              src={theme === 'light' ? images.moon.src : images.sun.src}
-              width={15}
-              height={15}
-            />
+            {theme === 'light' ? <FaMoon /> : <FaSun color="white" />}
           </button>
         </div>
       </nav>

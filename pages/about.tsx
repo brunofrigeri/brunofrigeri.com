@@ -1,64 +1,42 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import Container from '../containers/Container'
-import Image, { ImageProps } from 'next/image'
-import images from '../public/assets/images'
 import { useTheme } from 'next-themes'
 import Button from '../components/Button'
 import { useTranslation } from 'react-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { FaReact, FaNode } from 'react-icons/fa'
+import {
+  SiTypescript,
+  SiJavascript,
+  SiNextdotjs,
+  SiApollographql,
+  SiGraphql,
+  SiGatsby,
+} from 'react-icons/si'
+
+type ImageProps = {
+  alt: string
+  width: number
+  height: number
+}
 
 export default function About({}) {
   const { theme } = useTheme()
 
-  const skills: Array<ImageProps> = [
-    {
-      alt: 'react',
-      src: images.react.src,
-      height: 50,
-      width: 50,
-    },
-    {
-      alt: 'ts',
-      src: images.ts.src,
-      height: 50,
-      width: 50,
-    },
-    {
-      alt: 'js',
-      src: images.js.src,
-      height: 50,
-      width: 50,
-    },
-    {
-      alt: 'nodejs',
-      src: theme === 'light' ? images.nodejs.src : images.darkNode.src,
-      height: 50,
-      width: 100,
-    },
-    {
-      alt: 'next',
-      src: theme === 'light' ? images.next.src : images.darkNext.src,
-      height: 50,
-      width: 100,
-    },
-    {
-      alt: 'apollo',
-      src: theme === 'light' ? images.apollo.src : images.darkApollo.src,
-      height: 50,
-      width: 100,
-    },
-    {
-      alt: 'graphql',
-      src: images.graphql.src,
-      height: 50,
-      width: 50,
-    },
-    {
-      alt: 'gatsby',
-      src: images.gatsby.src,
-      height: 50,
-      width: 50,
-    },
+  const iconColor = useMemo(
+    () => (theme === 'light' ? 'black' : 'white'),
+    [theme]
+  )
+
+  const skills: Array<React.ReactElement> = [
+    <FaReact size={50} color={iconColor} />,
+    <FaNode size={50} color={iconColor} />,
+    <SiTypescript size={50} color={iconColor} />,
+    <SiJavascript size={50} color={iconColor} />,
+    <SiNextdotjs size={50} color={iconColor} />,
+    <SiApollographql size={50} color={iconColor} />,
+    <SiGraphql size={50} color={iconColor} />,
+    <SiGatsby size={50} color={iconColor} />,
   ]
 
   const onEmailSentPress = () => {
@@ -90,7 +68,7 @@ export default function About({}) {
           {skills?.length && (
             <div className="py-6 grid grid-flow-col grid-rows-2 gap-4 md:grid-flow-col md:grid-rows-1">
               {skills.map((skill, index) => (
-                <Image key={index} layout="intrinsic" {...skill} />
+                <div key={index}>{skill}</div>
               ))}
             </div>
           )}
