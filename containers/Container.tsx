@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -26,6 +26,8 @@ export default function Container({
   const router = useRouter()
   const { theme, setTheme } = useTheme()
 
+  const [mounted, setMounted] = useState<boolean>(false)
+
   const { t } = useTranslation('common')
 
   const menuOptions: Array<MenuOption> = [
@@ -38,6 +40,18 @@ export default function Container({
       path: '/about',
     },
   ]
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const renderThemeIcon = useCallback(() => {
+    if (!mounted) return null
+
+    const isLight = theme === 'light'
+
+    return isLight ? <FaMoon /> : <FaSun color="white" />
+  }, [mounted, theme])
 
   return (
     <div
@@ -115,7 +129,7 @@ export default function Container({
             onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
             className="w-7 h-7 bg-light_toggle dark:bg-dark_toggle rounded mx-8 flex justify-center items-center focus:outline-none"
           >
-            {theme === 'light' ? <FaMoon /> : <FaSun color="white" />}
+            {renderThemeIcon()}
           </button>
         </div>
       </nav>

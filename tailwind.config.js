@@ -12,13 +12,13 @@ module.exports = {
   theme: {
     colors: {
       transparent: 'transparent',
-      highlight_light: '#69C6ED',
-      highlight_dark: '#7D95C2',
+      highlight_light: '#1E3F66',
+      highlight_dark: '#528AAE',
       description_light: '#626262',
       description_dark: '#DBDBDB',
       light_toggle: '#F6F6F6',
       dark_toggle: '#344159',
-      search_light: '#AAAAAA',
+      search_light: '#CDCDCD',
       search_dark: '#EDEDED',
       current: 'currentColor',
       black: '#191919',
