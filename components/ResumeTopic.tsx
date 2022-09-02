@@ -25,7 +25,7 @@ export default function ResumeTopic({
       <div className="flex flex-row justify-between my-4">
         <div>
           {title && (
-            <h3 className="text-highlight_light dark:text-highlight_dark">
+            <h3 className="text-primary_light dark:text-primary_dark">
               {title}
             </h3>
           )}
@@ -38,7 +38,7 @@ export default function ResumeTopic({
         </div>
         <div className="flex flex-col">
           {location && (
-            <p className="self-end text-xs md:text-sm font-semibold text-highlight_light dark:text-highlight_dark">
+            <p className="self-end text-xs md:text-sm font-semibold text-primary_light dark:text-primary_dark">
               {location}
             </p>
           )}

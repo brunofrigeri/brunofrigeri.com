@@ -53,6 +53,7 @@ button:focus {
   }
 }
 
+.prose h3,
 .prose h2,
 .prose h1 {
   @apply my-6 text-black dark:text-white
@@ -63,7 +64,7 @@ button:focus {
 }
 
 .prose p > code {
-  @apply border rounded-lg m-1 p-1 bg-highlight_light bg-opacity-50 dark:bg-highlight_dark dark:bg-opacity-50
+  @apply border rounded-sm m-1 p-1 bg-primary_light bg-opacity-50 dark:bg-primary_dark dark:bg-opacity-50
 }
 
 .prose a {
@@ -80,7 +81,7 @@ button:focus {
 }
 
 .prose pre {
-  @apply bg-highlight_light bg-opacity-10 dark:bg-highlight_dark dark:bg-opacity-10 p-4 overflow-auto border border-gray-200 dark:border-gray-700 dark:bg-gray-900 my-4;
+  @apply bg-primary_light bg-opacity-10 dark:bg-primary_dark dark:bg-opacity-10 p-4 overflow-auto border border-gray-200 dark:border-gray-700 dark:bg-gray-900 my-4;
 }
 
 .prose code {

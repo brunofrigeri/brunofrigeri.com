@@ -2,7 +2,8 @@ const plugin = require('tailwindcss/plugin')
 const colors = require('tailwindcss/colors')
 
 module.exports = {
-  purge: [
+  mode: 'jit',
+  content: [
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
     './containers/**/*.{js,ts,jsx,tsx}',
@@ -12,8 +13,8 @@ module.exports = {
   theme: {
     colors: {
       transparent: 'transparent',
-      highlight_light: '#1E3F66',
-      highlight_dark: '#528AAE',
+      primary_light: '#1E3F66',
+      primary_dark: '#528AAE',
       description_light: '#626262',
       description_dark: '#DBDBDB',
       light_toggle: '#F6F6F6',
@@ -23,7 +24,7 @@ module.exports = {
       current: 'currentColor',
       black: '#191919',
       white: colors.white,
-      gray: colors.trueGray,
+      gray: colors.neutral,
       indigo: colors.indigo,
       red: '#FB3D62',
       yellow: '#D1A24E',
@@ -42,13 +43,13 @@ module.exports = {
   plugins: [
     plugin(function ({ addBase, theme }) {
       addBase({
-        h1: { fontWeight: 700, fontSize: theme('fontSize.3xl') },
-        h2: { fontWeight: 600, fontSize: theme('fontSize.lg') },
-        h3: { fontWeight: 500, fontSize: theme('fontSize.lg') },
-        h4: { fontWeight: 300, fontSize: theme('fontSize.base') },
-        h5: { fontWeight: 300, fontSize: theme('fontSize.sm') },
-        p: { fontWeight: 300, fontSize: theme('fontSize.sm') },
-        li: { fontWeight: 300, fontSize: theme('fontSize.sm') },
+        h1: { fontWeight: 700, fontSize: theme('fontSize.4xl') },
+        h2: { fontWeight: 600, fontSize: theme('fontSize.xl') },
+        h3: { fontWeight: 500, fontSize: theme('fontSize.xl') },
+        h4: { fontWeight: 300, fontSize: theme('fontSize.lg') },
+        h5: { fontWeight: 300, fontSize: theme('fontSize.tiny') },
+        p: { fontWeight: 300, fontSize: theme('fontSize.tiny') },
+        li: { fontWeight: 300, fontSize: theme('fontSize.tiny') },
       })
     }),
   ],

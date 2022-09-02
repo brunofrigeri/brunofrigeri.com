@@ -7,6 +7,7 @@ import { FaMoon, FaSun } from 'react-icons/fa'
 import { useRouter } from 'next/dist/client/router'
 import { useTheme } from 'next-themes'
 import { useTranslation } from 'react-i18next'
+
 interface ContainerProps {
   children?: React.ReactNode[] | React.ReactNode
   meta_description?: string
@@ -20,7 +21,6 @@ type MenuOption = {
 export default function Container({
   children,
   meta_description,
-  ...props
 }: ContainerProps) {
   const currentYear = new Date().getFullYear()
   const router = useRouter()
@@ -59,15 +59,9 @@ export default function Container({
       className="flex flex-col min-h-screen bg-white dark:bg-black"
     >
       <Head>
-        <title>Bruno Frigeri - Portfolio/Article Writer</title>
+        <title>Bruno Frigeri</title>
         <meta name="robots" content="follow, index" />
-        <meta
-          name="description"
-          content={
-            meta_description ||
-            "I'm a software developer, writer and passionate about traveling from Brazil. Always trying to learn more about my work and improve everyday."
-          }
-        />
+        <meta name="description" content={meta_description} />
         <link
           rel="canonical"
           href={`https://brunofrigeri.com${router.asPath}`}
@@ -85,7 +79,7 @@ export default function Container({
           property="og:title"
           content={'Bruno Frigeri - Software Developer'}
         />
-        <meta property="og:image" content={images.avatar.src} />
+        <meta property="og:image" />
       </Head>
       <nav className="max-w-4xl flex flex-row justify-between bg-white dark:bg-black mx-auto items-center w-full my-8">
         <div className="flex flex-row items-center">
@@ -116,7 +110,7 @@ export default function Container({
                     </a>
                   </Link>
                   {router.pathname === option.path ? (
-                    <div className="mx-2 h-0.5 bg-highlight_light dark:bg-highlight_dark" />
+                    <div className="mx-2 h-0.5 bg-primary_light dark:bg-primary_dark" />
                   ) : (
                     <div className="mx-2 h-0.5" />
                   )}
@@ -138,11 +132,31 @@ export default function Container({
       </main>
       <footer className="max-w-4xl flex flex-row justify-between text-black dark:text-white mx-auto items-center w-full my-8">
         <span className="md:text-sm">
-          © {currentYear}. Made by&nbsp;
-          <span className="md:text-sm text-highlight_light dark:text-highlight_dark">
-            myself.
+          © {currentYear}. {t('madeBy')}&nbsp;
+          <span className="md:text-sm text-primary_light dark:text-primary_dark">
+            {t('me')}.
           </span>
         </span>
+        <div>
+          <Link href="/" locale="pt-BR">
+            <Image
+              className="cursor-pointer pr-1"
+              src={images.brazil.src}
+              alt="brazil-locale"
+              height={32}
+              width={32}
+            />
+          </Link>
+          <Link href="/" locale="en">
+            <Image
+              className="cursor-pointer pl-1"
+              src={images.usa.src}
+              alt="en-locale"
+              height={32}
+              width={32}
+            />
+          </Link>
+        </div>
       </footer>
     </div>
   )

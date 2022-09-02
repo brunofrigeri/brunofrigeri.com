@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import icons from '../public/assets/icons'
+import { FaSearch } from 'react-icons/fa'
 
 interface SearchProps {
   value?: string
@@ -14,7 +14,7 @@ export default function Search({ value, setValue }: SearchProps) {
   return (
     <div className="flex flex-row items-center w-full rounded-lg border">
       <div className="flex p-2">
-        <Image alt="search" src={icons.searchIcon.src} width={20} height={20} />
+        <FaSearch className="text-description_light dark:text-description_dark" />
       </div>
       <input
         value={value}

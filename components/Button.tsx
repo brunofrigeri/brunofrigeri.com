@@ -31,8 +31,8 @@ export default function Button({
       className={
         `px-4 ${
           type === 'bordered'
-            ? 'border bg-white dark:bg-black border-highlight_light dark:border-highlight_dark py-1 '
-            : 'bg-highlight_light dark:bg-highlight_dark border-0 py-2 '
+            ? 'border bg-white dark:bg-black border-primary_light dark:border-primary_dark py-1 '
+            : 'bg-primary_light dark:bg-primary_dark border-0 py-2 '
         } cursor-pointer rounded px-4` + className
       }
       onClick={onClick}
@@ -40,7 +40,7 @@ export default function Button({
       <span
         className={`${
           type === 'bordered'
-            ? 'text-highlight_light dark:text-highlight_dark'
+            ? 'text-primary_light dark:text-primary_dark'
             : 'text-white'
         }`}
       >

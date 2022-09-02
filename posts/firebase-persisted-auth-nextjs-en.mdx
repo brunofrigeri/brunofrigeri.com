@@ -35,23 +35,23 @@ At this point we need to create our firebase project in the [Firebase Console](h
 
 After open the Firebase Console we'll create a new project as following:
 
-1 - Click on Add Project;
-2 - Enter the name of your project, in my case will be 'with-firebase-auth';
-3 - At this point Firebase will ask if you want to connect to Analytics, I'll denied this;
+- Click on Add Project;
+- Enter the name of your project, in my case will be 'with-firebase-auth';
+- At this point Firebase will ask if you want to connect to Analytics, I'll denied this;
 
 Let's do it. With our project created and with all access to Firebase Console we need to get the Service Account JSON, to do that we'll need to do the following:
 
-1 - Click on Engine Icon;
-2 - Project Settings;
-3 - Service Accounts;
-4 - Generate Private Keys;
+- Click on Engine Icon;
+- Project Settings;
+- Service Accounts;
+- Generate Private Keys;
 
 This will download a JSON file in your machine, that is really important, so keep it safe and don't lose it, because we'll need it soon.
 
 Now we need to Get Started with Authentication in the Firebase Console:
 
-1 - Click on Authentication in the sidebar;
-2 - Get Started;
+- Click on Authentication in the sidebar;
+- Get Started;
 
 Okay, now we'll enable the Authentication services that we want to use, in my case I'll enable just Email/Password.
 
@@ -159,8 +159,8 @@ Okay, we reach, to me, the most important part of our article, handling the auth
 
 First we'll need to `import firebase from 'lib/firebase.ts'` in our context. And then we'll need two basic functions (or more, that depends on how much authentications you want in your app, in my case are just two).
 
-1 - signInWithEmailAndPassword;
-2 - signOut;
+- signInWithEmailAndPassword;
+- signOut;
 
 This are my two basics functions for authentication, so lets added it on our context:
 
@@ -278,9 +278,9 @@ export default function withAuth(Component: any) {
 
 Now, we'll go to the important topic. I created 3 major constants:
 
-1 - isAuthenticated (Boolean if user is logged or not);
-2 - shouldRedirectToApp (If the user is already logged in, and is trying to access Login/SignUp routes)
-3 - shouldRedirectToLogin (If the user is not logged in, and is trying to access protected routes, in my case, protected routes init with /auth)
+- isAuthenticated (Boolean if user is logged or not);
+- shouldRedirectToApp (If the user is already logged in, and is trying to access Login/SignUp routes)
+- shouldRedirectToLogin (If the user is not logged in, and is trying to access protected routes, in my case, protected routes init with /auth)
 
 With this in hand, we need to do the following:
 
