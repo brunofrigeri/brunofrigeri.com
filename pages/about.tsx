@@ -29,14 +29,14 @@ export default function About({}) {
   )
 
   const skills: Array<React.ReactElement> = [
-    <FaReact size={50} color={iconColor} />,
-    <FaNode size={50} color={iconColor} />,
-    <SiTypescript size={50} color={iconColor} />,
-    <SiJavascript size={50} color={iconColor} />,
-    <SiNextdotjs size={50} color={iconColor} />,
-    <SiApollographql size={50} color={iconColor} />,
-    <SiGraphql size={50} color={iconColor} />,
-    <SiGatsby size={50} color={iconColor} />,
+    <FaReact key="react" size={50} color={iconColor} />,
+    <FaNode key="node" size={50} color={iconColor} />,
+    <SiTypescript key="ts" size={50} color={iconColor} />,
+    <SiJavascript key="js" size={50} color={iconColor} />,
+    <SiNextdotjs key="next" size={50} color={iconColor} />,
+    <SiApollographql key="apollo" size={50} color={iconColor} />,
+    <SiGraphql key="graphql" size={50} color={iconColor} />,
+    <SiGatsby key="gatsby" size={50} color={iconColor} />,
   ]
 
   const onEmailSentPress = () => {
@@ -68,7 +68,7 @@ export default function About({}) {
           {skills?.length && (
             <div className="py-6 grid grid-flow-col grid-rows-2 gap-4 md:grid-flow-col md:grid-rows-1">
               {skills.map((skill, index) => (
-                <div key={index}>{skill}</div>
+                <div key={skill.key}>{skill}</div>
               ))}
             </div>
           )}

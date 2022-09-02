@@ -5,13 +5,10 @@ interface ViewCounterProps {
 }
 
 export default function ViewCounter({ slug }: ViewCounterProps) {
-  const { data, isValidating } = useSWR(
-    `/api/views/${slug}`,
-    async (...args) => {
-      const res = await fetch(args)
-      return res.json()
-    }
-  )
+  const { data } = useSWR(`/api/views/${slug}`, async (args) => {
+    const res = await fetch(args)
+    return res.json()
+  })
 
   const views = data?.total
 

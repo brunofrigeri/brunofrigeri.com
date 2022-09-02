@@ -45,7 +45,7 @@ export default function Home({ posts }: HomeProps) {
         setFilteredPosts(posts)
       }
     }
-  }, [search])
+  }, [filteredPosts, posts, search])
 
   return (
     <Container>

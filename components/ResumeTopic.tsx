@@ -57,7 +57,10 @@ export default function ResumeTopic({
       {description && (
         <ul>
           {description.map((d) => (
-            <li className="text-xs md:text-sm list-disc list-inside text-description_light dark:text-description_dark">
+            <li
+              key={d}
+              className="text-xs md:text-sm list-disc list-inside text-description_light dark:text-description_dark"
+            >
               {d}
             </li>
           ))}
