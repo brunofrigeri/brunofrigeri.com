@@ -17,6 +17,22 @@ module.exports = withMDX({
 
     return config
   },
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: '/about',
+          destination: '/about',
+          locale: false,
+        },
+        {
+          source: '/pt-BR/about',
+          destination: '/pt-BR/about',
+          locale: false,
+        },
+      ],
+    }
+  },
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
   i18n,
 })

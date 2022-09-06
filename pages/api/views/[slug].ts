@@ -11,7 +11,8 @@ export default async (
 ) => {
   const slug = req?.query?.slug as string
   if (req.method === 'POST') {
-    const ref = db.ref('views').child(slug)
+    const locale = JSON.parse(req.body).locale as string
+    const ref = db.ref('views').child(locale).child(slug)
     const { snapshot } = await ref.transaction((currentViews) => {
       if (currentViews === null) {
         return 1
@@ -23,7 +24,8 @@ export default async (
     })
   }
   if (req.method === 'GET') {
-    const value = await db.ref('views').child(slug).once('value')
+    const locale = req.query.locale as string
+    const value = await db.ref('views').child(locale).child(slug).once('value')
     const views = value.val()
     return res.status(200).json({
       total: views || 0,

@@ -7,8 +7,9 @@ import { FaMoon, FaSun } from 'react-icons/fa'
 import { useRouter } from 'next/dist/client/router'
 import { useTheme } from 'next-themes'
 import { useTranslation } from 'react-i18next'
+import { useLinkProps } from '../hooks/useLink'
 
-interface ContainerProps {
+interface ContainerProps extends Partial<useLinkProps> {
   children?: React.ReactNode[] | React.ReactNode
   meta_description?: string
 }
@@ -21,6 +22,8 @@ type MenuOption = {
 export default function Container({
   children,
   meta_description,
+  enHref,
+  ptBRHref,
 }: ContainerProps) {
   const currentYear = new Date().getFullYear()
   const router = useRouter()
@@ -82,23 +85,25 @@ export default function Container({
         <meta property="og:image" />
       </Head>
       <nav className="max-w-4xl flex flex-row justify-between bg-white dark:bg-black mx-auto items-center w-full my-8">
-        <div className="flex flex-row items-center">
-          <Image
-            className="rounded-full"
-            src={images.avatar.src}
-            alt="BF"
-            height={48}
-            width={48}
-          />
-          <div id="avatar-description" className="flex flex-col px-4">
-            <h2 className="text-lg text-black dark:text-white">
-              Bruno Frigeri
-            </h2>
-            <p className="text-description_light dark:text-description_dark">
-              {t('description')}
-            </p>
-          </div>
-        </div>
+        <Link href="/">
+          <a className="cursor-pointer flex flex-row items-center">
+            <Image
+              className="rounded-full"
+              src={images.avatar.src}
+              alt="BF"
+              height={48}
+              width={48}
+            />
+            <div id="avatar-description" className="flex flex-col px-4">
+              <h2 className="text-lg text-black dark:text-white">
+                Bruno Frigeri
+              </h2>
+              <p className="text-description_light dark:text-description_dark">
+                {t('description')}
+              </p>
+            </div>
+          </a>
+        </Link>
         <div className="flex items-center">
           {menuOptions?.length &&
             menuOptions.map((option, index) => {
@@ -138,23 +143,27 @@ export default function Container({
           </span>
         </span>
         <div>
-          <Link href="/" locale="pt-BR">
-            <Image
-              className="cursor-pointer pr-1"
-              src={images.brazil.src}
-              alt="brazil-locale"
-              height={32}
-              width={32}
-            />
+          <Link href={ptBRHref ?? '/'} locale="pt-BR">
+            <a>
+              <Image
+                className="cursor-pointer pr-1"
+                src={images.brazil.src}
+                alt="brazil-locale"
+                height={32}
+                width={32}
+              />
+            </a>
           </Link>
-          <Link href="/" locale="en">
-            <Image
-              className="cursor-pointer pl-1"
-              src={images.usa.src}
-              alt="en-locale"
-              height={32}
-              width={32}
-            />
+          <Link href={enHref ?? '/'} locale="en">
+            <a>
+              <Image
+                className="cursor-pointer pl-1"
+                src={images.usa.src}
+                alt="en-locale"
+                height={32}
+                width={32}
+              />
+            </a>
           </Link>
         </div>
       </footer>

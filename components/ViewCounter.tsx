@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router'
+import { useTranslation } from 'react-i18next'
 import useSWR from 'swr'
 
 interface ViewCounterProps {
@@ -5,10 +7,15 @@ interface ViewCounterProps {
 }
 
 export default function ViewCounter({ slug }: ViewCounterProps) {
-  const { data } = useSWR(`/api/views/${slug}`, async (args) => {
-    const res = await fetch(args)
-    return res.json()
-  })
+  const { locale } = useRouter()
+  const { t } = useTranslation('common')
+  const { data } = useSWR(
+    `/api/views/${slug}?locale=${locale}`,
+    async (args) => {
+      const res = await fetch(args)
+      return res.json()
+    }
+  )
 
   const views = data?.total
 
@@ -20,7 +27,7 @@ export default function ViewCounter({ slug }: ViewCounterProps) {
     <div className="flex items-center justify-center">
       <h5 className="flex flex-row items-center justify-center text-description_light dark:text-description_dark">
         {!data && LoadingViews}
-        {`${views ?? ''} views`}
+        {t('views', { views })}
       </h5>
     </div>
   )

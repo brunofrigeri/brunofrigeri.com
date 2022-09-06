@@ -16,7 +16,6 @@ export default function Posts({
   hasButton = true,
   posts = [],
   onSeeAllPress = () => {},
-  ...props
 }: PostsProps) {
   const { t } = useTranslation('home')
 
@@ -31,9 +30,11 @@ export default function Posts({
         )}
       </div>
       {posts?.length ? (
-        posts.map((post, index) => (
-          <Post {...post} key={index} reading_time={post.reading_time.text} />
-        ))
+        posts.map((post, index) => {
+          return (
+            <Post {...post} key={index} reading_time={post.reading_time.text} />
+          )
+        })
       ) : (
         <h4 className="my-2 mb-8 text-description_light dark:text-description_dark">
           {t('notfound')}

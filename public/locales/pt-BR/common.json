@@ -4,5 +4,6 @@
     "about": "Sobre",
     "blog": "Blog",
     "madeBy": "Feito por",
-    "me": "mim"
+    "me": "mim",
+    "views": "{{ views }} visualizações"
 }

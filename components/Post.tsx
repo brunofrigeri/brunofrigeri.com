@@ -1,5 +1,6 @@
 import Image from 'next/image'
-import React from 'react'
+import Link from 'next/link'
+import React, { useCallback } from 'react'
 import Tags from './Tags'
 import ViewCounter from './ViewCounter'
 
@@ -11,6 +12,7 @@ interface PostProps {
   date?: string
   stacks?: Array<string>
   featured_image?: string
+  locale: string
 }
 
 export default function Post({
@@ -19,49 +21,40 @@ export default function Post({
   excerpt,
   date,
   reading_time,
-  featured_image,
 }: PostProps) {
-  const onPostPress = () => {
-    fetch(`/api/views/${slug}`, {
-      method: 'POST',
-    })
-  }
-
   return (
-    <a
-      href={`/blog/${slug}`}
-      onClick={onPostPress}
-      className="flex flex-row my-8"
-    >
-      <div className="mx-6">
-        {title && <h3 className="text-black dark:text-white">{title}</h3>}
-        {excerpt && (
-          <h4 className="my-1 text-description_light dark:text-description_dark">
-            {excerpt}
-          </h4>
-        )}
-        <div className="flex flex-row justify-between items-center my-4">
-          <div className="flex flex-row">
-            {date && (
+    <Link href={`/blog/${slug}`}>
+      <a className="flex flex-row my-8">
+        <div className="mx-6">
+          {title && <h3 className="text-black dark:text-white">{title}</h3>}
+          {excerpt && (
+            <h4 className="my-1 text-description_light dark:text-description_dark">
+              {excerpt}
+            </h4>
+          )}
+          <div className="flex flex-row justify-between items-center my-4">
+            <div className="flex flex-row">
+              {date && (
+                <h5 className="text-description_light dark:text-description_dark">
+                  {date}
+                </h5>
+              )}
               <h5 className="text-description_light dark:text-description_dark">
-                {date}
+                &nbsp;&nbsp;|&nbsp;&nbsp;
               </h5>
-            )}
-            <h5 className="text-description_light dark:text-description_dark">
-              &nbsp;&nbsp;|&nbsp;&nbsp;
-            </h5>
-            {reading_time && (
+              {reading_time && (
+                <h5 className="text-description_light dark:text-description_dark">
+                  {reading_time}
+                </h5>
+              )}
               <h5 className="text-description_light dark:text-description_dark">
-                {reading_time}
+                &nbsp;&nbsp;|&nbsp;&nbsp;
               </h5>
-            )}
-            <h5 className="text-description_light dark:text-description_dark">
-              &nbsp;&nbsp;|&nbsp;&nbsp;
-            </h5>
-            <ViewCounter slug={slug} />
+              <ViewCounter slug={slug} />
+            </div>
           </div>
         </div>
-      </div>
-    </a>
+      </a>
+    </Link>
   )
 }

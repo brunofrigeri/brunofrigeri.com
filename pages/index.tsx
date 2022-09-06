@@ -3,13 +3,13 @@ import Container from '../containers/Container'
 import React, { useEffect, useState } from 'react'
 import { getAllPosts, Post } from '../lib/posts'
 import Posts from '../components/Posts'
-import { useRouter } from 'next/dist/client/router'
 import Fuse from 'fuse.js'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'react-i18next'
 import Search from '../components/Search'
+import { SSRConfig } from 'next-i18next'
 
-interface HomeProps {
+interface HomeProps extends SSRConfig {
   posts: Array<Post>
 }
 

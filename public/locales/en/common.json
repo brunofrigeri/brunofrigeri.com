@@ -4,5 +4,6 @@
     "about": "About",
     "blog": "Blog",
     "madeBy": "Made by",
-    "me": "myself"
+    "me": "myself",
+    "views": "{{ views }} views"
 }
