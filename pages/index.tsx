@@ -1,6 +1,6 @@
 import Button from '../components/Button'
 import Container from '../containers/Container'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { getAllPosts, Post } from '../lib/posts'
 import Posts from '../components/Posts'
 import Fuse from 'fuse.js'
@@ -32,20 +32,22 @@ export default function Home({ posts }: HomeProps) {
   const [search, setSearch] = useState<string>('')
   const [filteredPosts, setFilteredPosts] = useState<Array<Post>>([])
 
-  useEffect(() => {
-    if (filteredPosts) {
-      if (search.length > 0) {
-        const fuse = new Fuse(posts, options)
-        const postsFound = fuse.search(search)
+  const setPosts = useCallback(() => {
+    if (search.length > 0) {
+      const fuse = new Fuse(posts, options)
+      const postsFound = fuse.search(search)
 
-        setFilteredPosts(
-          postsFound.length > 0 ? postsFound.map((post) => post.item) : []
-        )
-      } else {
-        setFilteredPosts(posts)
-      }
+      setFilteredPosts(
+        postsFound.length > 0 ? postsFound.map((post) => post.item) : []
+      )
+    } else {
+      setFilteredPosts(posts)
     }
-  }, [filteredPosts, posts, search])
+  }, [search, setFilteredPosts, posts])
+
+  useEffect(() => {
+    setPosts()
+  }, [setPosts])
 
   return (
     <Container>

@@ -23,38 +23,36 @@ export default function Post({
   reading_time,
 }: PostProps) {
   return (
-    <Link href={`/blog/${slug}`}>
-      <a className="flex flex-row my-8">
-        <div className="mx-6">
-          {title && <h3 className="text-black dark:text-white">{title}</h3>}
-          {excerpt && (
-            <h4 className="my-1 text-description_light dark:text-description_dark">
-              {excerpt}
-            </h4>
-          )}
-          <div className="flex flex-row justify-between items-center my-4">
-            <div className="flex flex-row">
-              {date && (
-                <h5 className="text-description_light dark:text-description_dark">
-                  {date}
-                </h5>
-              )}
+    <Link href={`/blog/${slug}`} className="flex flex-row my-8">
+      <div className="mx-6">
+        {title && <h3 className="text-black dark:text-white">{title}</h3>}
+        {excerpt && (
+          <h4 className="my-1 text-description_light dark:text-description_dark">
+            {excerpt}
+          </h4>
+        )}
+        <div className="flex flex-row justify-between items-center my-4">
+          <div className="flex flex-row">
+            {date && (
               <h5 className="text-description_light dark:text-description_dark">
-                &nbsp;&nbsp;|&nbsp;&nbsp;
+                {date}
               </h5>
-              {reading_time && (
-                <h5 className="text-description_light dark:text-description_dark">
-                  {reading_time}
-                </h5>
-              )}
+            )}
+            <h5 className="text-description_light dark:text-description_dark">
+              &nbsp;&nbsp;|&nbsp;&nbsp;
+            </h5>
+            {reading_time && (
               <h5 className="text-description_light dark:text-description_dark">
-                &nbsp;&nbsp;|&nbsp;&nbsp;
+                {reading_time}
               </h5>
-              <ViewCounter slug={slug} />
-            </div>
+            )}
+            <h5 className="text-description_light dark:text-description_dark">
+              &nbsp;&nbsp;|&nbsp;&nbsp;
+            </h5>
+            <ViewCounter slug={slug} />
           </div>
         </div>
-      </a>
+      </div>
     </Link>
   )
 }

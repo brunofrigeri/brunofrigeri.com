@@ -13,19 +13,20 @@ import {
   SiGraphql,
   SiGatsby,
 } from 'react-icons/si'
-
-type ImageProps = {
-  alt: string
-  width: number
-  height: number
-}
+import resolveConfig from 'tailwindcss/resolveConfig'
+import tailwindConfig from '../tailwind.config.js'
+import { Config } from 'tailwindcss/types/config'
 
 export default function About({}) {
   const { theme } = useTheme()
+  const fullConfig = resolveConfig(tailwindConfig as Config)
 
   const iconColor = useMemo(
-    () => (theme === 'light' ? 'black' : 'white'),
-    [theme]
+    () =>
+      theme === 'light'
+        ? fullConfig.theme.colors['dark_toggle']
+        : fullConfig.theme.colors['light_toggle'],
+    [theme, fullConfig]
   )
 
   const skills: Array<React.ReactElement> = [

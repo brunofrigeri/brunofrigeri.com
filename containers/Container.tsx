@@ -8,6 +8,9 @@ import { useRouter } from 'next/dist/client/router'
 import { useTheme } from 'next-themes'
 import { useTranslation } from 'react-i18next'
 import { useLinkProps } from '../hooks/useLink'
+import resolveConfig from 'tailwindcss/resolveConfig'
+import tailwindConfig from '../tailwind.config.js'
+import { Config } from 'tailwindcss/types/config'
 
 interface ContainerProps extends Partial<useLinkProps> {
   children?: React.ReactNode[] | React.ReactNode
@@ -28,6 +31,7 @@ export default function Container({
   const currentYear = new Date().getFullYear()
   const router = useRouter()
   const { theme, setTheme } = useTheme()
+  const fullConfig = resolveConfig(tailwindConfig as Config)
 
   const [mounted, setMounted] = useState<boolean>(false)
 
@@ -53,8 +57,12 @@ export default function Container({
 
     const isLight = theme === 'light'
 
-    return isLight ? <FaMoon /> : <FaSun color="white" />
-  }, [mounted, theme])
+    return isLight ? (
+      <FaMoon color={fullConfig.theme.colors['dark_toggle']} />
+    ) : (
+      <FaSun color={fullConfig.theme.colors['light_toggle']} />
+    )
+  }, [mounted, theme, fullConfig])
 
   return (
     <div
@@ -85,34 +93,34 @@ export default function Container({
         <meta property="og:image" />
       </Head>
       <nav className="max-w-4xl flex flex-row justify-between bg-white dark:bg-black mx-auto items-center w-full my-8">
-        <Link href="/">
-          <a className="cursor-pointer flex flex-row items-center">
-            <Image
-              className="rounded-full"
-              src={images.avatar.src}
-              alt="BF"
-              height={48}
-              width={48}
-            />
-            <div id="avatar-description" className="flex flex-col px-4">
-              <h2 className="text-lg text-black dark:text-white">
-                Bruno Frigeri
-              </h2>
-              <p className="text-description_light dark:text-description_dark">
-                {t('description')}
-              </p>
-            </div>
-          </a>
+        <Link href="/" className="cursor-pointer flex flex-row items-center">
+          <Image
+            className="rounded-full"
+            src={images.avatar.src}
+            alt="BF"
+            priority
+            height={48}
+            width={48}
+          />
+          <div id="avatar-description" className="flex flex-col px-4">
+            <h2 className="text-lg text-black dark:text-white">
+              Bruno Frigeri
+            </h2>
+            <p className="text-description_light dark:text-description_dark">
+              {t('description')}
+            </p>
+          </div>
         </Link>
         <div className="flex items-center">
           {menuOptions?.length &&
             menuOptions.map((option, index) => {
               return (
                 <div key={index}>
-                  <Link href={option.path}>
-                    <a className="md:text-base mx-2 text-black dark:text-white">
-                      {option.name}
-                    </a>
+                  <Link
+                    href={option.path}
+                    className="md:text-base mx-2 text-black dark:text-white"
+                  >
+                    {option.name}
                   </Link>
                   {router.pathname === option.path ? (
                     <div className="mx-2 h-0.5 bg-primary_light dark:bg-primary_dark" />
@@ -142,28 +150,26 @@ export default function Container({
             {t('me')}.
           </span>
         </span>
-        <div>
+        <div className="flex flex-column">
           <Link href={ptBRHref ?? '/'} locale="pt-BR">
-            <a>
-              <Image
-                className="cursor-pointer pr-1"
-                src={images.brazil.src}
-                alt="brazil-locale"
-                height={32}
-                width={32}
-              />
-            </a>
+            <Image
+              className="cursor-pointer pr-1"
+              src={images.brazil.src}
+              priority
+              alt="brazil-locale"
+              height={36}
+              width={36}
+            />
           </Link>
           <Link href={enHref ?? '/'} locale="en">
-            <a>
-              <Image
-                className="cursor-pointer pl-1"
-                src={images.usa.src}
-                alt="en-locale"
-                height={32}
-                width={32}
-              />
-            </a>
+            <Image
+              className="cursor-pointer pl-1"
+              src={images.usa.src}
+              alt="en-locale"
+              priority
+              height={36}
+              width={36}
+            />
           </Link>
         </div>
       </footer>
