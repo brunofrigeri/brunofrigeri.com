@@ -1,7 +1,5 @@
-import Image from 'next/image'
 import Link from 'next/link'
-import React, { useCallback } from 'react'
-import Tags from './Tags'
+import React from 'react'
 import ViewCounter from './ViewCounter'
 
 interface PostProps {

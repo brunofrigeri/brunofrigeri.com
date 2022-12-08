@@ -8,7 +8,8 @@ interface TagsProps {
 
 export default function Tags({ stacks }: TagsProps) {
   const getTagName = (stack: string) => {
-    return stack.toLocaleLowerCase().replace('_', '-')
+    const lowerCaseTagName = stack.toLocaleLowerCase().replace('_', '-')
+    return lowerCaseTagName.charAt(0).toUpperCase() + lowerCaseTagName.slice(1)
   }
 
   return (
@@ -17,13 +18,13 @@ export default function Tags({ stacks }: TagsProps) {
         stacks.map((stack, index) => (
           <div
             key={index}
-            className={`border border-gray-400 dark:border-gray-600 p-1 rounded-lg mr-2`}
+            className={`bg-light_toggle dark:bg-dark_toggle p-1.5 rounded-xl  mr-2`}
           >
             <p
               key={index}
-              className="text-xs font-semibold text-gray-400 dark:text-gray-600"
+              className="text-xs font-medium text-black dark:text-white"
             >
-              #{getTagName(stack)}
+              {getTagName(stack)}
             </p>
           </div>
         ))}
