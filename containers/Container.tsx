@@ -30,10 +30,9 @@ export default function Container({
 }: ContainerProps) {
   const currentYear = new Date().getFullYear()
   const router = useRouter()
+  const [mounted, setMounted] = useState<boolean>(false)
   const { theme, setTheme } = useTheme()
   const fullConfig = resolveConfig(tailwindConfig as Config)
-
-  const [mounted, setMounted] = useState<boolean>(false)
 
   const { t } = useTranslation('common')
 
@@ -55,8 +54,7 @@ export default function Container({
   const renderThemeIcon = useCallback(() => {
     if (!mounted) return null
 
-    console.log('TESTING', theme, fullConfig)
-    // const isLight = theme === 'light'
+    console.log('TESTING', theme, mounted)
 
     return theme === 'light' ? (
       <FaMoon color={fullConfig.theme.colors['toggleDark']} />
