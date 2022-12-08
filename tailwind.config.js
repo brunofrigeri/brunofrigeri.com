@@ -1,5 +1,6 @@
 const plugin = require('tailwindcss/plugin')
 const colors = require('tailwindcss/colors')
+const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
   mode: 'jit',
@@ -13,16 +14,17 @@ module.exports = {
   theme: {
     colors: {
       transparent: 'transparent',
-      primary_light: '#1E3F66',
-      primary_dark: '#528AAE',
-      description_light: '#626262',
-      description_dark: '#DBDBDB',
-      light_toggle: '#F6F6F6',
-      dark_toggle: '#344159',
-      search_light: '#CDCDCD',
-      search_dark: '#EDEDED',
+      primaryLight: '#1E3F66',
+      primaryDark: '#528AAE',
+      descriptionLight: '#626262',
+      descriptionDark: '#DBDBDB',
+      toggleLight: '#F6F6F6',
+      toggleDark: '#344159',
+      searchLight: '#CDCDCD',
+      searchDark: '#EDEDED',
+      greenToken: '#63A8A4',
       current: 'currentColor',
-      black: '#191919',
+      black: '#333333',
       white: colors.white,
       gray: colors.neutral,
       indigo: colors.indigo,
@@ -31,26 +33,49 @@ module.exports = {
       blue: '#7096FF',
       purple: '#B677E3',
       green: '#ABD56F',
-      green_text: '#63A8A4',
       pink: colors.pink,
     },
     extend: {
       fontFamily: {
-        custom: ['Inter', 'sans-serif'],
+        custom: ['Inter', ...defaultTheme.fontFamily.sans],
       },
     },
   },
   plugins: [
     plugin(function ({ addBase, theme }) {
       addBase({
-        h1: { fontWeight: 700, fontSize: theme('fontSize.4xl') },
-        h2: { fontWeight: 600, fontSize: theme('fontSize.xl') },
-        h3: { fontWeight: 500, fontSize: theme('fontSize.xl') },
-        h4: { fontWeight: 300, fontSize: theme('fontSize.lg') },
-        h5: { fontWeight: 300, fontSize: theme('fontSize.tiny') },
-        p: { fontWeight: 300, fontSize: theme('fontSize.tiny') },
-        li: { fontWeight: 300, fontSize: theme('fontSize.tiny') },
+        h1: {
+          fontWeight: 700,
+          fontSize: theme('fontSize.4xl'),
+        },
+        h2: {
+          fontWeight: 600,
+          fontSize: theme('fontSize.xl'),
+        },
+        h3: {
+          fontWeight: 500,
+          fontSize: theme('fontSize.xl'),
+        },
+        h4: {
+          fontWeight: 300,
+          fontSize: theme('fontSize.lg'),
+        },
+        h5: {
+          fontWeight: 300,
+          fontSize: theme('fontSize.tiny'),
+        },
+        p: {
+          fontWeight: 300,
+          fontSize: theme('fontSize.tiny'),
+        },
+        li: {
+          fontWeight: 300,
+          fontSize: theme('fontSize.tiny'),
+        },
       })
     }),
   ],
+  corePlugins: {
+    fontFamily: true,
+  },
 }

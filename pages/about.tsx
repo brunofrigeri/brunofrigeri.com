@@ -17,15 +17,15 @@ import resolveConfig from 'tailwindcss/resolveConfig'
 import tailwindConfig from '../tailwind.config.js'
 import { Config } from 'tailwindcss/types/config'
 
-export default function About({}) {
+export default function About() {
   const { theme } = useTheme()
   const fullConfig = resolveConfig(tailwindConfig as Config)
 
   const iconColor = useMemo(
     () =>
       theme === 'light'
-        ? fullConfig.theme.colors['dark_toggle']
-        : fullConfig.theme.colors['light_toggle'],
+        ? fullConfig.theme.colors['toggleDark']
+        : fullConfig.theme.colors['toggleLight'],
     [theme, fullConfig]
   )
 
@@ -53,7 +53,7 @@ export default function About({}) {
       <div>
         <div>
           <h1 className="text-black dark:text-white">{t('introduction')}</h1>
-          <h2 className="font-light my-2 mb-8 text-description_light dark:text-description_dark">
+          <h2 className="font-light my-2 mb-8 text-descriptionLight dark:text-descriptionDark">
             {t('intro-description')}
           </h2>
           <Button
@@ -68,7 +68,7 @@ export default function About({}) {
           <h1 className="text-black dark:text-white">{t('skills')}</h1>
           {skills?.length && (
             <div className="py-6 grid grid-flow-col grid-rows-2 gap-4 md:grid-flow-col md:grid-rows-1">
-              {skills.map((skill, index) => (
+              {skills.map((skill) => (
                 <div key={skill.key}>{skill}</div>
               ))}
             </div>
@@ -76,7 +76,7 @@ export default function About({}) {
         </div>
         <div className="py-8">
           <h1 className="text-black dark:text-white">{t('resume-title')}</h1>
-          <h2 className="font-light my-2 mb-8 text-description_light dark:text-description_dark">
+          <h2 className="font-light my-2 mb-8 text-descriptionLight dark:text-descriptionDark">
             {t('experiences')}
           </h2>
           <Button href={'/cv.pdf'} target={'_blank'} type={'bordered'}>

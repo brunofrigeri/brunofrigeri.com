@@ -56,7 +56,7 @@ export default function Home({ posts }: HomeProps) {
           <h1 className="md:text-4xl text-black dark:text-white">
             {t('title')}
           </h1>
-          <h2 className="md:text-lg font-light my-2 mb-8 text-description_light dark:text-description_dark">
+          <h2 className="md:text-lg font-light my-2 mb-8 text-descriptionLight dark:text-descriptionDark">
             {t('description')}
           </h2>
           <Button
@@ -70,7 +70,7 @@ export default function Home({ posts }: HomeProps) {
         <div className="flex flex-col">
           <div>
             <h1 className="text-black dark:text-white">{t('blogTitle')}</h1>
-            <h4 className="my-2 mb-8 text-description_light dark:text-description_dark">
+            <h4 className="my-2 mb-8 text-descriptionLight dark:text-descriptionDark">
               {t('blogDescription', { numberOfPosts: posts.length })}
             </h4>
           </div>

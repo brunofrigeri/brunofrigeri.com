@@ -25,26 +25,26 @@ export default function Post({
       <div className="mx-6">
         {title && <h3 className="text-black dark:text-white">{title}</h3>}
         {excerpt && (
-          <h4 className="my-1 text-description_light dark:text-description_dark">
+          <h4 className="my-1 text-descriptionLight dark:text-descriptionDark">
             {excerpt}
           </h4>
         )}
         <div className="flex flex-row justify-between items-center my-4">
           <div className="flex flex-row">
             {date && (
-              <h5 className="text-description_light dark:text-description_dark">
+              <h5 className="text-descriptionLight dark:text-descriptionDark">
                 {date}
               </h5>
             )}
-            <h5 className="text-description_light dark:text-description_dark">
+            <h5 className="text-descriptionLight dark:text-descriptionDark">
               &nbsp;&nbsp;|&nbsp;&nbsp;
             </h5>
             {reading_time && (
-              <h5 className="text-description_light dark:text-description_dark">
+              <h5 className="text-descriptionLight dark:text-descriptionDark">
                 {reading_time}
               </h5>
             )}
-            <h5 className="text-description_light dark:text-description_dark">
+            <h5 className="text-descriptionLight dark:text-descriptionDark">
               &nbsp;&nbsp;|&nbsp;&nbsp;
             </h5>
             <ViewCounter slug={slug} />

@@ -26,7 +26,7 @@ export default function BlogBySlug({ source, post }) {
     >
       <div className="max-w-3xl mx-auto">
         <h1 className="mt-6 text-black dark:text-white">{post.title}</h1>
-        <h4 className="my-6 text-description_light dark:text-description_dark">
+        <h4 className="my-6 text-descriptionLight dark:text-descriptionDark">
           {post.date}
         </h4>
         <Tags stacks={post.stacks} />

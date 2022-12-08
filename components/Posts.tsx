@@ -36,7 +36,7 @@ export default function Posts({
           )
         })
       ) : (
-        <h4 className="my-2 mb-8 text-description_light dark:text-description_dark">
+        <h4 className="my-2 mb-8 text-descriptionLight dark:text-descriptionDark">
           {t('notfound')}
         </h4>
       )}

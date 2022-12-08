@@ -20,7 +20,6 @@ export default function Button({
   target,
   href,
   rel,
-  ...props
 }: ButtonProps) {
   return (
     <a
@@ -31,8 +30,8 @@ export default function Button({
       className={
         `px-4 ${
           type === 'bordered'
-            ? 'border bg-white dark:bg-black border-primary_light dark:border-primary_dark py-1 '
-            : 'bg-primary_light dark:bg-primary_dark border-0 py-2 '
+            ? 'border bg-white dark:bg-black border-primaryLight dark:border-primaryDark py-1 '
+            : 'bg-primaryLight dark:bg-primaryDark border-0 py-2 '
         } cursor-pointer rounded px-4` + className
       }
       onClick={onClick}
@@ -40,7 +39,7 @@ export default function Button({
       <span
         className={`${
           type === 'bordered'
-            ? 'text-primary_light dark:text-primary_dark'
+            ? 'text-primaryLight dark:text-primaryDark'
             : 'text-white'
         }`}
       >

@@ -20,12 +20,12 @@ export default function ViewCounter({ slug }: ViewCounterProps) {
   const views = data?.total
 
   const LoadingViews = (
-    <div className="h-px w-4 bg-description_light dark:bg-description_dark mr-2" />
+    <div className="h-px w-4 bg-descriptionLight dark:bg-descriptionDark mr-2" />
   )
 
   return (
     <div className="flex items-center justify-center">
-      <h5 className="flex flex-row items-center justify-center text-description_light dark:text-description_dark">
+      <h5 className="flex flex-row items-center justify-center text-descriptionLight dark:text-descriptionDark">
         {!data && LoadingViews}
         {t('views', { views })}
       </h5>

@@ -64,7 +64,7 @@ button:focus {
 }
 
 .prose p > code {
-  @apply border rounded-sm m-1 p-1 bg-primary_light bg-opacity-50 dark:bg-primary_dark dark:bg-opacity-50
+  @apply border rounded-sm m-1 p-1 bg-primaryLight bg-opacity-50 dark:bg-primaryDark dark:bg-opacity-50
 }
 
 .prose a {
@@ -81,7 +81,7 @@ button:focus {
 }
 
 .prose pre {
-  @apply bg-primary_light bg-opacity-10 dark:bg-primary_dark dark:bg-opacity-10 p-4 overflow-auto border border-gray-200 dark:border-gray-700 dark:bg-gray-900 my-4;
+  @apply bg-primaryLight bg-opacity-10 dark:bg-primaryDark dark:bg-opacity-10 p-4 overflow-auto border border-gray-200 dark:border-gray-700 dark:bg-gray-900 my-4;
 }
 
 .prose code {
@@ -103,7 +103,7 @@ button:focus {
 }
 
 .token.string {
-  @apply text-green_text
+  @apply text-greenToken
 }
 
 .token.function,

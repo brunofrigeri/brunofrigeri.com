@@ -58,9 +58,9 @@ export default function Container({
     const isLight = theme === 'light'
 
     return isLight ? (
-      <FaMoon color={fullConfig.theme.colors['dark_toggle']} />
+      <FaMoon color={fullConfig.theme.colors['toggleDark']} />
     ) : (
-      <FaSun color={fullConfig.theme.colors['light_toggle']} />
+      <FaSun color={fullConfig.theme.colors['toggleLight']} />
     )
   }, [mounted, theme, fullConfig])
 
@@ -106,7 +106,7 @@ export default function Container({
             <h2 className="text-lg text-black dark:text-white">
               Bruno Frigeri
             </h2>
-            <p className="text-description_light dark:text-description_dark">
+            <p className="text-descriptionLight dark:text-descriptionDark">
               {t('description')}
             </p>
           </div>
@@ -123,7 +123,7 @@ export default function Container({
                     {option.name}
                   </Link>
                   {router.pathname === option.path ? (
-                    <div className="mx-2 h-0.5 bg-primary_light dark:bg-primary_dark" />
+                    <div className="mx-2 h-0.5 bg-primaryLight dark:bg-primaryDark" />
                   ) : (
                     <div className="mx-2 h-0.5" />
                   )}
@@ -134,7 +134,7 @@ export default function Container({
             aria-label="Toggle Dark Mode"
             type="button"
             onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-            className="w-7 h-7 bg-light_toggle dark:bg-dark_toggle rounded mx-8 flex justify-center items-center focus:outline-none"
+            className="w-7 h-7 bg-toggleLight dark:bg-toggleDark rounded mx-8 flex justify-center items-center focus:outline-none"
           >
             {renderThemeIcon()}
           </button>
@@ -146,7 +146,7 @@ export default function Container({
       <footer className="max-w-4xl flex flex-row justify-between text-black dark:text-white mx-auto items-center w-full my-8">
         <span className="md:text-sm">
           © {currentYear}. {t('madeBy')}&nbsp;
-          <span className="md:text-sm text-primary_light dark:text-primary_dark">
+          <span className="md:text-sm text-primaryLight dark:text-primaryDark">
             {t('me')}.
           </span>
         </span>

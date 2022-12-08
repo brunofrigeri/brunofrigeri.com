@@ -1,7 +1,6 @@
-import Image from 'next/image'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { FaSearch } from 'react-icons/fa'
+import { AiOutlineSearch } from 'react-icons/ai'
 
 interface SearchProps {
   value?: string
@@ -12,14 +11,17 @@ export default function Search({ value, setValue }: SearchProps) {
   const { t } = useTranslation('home')
 
   return (
-    <div className="flex flex-row items-center w-full rounded-lg border">
+    <div className="flex flex-row items-center w-full rounded-full border">
       <div className="flex p-2">
-        <FaSearch className="text-description_light dark:text-description_dark" />
+        <AiOutlineSearch
+          size={25}
+          className="text-descriptionLight dark:text-descriptionDark"
+        />
       </div>
       <input
         value={value}
         onChange={(e) => setValue(e.currentTarget.value)}
-        className="w-full font-custom placeholder-search_light dark:placeholder-search_dark text-search_light dark:text-search_dark"
+        className="w-full font-light placeholder-searchLight dark:placeholder-searchDark"
         placeholder={t('search')}
       ></input>
     </div>

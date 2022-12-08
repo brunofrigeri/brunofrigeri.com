@@ -18,7 +18,7 @@ export default function Tags({ stacks }: TagsProps) {
         stacks.map((stack, index) => (
           <div
             key={index}
-            className={`bg-light_toggle dark:bg-dark_toggle p-1.5 rounded-xl  mr-2`}
+            className={`bg-toggleLight dark:bg-toggleDark p-1.5 rounded-xl  mr-2`}
           >
             <p
               key={index}
