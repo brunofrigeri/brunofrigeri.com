@@ -53,11 +53,12 @@ export default function Container({
   }, [])
 
   const renderThemeIcon = useCallback(() => {
-    if (!mounted || !fullConfig) return null
+    if (!mounted) return null
 
-    const isLight = theme === 'light'
+    console.log('TESTING', theme, fullConfig)
+    // const isLight = theme === 'light'
 
-    return isLight ? (
+    return theme === 'light' ? (
       <FaMoon color={fullConfig.theme.colors['toggleDark']} />
     ) : (
       <FaSun color={fullConfig.theme.colors['toggleLight']} />
