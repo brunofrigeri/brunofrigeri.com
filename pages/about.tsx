@@ -29,16 +29,19 @@ export default function About() {
     [theme, fullConfig]
   )
 
-  const skills: Array<React.ReactElement> = [
-    <FaReact key="react" size={50} color={iconColor} />,
-    <FaNode key="node" size={50} color={iconColor} />,
-    <SiTypescript key="ts" size={50} color={iconColor} />,
-    <SiJavascript key="js" size={50} color={iconColor} />,
-    <SiNextdotjs key="next" size={50} color={iconColor} />,
-    <SiApollographql key="apollo" size={50} color={iconColor} />,
-    <SiGraphql key="graphql" size={50} color={iconColor} />,
-    <SiGatsby key="gatsby" size={50} color={iconColor} />,
-  ]
+  const skills: Array<React.ReactElement> = useMemo(
+    () => [
+      <FaReact key="react" size={50} color={iconColor} />,
+      <FaNode key="node" size={50} color={iconColor} />,
+      <SiTypescript key="ts" size={50} color={iconColor} />,
+      <SiJavascript key="js" size={50} color={iconColor} />,
+      <SiNextdotjs key="next" size={50} color={iconColor} />,
+      <SiApollographql key="apollo" size={50} color={iconColor} />,
+      <SiGraphql key="graphql" size={50} color={iconColor} />,
+      <SiGatsby key="gatsby" size={50} color={iconColor} />,
+    ],
+    [iconColor]
+  )
 
   const onEmailSentPress = () => {
     const email = 'bpiraja97@gmail.com'

@@ -53,7 +53,7 @@ export default function Container({
   }, [])
 
   const renderThemeIcon = useCallback(() => {
-    if (!mounted) return null
+    if (!mounted || !fullConfig) return null
 
     const isLight = theme === 'light'
 
