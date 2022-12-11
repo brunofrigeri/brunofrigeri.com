@@ -54,8 +54,6 @@ export default function Container({
   const renderThemeIcon = useCallback(() => {
     if (!mounted) return null
 
-    console.log('TESTING', theme, mounted)
-
     return theme === 'light' ? (
       <FaMoon color={fullConfig.theme.colors['toggleDark']} />
     ) : (
