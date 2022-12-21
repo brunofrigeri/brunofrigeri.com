@@ -1,14 +1,17 @@
-const { i18n } = require('./next-i18next.config')
-const withMDX = require('@next/mdx')({
+import remarkHtml from 'remark-html'
+import remarkPrism from 'remark-prism'
+import mdx from '@next/mdx'
+
+const withMDX = mdx({
   extension: /\.mdx?$/,
   options: {
-    remarkPlugins: [],
+    remarkPlugins: [remarkHtml, remarkPrism],
     rehypePlugins: [],
     providerImportSource: '@mdx-js/react',
   },
 })
 
-module.exports = withMDX({
+export default withMDX({
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
@@ -34,5 +37,8 @@ module.exports = withMDX({
     }
   },
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
-  i18n,
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'pt-BR'],
+  },
 })

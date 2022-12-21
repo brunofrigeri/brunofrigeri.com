@@ -5,6 +5,7 @@ import readingTime from 'reading-time'
 import { format } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'
 import en from 'date-fns/locale/en-US'
+import { storage } from './firebase'
 
 interface IReadTimeResults {
   text: string
@@ -166,40 +167,52 @@ export const getLatestsPosts = (locale: string): Array<Post> => {
   } else return []
 }
 
-export const getAllPostSlugs = () => {
-  if (fs.existsSync(postDirectory)) {
-    const fileNames = getFileNamesByLocale() as {
-      locale: string
-      fileName: string
-    }[]
+export const getAllPostSlugs = async () => {
+  const fileNames = await storage.bucket().getFiles({})
+  const slugs = fileNames[0]
+    .map((item) => {
+      const [locale, fileName] = item.name.split('/')
 
-    const slugs = fileNames.map(({ fileName, locale }) => {
+      if (!fileName) {
+        return undefined
+      }
+
       return {
         params: {
           slug: fileName.replace('.mdx', ''),
+          locale: locale,
         },
-        locale,
       }
     })
+    .filter(Boolean)
 
-    return slugs
-  } else {
-    return []
-  }
+  return slugs
 }
 
 export const getPostBySlug = async (slug: string, locale: string) => {
-  const postLocaleDirectory = getPostLocaleDirectory(locale)
+  const filePath = locale + '/' + slug + '.mdx'
+  const fileContent = await storage.bucket().file(filePath).get()
 
-  const fullPath = path.join(postLocaleDirectory, `${slug}.mdx`)
-  const postContent = fs.readFileSync(fullPath, 'utf8')
+  const postContent = await fileContent[0].download()
+  const body = postContent[0].toString('utf8')
 
-  const { data, content } = matter(postContent)
-
-  const front_matter = formatData(data, content, locale)
+  // Parse body of mdx file
+  const { data, content } = matter(body)
+  const frontMatter = formatData(data, content, locale)
 
   return {
     slug,
-    ...front_matter,
+    ...frontMatter,
   }
+
+  // const postContent = storage.bucket().
+  // const postLocaleDirectory = getPostLocaleDirectory(locale)
+  // const fullPath = path.join(postLocaleDirectory, `${slug}.mdx`)
+  // const postContent = fs.readFileSync(fullPath, 'utf8')
+  // const { data, content } = matter(postContent)
+  // const front_matter = formatData(data, content, locale)
+  // return {
+  //   slug,
+  //   ...front_matter,
+  // }
 }

@@ -8,7 +8,11 @@ if (!admin.apps.length) {
       clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
     }),
     databaseURL: 'https://brunofrigeri-cbdf3-default-rtdb.firebaseio.com/',
+    storageBucket: 'brunofrigeri-cbdf3.appspot.com',
   })
 }
 
-export default admin.database()
+const database = admin.database()
+const storage = admin.storage()
+
+export { database, storage }

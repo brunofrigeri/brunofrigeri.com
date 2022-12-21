@@ -40,7 +40,7 @@ export default function BlogBySlug({ source, post }) {
 }
 
 export async function getStaticPaths() {
-  const paths = getAllPostSlugs()
+  const paths = await getAllPostSlugs()
 
   if (!paths)
     return {
