@@ -35,7 +35,7 @@ const Mdx = () => {
 
   const onPublish = async () => {
     await octokit.request('POST /repos/{owner}/{repo}/dispatches', {
-      owner: 'Bruno Frigeri',
+      owner: 'brunofrigeri',
       repo: 'brunofrigeri.com',
       event_type: 'TEST_EVENT',
       client_payload: {

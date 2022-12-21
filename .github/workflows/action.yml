@@ -2,6 +2,9 @@ name: repo dispatch example
 
 on: [repository_dispatch]
 
+permissions:
+    actions: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
