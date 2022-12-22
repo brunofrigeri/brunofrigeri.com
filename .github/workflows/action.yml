@@ -19,4 +19,4 @@ jobs:
           python ./scripts/mdx.py -d $CLIENT_PAYLOAD
 
         env:
-          CLIENT_PAYLOAD: ${{ toJSON(github.event.client_payload) }}
+          CLIENT_PAYLOAD: ${{ toJson(github.event.client_payload) }}
