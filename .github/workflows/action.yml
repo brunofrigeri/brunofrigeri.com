@@ -12,4 +12,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3      
       - name: Echo github event
-        run: echo ${{ toJson(github.event.client_payload) }}
+        run: echo $CLIENT_PAYLOAD
+        env:
+          CLIENT_PAYLOAD: ${{ toJSON(github.event.client_payload) }}
