@@ -14,4 +14,4 @@ jobs:
       - uses: actions/setup-python@v4
       - name: execute py script
         run: |
-          python ./scripts/mdx.py github.event.client_payload
+          python ./scripts/mdx.py ${{github.event.client_payload}}
