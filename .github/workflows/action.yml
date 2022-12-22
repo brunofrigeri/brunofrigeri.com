@@ -15,6 +15,5 @@ jobs:
       - name: execute py script
         run: |
           python ./scripts/mdx.py $CLIENT_PAYLOAD
-
         env:
           CLIENT_PAYLOAD: ${{ github.event.client_payload }}
