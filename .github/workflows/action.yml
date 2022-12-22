@@ -12,9 +12,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3            
       - uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-          cache: 'pip' # caching pip dependencies
       - name: execute py script
         run: |
           python ./scripts/mdx.py $CLIENT_PAYLOAD
