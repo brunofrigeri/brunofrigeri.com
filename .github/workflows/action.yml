@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: dispatch trigger      
-      - env:
-          MESSAGE: ${{ github.event }}
-        run: echo $MESSAGE
+      - name: dispatch trigger
+        run: |
+          echo "repository_dispatch triggered"
