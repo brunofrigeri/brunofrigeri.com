@@ -12,5 +12,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3            
       - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
       - name: execute py script
-        run: python ./scripts/mdx.py ${{ toJson(github.event.client_payload) }}
+        run: |
+          python ./scripts/mdx.py -d $CLIENT_PAYLOAD
+
+        env:
+          CLIENT_PAYLOAD: ${{ toJSON(github.event.client_payload) }}
