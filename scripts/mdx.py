@@ -1,7 +1,6 @@
-import sys,json
+import sys
 
 def runMDXFile(args):
-    inputs = json.loads(args)
-    print("New file was created with: ", inputs)
+    print("New file was created with: ", args)
 
-runMDXFile(sys.argv[1])
+runMDXFile(sys.argv)
