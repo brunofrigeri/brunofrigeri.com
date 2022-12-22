@@ -15,11 +15,9 @@ jobs:
         with:
           python-version: '3.9'
           cache: 'pip' # caching pip dependencies
-      - name: Echo github event
+      - name: execute py script
         run: |
-          ./scripts/mdx.py
-        with:
-          args: $CLIENT_PAYLOAD
+          python ./scripts/mdx.py $CLIENT_PAYLOAD
 
         env:
           CLIENT_PAYLOAD: ${{ toJSON(github.event.client_payload) }}
