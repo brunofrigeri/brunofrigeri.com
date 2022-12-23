@@ -84,6 +84,10 @@ const Mdx = () => {
                   onFrontMatterChange('excerpt', event.currentTarget.value)
                 }
               />
+              <p className="py-2">
+                Remember of avoid using quotation marks, its breaking the
+                stringified JSON!
+              </p>
             </div>
             <MDXTextArea value={rawMdx} setValue={setRawMdx} />
           </div>
