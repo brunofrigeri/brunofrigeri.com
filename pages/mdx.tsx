@@ -39,10 +39,13 @@ const Mdx = () => {
       repo: 'brunofrigeri.com',
       event_type: 'TEST_EVENT',
       client_payload: {
-        ...frontMatter,
-        date: format(new Date(), 'MM/dd/yyyy'),
-        author: 'Bruno Frigeri',
-        locale: 'en',
+        frontMatter: {
+          ...frontMatter,
+          date: format(new Date(), 'MM/dd/yyyy'),
+          author: 'Bruno Frigeri',
+          locale: 'en',
+        },
+        mdx: rawMdx,
       },
     })
   }
