@@ -28,6 +28,6 @@ jobs:
         run: |
           git config --global user.name "Bruno Frigeri"
           git config --global user.email "bpiraja97@gmail.com"
-          gir add \*.mdx
+          git add \*.mdx
           git commit -a -m "merge: add new article to blog"
           git push
