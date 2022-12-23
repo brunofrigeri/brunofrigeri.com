@@ -15,6 +15,7 @@ const MDXTextArea = ({ value, setValue }: MDXTextAreaProps) => {
     <textarea
       ref={inputRef}
       name="mdxTextArea"
+      placeholder="Write your post content here..."
       className="border border-black w-full resize-none p-4 overflow-hidden"
       value={value}
       onChange={(event) => setValue(event.currentTarget.value)}
