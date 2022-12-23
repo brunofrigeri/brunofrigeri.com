@@ -4,6 +4,7 @@ on: [repository_dispatch]
 
 permissions:
     actions: write
+    repository-projects: write
 
 jobs:
   build:
