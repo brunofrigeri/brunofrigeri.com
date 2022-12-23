@@ -14,7 +14,12 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: '3.9'
-      - name: execute py script
+      - name: Execute py script
         run: python ./scripts/mdx.py -d '${{ toJson(github.event.client_payload) }}'
         env:
           CLIENT_PAYLOAD: ${{ toJson(github.event.client_payload) }}
+      - name: Adding the new article
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: '*.mdx'
+          message: 'merge: add new article to blog'

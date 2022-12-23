@@ -1,8 +1,23 @@
 import sys
 import json
 
-def runMDXFile(args):
+def createArticle(args):
     inputs = json.loads(args[2])
-    print("New file was created with: ", inputs)
+    frontMatter = inputs['frontMatter']
+    mdx = inputs['mdx']
 
-runMDXFile(sys.argv)
+    locale = inputs['frontMatter']['locale']
+    slug = inputs['frontMatter']['slug']
+
+    path = 'posts/' + locale + '/' + slug + '.mdx'    
+
+    with open(path, 'w') as f:
+        f.write('---')
+        f.write('\n')
+        for key,value in frontMatter.items():
+            f.write('%s: %s\n' % (key, value))
+        f.write('---')
+        f.write('\n')
+        f.write(mdx)
+
+createArticle(sys.argv)

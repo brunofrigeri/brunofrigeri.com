@@ -7,6 +7,7 @@ import { format } from 'date-fns'
 import { FaPlus } from 'react-icons/fa'
 import Head from 'next/head'
 import octokit from '../lib/octokit'
+import { slugify } from '../helpers/slugify'
 
 const Mdx = () => {
   const [frontMatter, setFrontMatter] = useState<FrontMatter | undefined>(
@@ -41,6 +42,7 @@ const Mdx = () => {
       client_payload: {
         frontMatter: {
           ...frontMatter,
+          slug: slugify(frontMatter.title),
           date: format(new Date(), 'MM/dd/yyyy'),
           author: 'Bruno Frigeri',
           locale: 'en',
