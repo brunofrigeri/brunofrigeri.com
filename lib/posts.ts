@@ -52,7 +52,7 @@ const formatData = (data, content, locale) => {
     author: data.author,
     content,
     title: data.title,
-    stacks: data.stacks,
+    stacks: data?.stacks ?? [],
     locale: data.locale,
     excerpt: data.excerpt,
     date: formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1),

@@ -29,7 +29,7 @@ export default function BlogBySlug({ source, post }) {
         <h4 className="my-6 text-descriptionLight dark:text-descriptionDark">
           {post.date}
         </h4>
-        <Tags stacks={post.stacks} />
+        {post?.stacks.length && <Tags stacks={post.stacks} />}
       </div>
       <article
         className="max-w-sm md:max-w-3xl prose lg:prose-xl"

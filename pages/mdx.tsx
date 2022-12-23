@@ -46,7 +46,6 @@ const Mdx = () => {
           date: format(new Date(), 'MM/dd/yyyy'),
           author: 'Bruno Frigeri',
           locale: 'en',
-          stacks: [],
         },
         mdx: rawMdx,
       },
