@@ -20,7 +20,9 @@ const Mdx = () => {
 
   useEffect(() => {
     const compileToString = async () => {
-      const source = await remark().use(remarkHtml).process(rawMdx)
+      const source = await remark()
+        .use(remarkHtml, { sanitize: false, quoteSmart: true })
+        .process(rawMdx)
       setCompiledMdx(source)
     }
 
@@ -66,12 +68,12 @@ const Mdx = () => {
       <div className="m-5">
         <div className="w-full grid grid-cols-2">
           <div className="mx-5">
-            <div className="flex flex-col p-5 border border-black border-b-0">
+            <div className="flex flex-col border-black dark:border-white border border-b-0">
               <input
                 name="title"
                 type="text"
                 placeholder="New post title here..."
-                className="text-black font-bold text-4xl"
+                className="dark:text-white text-black font-bold text-4xl p-5"
                 onChange={(event) =>
                   onFrontMatterChange('title', event.currentTarget.value)
                 }
@@ -80,14 +82,11 @@ const Mdx = () => {
                 name="excerpt"
                 type="text"
                 placeholder="New post description here..."
+                className="dark:text-white text-black px-5 pt-1 pb-5"
                 onChange={(event) =>
                   onFrontMatterChange('excerpt', event.currentTarget.value)
                 }
               />
-              <p className="py-2">
-                Remember of avoid using quotation marks, its breaking the
-                stringified JSON!
-              </p>
             </div>
             <MDXTextArea value={rawMdx} setValue={setRawMdx} />
           </div>
