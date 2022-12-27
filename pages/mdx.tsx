@@ -8,13 +8,14 @@ import { FaPlus } from 'react-icons/fa'
 import Head from 'next/head'
 import octokit from '../lib/octokit'
 import { slugify } from '../helpers/slugify'
+import ResizableTextArea from '../components/ResizableTextArea'
 
 const Mdx = () => {
   const [frontMatter, setFrontMatter] = useState<FrontMatter | undefined>(
     undefined
   )
   const [rawMdx, setRawMdx] = useState<string>('')
-  const [compiledMdx, setCompiledMdx] = useState(null)
+  const [, setCompiledMdx] = useState(null)
 
   const isDev = process.env.NODE_ENV === 'development'
 
@@ -40,7 +41,7 @@ const Mdx = () => {
     await octokit.request('POST /repos/{owner}/{repo}/dispatches', {
       owner: 'brunofrigeri',
       repo: 'brunofrigeri.com',
-      event_type: 'TEST_EVENT',
+      event_type: 'CREATE_POST',
       client_payload: {
         frontMatter: {
           ...frontMatter,
@@ -65,37 +66,29 @@ const Mdx = () => {
         <meta property="og:title" content="MDX Editor" />
         <meta property="og:image" />
       </Head>
-      <div className="m-5">
-        <div className="w-full grid grid-cols-2">
-          <div className="mx-5">
-            <div className="flex flex-col border-black dark:border-white border border-b-0">
-              <input
-                name="title"
-                type="text"
-                placeholder="New post title here..."
-                className="dark:text-white text-black font-bold text-4xl p-5"
-                onChange={(event) =>
-                  onFrontMatterChange('title', event.currentTarget.value)
-                }
-              />
-              <input
-                name="excerpt"
-                type="text"
-                placeholder="New post description here..."
-                className="dark:text-white text-black px-5 pt-1 pb-5"
-                onChange={(event) =>
-                  onFrontMatterChange('excerpt', event.currentTarget.value)
-                }
-              />
-            </div>
-            <MDXTextArea value={rawMdx} setValue={setRawMdx} />
+      <div className="flex justify-center min-h-screen">
+        <div className="flex flex-col m-5 w-1/2">
+          <div className="flex-initial flex flex-col border-black dark:border-white border border-b-0 mt-5">
+            <ResizableTextArea
+              value={frontMatter?.title}
+              placeholder="New post title here..."
+              className="dark:text-white text-black font-bold text-4xl p-5"
+              setValue={(value) => onFrontMatterChange('title', value)}
+            />
+            <ResizableTextArea
+              value={frontMatter?.excerpt}
+              placeholder="New post description here..."
+              className="dark:text-white text-black px-5 pt-1 pb-5 resize-none"
+              setValue={(value) => onFrontMatterChange('excerpt', value)}
+            />
           </div>
-          {!!compiledMdx && (
+          <MDXTextArea value={rawMdx} setValue={setRawMdx} />
+          {/* {!!compiledMdx && (
             <article
               className="prose"
               dangerouslySetInnerHTML={{ __html: compiledMdx }}
             />
-          )}
+          )} */}
         </div>
         {isDev && (
           <button

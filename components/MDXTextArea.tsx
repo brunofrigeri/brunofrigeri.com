@@ -1,5 +1,4 @@
 import React, { useRef } from 'react'
-import useAutosizeTextArea from '../hooks/useAutosizeTextArea'
 
 interface MDXTextAreaProps {
   value: string
@@ -8,8 +7,6 @@ interface MDXTextAreaProps {
 
 const MDXTextArea = ({ value, setValue }: MDXTextAreaProps) => {
   const inputRef = useRef<HTMLTextAreaElement>(null)
-
-  useAutosizeTextArea(inputRef.current, value)
 
   const handleTabKey = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.code === 'Tab') {
@@ -22,9 +19,8 @@ const MDXTextArea = ({ value, setValue }: MDXTextAreaProps) => {
   return (
     <textarea
       ref={inputRef}
-      name="mdxTextArea"
       placeholder="Write your post content here..."
-      className="border dark:border-white border-black w-full resize-none p-4 overflow-hidden"
+      className="flex-auto border dark:border-white border-black w-full resize-none p-4"
       value={value}
       onChange={(event) => setValue(event.currentTarget.value)}
       onKeyDown={handleTabKey}
