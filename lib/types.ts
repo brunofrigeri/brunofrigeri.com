@@ -5,6 +5,22 @@ export type FrontMatter = {
   excerpt: string
   date: string
   author: string
-  tags: Tag[]
+  slug: string
+  tags?: Tag[]
   locale: 'pt-BR' | 'en'
+}
+
+export type ReadTimeResults = {
+  text: string
+  time: number
+  words: number
+  minutes: number
+}
+
+export type Post = {
+  frontMatter: FrontMatter
+  content: string
+  readingTime: ReadTimeResults
+  featuredImage?: string
+  views?: number
 }

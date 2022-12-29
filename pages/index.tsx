@@ -1,23 +1,24 @@
 import Button from '../components/Button'
 import Container from '../containers/Container'
 import React, { useCallback, useEffect, useState } from 'react'
-import { getAllPosts, Post } from '../lib/posts'
+import { getAllPosts } from '../lib/posts'
 import Posts from '../components/Posts'
 import Fuse from 'fuse.js'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'react-i18next'
 import Search from '../components/Search'
 import { SSRConfig } from 'next-i18next'
+import { Post } from '../lib/types'
 
 interface HomeProps extends SSRConfig {
-  posts: Array<Post>
+  posts: Post[]
 }
 
 const options = {
   includeMatches: true,
   matchAllOnEmptyQuery: true,
   threshold: 0.4,
-  keys: ['title', 'excerpt'],
+  keys: ['frontMatter.title', 'frontMatter.excerpt'],
 }
 
 export default function Home({ posts }: HomeProps) {
@@ -30,7 +31,7 @@ export default function Home({ posts }: HomeProps) {
   const { t } = useTranslation('home')
 
   const [search, setSearch] = useState<string>('')
-  const [filteredPosts, setFilteredPosts] = useState<Array<Post>>([])
+  const [filteredPosts, setFilteredPosts] = useState<Post[]>([])
 
   const setPosts = useCallback(() => {
     if (search.length > 0) {

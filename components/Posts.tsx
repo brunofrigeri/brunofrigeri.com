@@ -1,13 +1,13 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Post as PostType } from '../lib/posts'
+import { Post as PostType } from '../lib/types'
 import Button from './Button'
 import Post from './Post'
 
 interface PostsProps {
   title: string
   hasButton?: boolean
-  posts: Array<PostType>
+  posts?: PostType[]
   onSeeAllPress?(): void
 }
 
@@ -30,10 +30,8 @@ export default function Posts({
         )}
       </div>
       {posts?.length ? (
-        posts.map((post, index) => {
-          return (
-            <Post {...post} key={index} reading_time={post.reading_time.text} />
-          )
+        posts.map((post) => {
+          return <Post {...post} key={post.frontMatter.slug} />
         })
       ) : (
         <h4 className="my-2 mb-8 text-descriptionLight dark:text-descriptionDark">

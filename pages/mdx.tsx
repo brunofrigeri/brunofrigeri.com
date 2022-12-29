@@ -9,13 +9,24 @@ import Head from 'next/head'
 import octokit from '../lib/octokit'
 import { slugify } from '../helpers/slugify'
 import ResizableTextArea from '../components/ResizableTextArea'
+import Article from '../components/Article'
+
+const defaultFrontMatter: FrontMatter = {
+  title: '',
+  excerpt: '',
+  date: format(new Date(), 'MM/dd/yyyy'),
+  author: 'Bruno Frigeri',
+  slug: '',
+  locale: 'en',
+  tags: [],
+}
 
 const Mdx = () => {
   const [frontMatter, setFrontMatter] = useState<FrontMatter | undefined>(
-    undefined
+    defaultFrontMatter
   )
   const [rawMdx, setRawMdx] = useState<string>('')
-  const [, setCompiledMdx] = useState(null)
+  const [compiledMdx, setCompiledMdx] = useState(null)
 
   const isDev = process.env.NODE_ENV === 'development'
 
@@ -66,8 +77,8 @@ const Mdx = () => {
         <meta property="og:title" content="MDX Editor" />
         <meta property="og:image" />
       </Head>
-      <div className="flex justify-center min-h-screen">
-        <div className="flex flex-col m-5 w-1/2">
+      <div className="flex flex-row min-h-screen">
+        <div className="flex flex-col m-5 w-full">
           <div className="flex-initial flex flex-col border-black dark:border-white border border-b-0 mt-5">
             <ResizableTextArea
               value={frontMatter?.title}
@@ -83,12 +94,9 @@ const Mdx = () => {
             />
           </div>
           <MDXTextArea value={rawMdx} setValue={setRawMdx} />
-          {/* {!!compiledMdx && (
-            <article
-              className="prose"
-              dangerouslySetInnerHTML={{ __html: compiledMdx }}
-            />
-          )} */}
+        </div>
+        <div className="w-full">
+          <Article content={compiledMdx} frontMatter={frontMatter} />
         </div>
         {isDev && (
           <button

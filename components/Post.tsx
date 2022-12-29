@@ -1,25 +1,12 @@
 import Link from 'next/link'
 import React from 'react'
+import { Post as PostType } from '../lib/types'
 import ViewCounter from './ViewCounter'
 
-interface PostProps {
-  slug: string
-  title?: string
-  reading_time?: string
-  excerpt?: string
-  date?: string
-  stacks?: Array<string>
-  featured_image?: string
-  locale: string
-}
-
 export default function Post({
-  slug,
-  title,
-  excerpt,
-  date,
-  reading_time,
-}: PostProps) {
+  frontMatter: { slug, title, excerpt, date },
+  readingTime,
+}: PostType) {
   return (
     <Link href={`/blog/${slug}`} className="flex flex-row my-8">
       <div className="mx-6">
@@ -39,9 +26,9 @@ export default function Post({
             <h5 className="text-descriptionLight dark:text-descriptionDark">
               &nbsp;&nbsp;|&nbsp;&nbsp;
             </h5>
-            {reading_time && (
+            {readingTime && (
               <h5 className="text-descriptionLight dark:text-descriptionDark">
-                {reading_time}
+                {readingTime.text}
               </h5>
             )}
             <h5 className="text-descriptionLight dark:text-descriptionDark">

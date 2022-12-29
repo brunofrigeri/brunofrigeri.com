@@ -5,43 +5,28 @@ import readingTime from 'reading-time'
 import { format } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'
 import en from 'date-fns/locale/en-US'
-
-interface IReadTimeResults {
-  text: string
-  time: number
-  words: number
-  minutes: number
-}
-
-export type Post = {
-  content: string
-  title: string
-  author: string
-  locale: string
-  excerpt: string
-  date: string
-  reading_time: IReadTimeResults
-  slug: string
-  featured_image?: string
-  stacks: Array<string>
-  views?: number
-}
+import { Post } from './types'
 
 const postDirectory = path.join(process.cwd(), 'posts')
 const postPtBRDirectory = path.join(process.cwd(), 'posts', 'pt-BR')
 const postEnDirectory = path.join(process.cwd(), 'posts', 'en')
 
-const formatData = (data, content, locale) => {
-  const reading_time = readingTime(content)
+export const formatData = (
+  data: { [key: string]: any },
+  content: string,
+  locale: string,
+  slug: string
+): Post => {
+  const readingData = readingTime(content)
 
   const isPtBrLocale = locale === 'pt-BR'
 
   const reading = isPtBrLocale
     ? {
-        ...reading_time,
-        text: reading_time.text.replace('read', 'de leitura'),
+        ...readingData,
+        text: readingData.text.replace('read', 'de leitura'),
       }
-    : reading_time
+    : readingData
 
   const formattedDate = format(new Date(data.date), 'MMMM dd, yyyy', {
     locale: isPtBrLocale ? ptBR : en,
@@ -49,15 +34,18 @@ const formatData = (data, content, locale) => {
 
   return {
     ...data,
-    author: data.author,
     content,
-    title: data.title,
-    stacks: data?.stacks ?? [],
-    locale: data.locale,
-    excerpt: data.excerpt,
-    date: formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1),
-    featured_image: data.featuredImage || '',
-    reading_time: reading,
+    frontMatter: {
+      author: data.author,
+      title: data?.title,
+      slug,
+      tags: data?.stacks ?? [],
+      locale: data.locale,
+      excerpt: data.excerpt,
+      date: formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1),
+    },
+    featuredImage: data.featuredImage || '',
+    readingTime: reading,
   }
 }
 
@@ -103,7 +91,7 @@ const getFileNamesByLocale = (
   }
 }
 
-export const getAllPosts = (locale: string): Array<Post> => {
+export const getAllPosts = (locale: string): Post[] => {
   if (fs.existsSync(postDirectory)) {
     const postLocaleDirectory = getPostLocaleDirectory(locale)
     const fileNames = getFileNamesByLocale(locale)
@@ -117,16 +105,13 @@ export const getAllPosts = (locale: string): Array<Post> => {
 
       const fileContents = fs.readFileSync(fullPath, 'utf8')
       const { data, content } = matter(fileContents)
-      const front_matter = formatData(data, content, locale)
+      const post = formatData(data, content, locale, slug)
 
-      return {
-        slug,
-        ...front_matter,
-      }
+      return post
     })
 
     return filteredData.sort((a, b) => {
-      if (new Date(a.date) < new Date(b.date)) {
+      if (new Date(a.frontMatter.date) < new Date(b.frontMatter.date)) {
         return 1
       } else {
         return -1
@@ -147,7 +132,7 @@ export const getLatestsPosts = (locale: string): Array<Post> => {
 
         const fileContents = fs.readFileSync(fullPath, 'utf8')
         const { data, content } = matter(fileContents)
-        const front_matter = formatData(data, content, locale)
+        const front_matter = formatData(data, content, locale, slug)
 
         return {
           slug,
@@ -157,7 +142,7 @@ export const getLatestsPosts = (locale: string): Array<Post> => {
       .filter((_, index) => index < 3)
 
     return filteredData.sort((a, b) => {
-      if (new Date(a.date) < new Date(b.date)) {
+      if (new Date(a.frontMatter.date) < new Date(b.frontMatter.date)) {
         return 1
       } else {
         return -1
@@ -196,10 +181,10 @@ export const getPostBySlug = async (slug: string, locale: string) => {
 
   const { data, content } = matter(postContent)
 
-  const front_matter = formatData(data, content, locale)
+  const frontMatter = formatData(data, content, locale, slug)
 
   return {
     slug,
-    ...front_matter,
+    ...frontMatter,
   }
 }

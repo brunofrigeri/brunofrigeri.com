@@ -1,43 +1,43 @@
-import { getAllPostSlugs, getPostBySlug, Post } from '../../lib/posts'
+import { getAllPostSlugs, getPostBySlug } from '../../lib/posts'
 import Container from '../../containers/Container'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import markdownToHtml from '../../lib/markdown'
-import Tags from '../../components/Tags'
 import { useRouter } from 'next/router'
 import { useLink } from '../../hooks/useLink'
 import { useEffect } from 'react'
 import { usePostViewsBySlug } from '../../hooks/usePostViewsBySlug'
+import Article from '../../components/Article'
+import { Post } from '../../lib/types'
 
-export default function BlogBySlug({ source, post }) {
+interface IBlogBySlugProps {
+  source: string
+  post: Post
+}
+
+const BlogBySlug: React.FC<IBlogBySlugProps> = ({ source, post }) => {
   const router = useRouter()
 
   const { ptBRHref, enHref } = useLink(router)
   const { postView } = usePostViewsBySlug()
 
+  const { frontMatter } = post
+
   useEffect(() => {
-    postView(post.slug, router.locale)
-  }, [post.slug, postView, router.locale])
+    postView(frontMatter.slug, router.locale)
+  }, [frontMatter.slug, postView, router.locale])
 
   return (
     <Container
-      meta_description={post.title}
+      meta_description={frontMatter.title}
       ptBRHref={ptBRHref}
       enHref={enHref}
     >
-      <div className="max-w-3xl mx-auto">
-        <h1 className="mt-6 text-black dark:text-white">{post.title}</h1>
-        <h4 className="my-6 text-descriptionLight dark:text-descriptionDark">
-          {post.date}
-        </h4>
-        {post?.stacks.length > 0 && <Tags stacks={post.stacks} />}
-      </div>
-      <article
-        className="max-w-sm md:max-w-3xl prose lg:prose-xl"
-        dangerouslySetInnerHTML={{ __html: source }}
-      />
+      <Article frontMatter={frontMatter} content={source} />
     </Container>
   )
 }
+
+export default BlogBySlug
 
 export async function getStaticPaths() {
   const paths = getAllPostSlugs()
