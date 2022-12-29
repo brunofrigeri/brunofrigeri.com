@@ -36,7 +36,7 @@ export default function Container({
 
   const { t } = useTranslation('common')
 
-  const menuOptions: Array<MenuOption> = [
+  const menuOptions: MenuOption[] = [
     {
       name: t('home'),
       path: '/',
@@ -44,6 +44,10 @@ export default function Container({
     {
       name: t('about'),
       path: '/about',
+    },
+    {
+      name: t('projects'),
+      path: '/projects',
     },
   ]
 
@@ -85,7 +89,7 @@ export default function Container({
         />
         <meta
           property="og:title"
-          content={'Bruno Frigeri - Software Developer'}
+          content="Bruno Frigeri - Software Developer"
         />
         <meta property="og:image" />
       </Head>
@@ -110,9 +114,9 @@ export default function Container({
         </Link>
         <div className="flex items-center">
           {menuOptions?.length &&
-            menuOptions.map((option, index) => {
+            menuOptions.map((option) => {
               return (
-                <div key={index}>
+                <div key={option.path}>
                   <Link
                     href={option.path}
                     className="md:text-base mx-2 text-black dark:text-white"
