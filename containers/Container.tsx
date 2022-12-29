@@ -1,9 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Head from 'next/head'
 import Link from 'next/link'
 import images from '../public/assets/images'
-import { FaMoon, FaSun } from 'react-icons/fa'
 import { useRouter } from 'next/dist/client/router'
 import { useTheme } from 'next-themes'
 import { useTranslation } from 'react-i18next'
@@ -11,6 +10,7 @@ import { useLinkProps } from '../hooks/useLink'
 import resolveConfig from 'tailwindcss/resolveConfig'
 import tailwindConfig from '../tailwind.config.js'
 import { Config } from 'tailwindcss/types/config'
+import ThemeButton from '../components/ThemeButton'
 
 interface ContainerProps extends Partial<useLinkProps> {
   children?: React.ReactNode[] | React.ReactNode
@@ -55,20 +55,10 @@ export default function Container({
     setMounted(true)
   }, [])
 
-  const renderThemeIcon = useCallback(() => {
-    if (!mounted) return null
-
-    return theme === 'light' ? (
-      <FaMoon color={fullConfig.theme.colors['toggleDark']} />
-    ) : (
-      <FaSun color={fullConfig.theme.colors['toggleLight']} />
-    )
-  }, [mounted, theme, fullConfig])
-
   return (
     <div
       id="container"
-      className="flex flex-col min-h-screen bg-white dark:bg-black"
+      className="flex flex-col min-h-screen transition-colors bg-white dark:bg-black"
     >
       <Head>
         <title>Bruno Frigeri</title>
@@ -78,7 +68,7 @@ export default function Container({
           rel="canonical"
           href={`https://brunofrigeri.com${router.asPath}`}
         />
-        <meta property="og:type" content={'website'} />
+        <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Bruno Frigeri" />
         <meta
           property="og:description"
@@ -93,7 +83,7 @@ export default function Container({
         />
         <meta property="og:image" />
       </Head>
-      <nav className="max-w-4xl flex flex-row justify-between bg-white dark:bg-black mx-auto items-center w-full my-8">
+      <nav className="max-w-4xl flex flex-row justify-between bg-white transition-colors dark:bg-black mx-auto items-center w-full my-8">
         <Link href="/" className="cursor-pointer flex flex-row items-center">
           <Image
             className="rounded-full"
@@ -115,33 +105,34 @@ export default function Container({
         <div className="flex items-center">
           {menuOptions?.length &&
             menuOptions.map((option) => {
+              const isCurrentOption = router.pathname === option.path
+
               return (
-                <div key={option.path}>
+                <div
+                  key={option.path}
+                  className="rounded hover:bg-gray-100 hover:dark:bg-gray-600 transition-all px-2 py-1 mx-2"
+                >
                   <Link
                     href={option.path}
-                    className="md:text-base mx-2 text-black dark:text-white"
+                    className={`md:text-base text-black dark:text-white ${
+                      isCurrentOption ? 'font-bold' : 'opacity-70'
+                    }`}
                   >
                     {option.name}
                   </Link>
-                  {router.pathname === option.path ? (
-                    <div className="mx-2 h-0.5 bg-primaryLight dark:bg-primaryDark" />
-                  ) : (
-                    <div className="mx-2 h-0.5" />
-                  )}
                 </div>
               )
             })}
-          <button
-            aria-label="Toggle Dark Mode"
-            type="button"
-            onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-            className="w-7 h-7 bg-toggleLight dark:bg-toggleDark rounded mx-8 flex justify-center items-center focus:outline-none"
-          >
-            {renderThemeIcon()}
-          </button>
+          <ThemeButton
+            theme={theme}
+            setTheme={setTheme}
+            lightColor={fullConfig.theme.colors['toggleDark']}
+            darkColor={fullConfig.theme.colors['toggleLight']}
+            mounted={mounted}
+          />
         </div>
       </nav>
-      <main className="flex-grow mx-auto max-w-3xl bg-white dark:bg-black">
+      <main className="flex-grow transition-colors mx-auto max-w-3xl bg-white dark:bg-black">
         {children}
       </main>
       <footer className="max-w-4xl flex flex-row justify-between text-black dark:text-white mx-auto items-center w-full my-8">
