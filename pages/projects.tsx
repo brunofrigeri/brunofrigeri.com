@@ -33,18 +33,27 @@ const Projects = () => {
               <Link
                 key={project.title}
                 href={project.href}
-                className={`flex flex-col justify-between border rounded-lg p-4 ${
+                className={`group flex flex-col justify-between border rounded-lg p-4 hover:border-primaryLight dark:hover:border-primaryDark ${
                   !isLast ? 'md:mr-4 md:mb-0 mb-4' : ''
                 }`}
               >
-                <div className="">
-                  <h2>{project.title}</h2>
-                  <p className="my-4">{project.description}</p>
+                <div>
+                  <h2 className="dark:text-white text-black group-hover:text-primaryLight dark:group-hover:text-primaryDark">
+                    {project.title}
+                  </h2>
+                  <p className="my-4 dark:text-white text-black">
+                    {project.description}
+                  </p>
                 </div>
 
                 <div className="flex flex-row items-center">
-                  <a className="mr-2 font-medium">Read more</a>
-                  <FaArrowRight size={14} />
+                  <a className="mr-2 group-hover:mr-4 font-medium dark:text-white text-black">
+                    Read more
+                  </a>
+                  <FaArrowRight
+                    className="dark:text-white text-black group-hover:text-primaryLight dark:group-hover:text-primaryDark group-hover:animate-bounceHorizontal"
+                    size={14}
+                  />
                 </div>
               </Link>
             )

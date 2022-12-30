@@ -39,6 +39,21 @@ module.exports = {
       fontFamily: {
         custom: ['Inter', ...defaultTheme.fontFamily.sans],
       },
+      keyframes: {
+        bounceHorizontal: {
+          '0%, 100%': {
+            transform: 'translate(-50%)',
+            animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)',
+          },
+          '50%': {
+            transform: 'translate(0)',
+            animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)',
+          },
+        },
+      },
+      animation: {
+        bounceHorizontal: 'bounceHorizontal 1s infinite',
+      },
     },
   },
   plugins: [
