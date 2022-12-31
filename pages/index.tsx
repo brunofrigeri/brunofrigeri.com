@@ -52,8 +52,8 @@ export default function Home({ posts }: HomeProps) {
 
   return (
     <Container>
-      <div className="flex flex-col">
-        <div className="pb-8">
+      <div>
+        <div className="inline-block pb-8">
           <h1 className="md:text-4xl text-black dark:text-white">
             {t('title')}
           </h1>
@@ -61,8 +61,8 @@ export default function Home({ posts }: HomeProps) {
             {t('description')}
           </h2>
           <Button
-            target={'_blank'}
-            rel={'noreferrer noopener'}
+            target="_blank"
+            rel="noreferrer noopener"
             onClick={onEmailSentPress}
           >
             {t('schedule')}

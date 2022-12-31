@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react'
 import Container from '../containers/Container'
-import { useTheme } from 'next-themes'
 import Button from '../components/Button'
 import { useTranslation } from 'react-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -13,34 +12,22 @@ import {
   SiGraphql,
   SiGatsby,
 } from 'react-icons/si'
-import resolveConfig from 'tailwindcss/resolveConfig'
-import tailwindConfig from '../tailwind.config.js'
-import { Config } from 'tailwindcss/types/config'
 
 export default function About() {
-  const { theme } = useTheme()
-  const fullConfig = resolveConfig(tailwindConfig as Config)
-
-  const iconColor = useMemo(
-    () =>
-      theme === 'light'
-        ? fullConfig.theme.colors['toggleDark']
-        : fullConfig.theme.colors['toggleLight'],
-    [theme, fullConfig]
-  )
+  const skillsClassName = 'text-toggleDark dark:text-toggleLight'
 
   const skills: Array<React.ReactElement> = useMemo(
     () => [
-      <FaReact key="react" size={50} color={iconColor} />,
-      <FaNode key="node" size={50} color={iconColor} />,
-      <SiTypescript key="ts" size={50} color={iconColor} />,
-      <SiJavascript key="js" size={50} color={iconColor} />,
-      <SiNextdotjs key="next" size={50} color={iconColor} />,
-      <SiApollographql key="apollo" size={50} color={iconColor} />,
-      <SiGraphql key="graphql" size={50} color={iconColor} />,
-      <SiGatsby key="gatsby" size={50} color={iconColor} />,
+      <FaReact key="react" size={50} className={skillsClassName} />,
+      <FaNode key="node" size={50} className={skillsClassName} />,
+      <SiTypescript key="ts" size={50} className={skillsClassName} />,
+      <SiJavascript key="js" size={50} className={skillsClassName} />,
+      <SiNextdotjs key="next" size={50} className={skillsClassName} />,
+      <SiApollographql key="apollo" size={50} className={skillsClassName} />,
+      <SiGraphql key="graphql" size={50} className={skillsClassName} />,
+      <SiGatsby key="gatsby" size={50} className={skillsClassName} />,
     ],
-    [iconColor]
+    []
   )
 
   const onEmailSentPress = () => {

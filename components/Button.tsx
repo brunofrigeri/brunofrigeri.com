@@ -1,4 +1,5 @@
 import React from 'react'
+import { FaArrowRight } from 'react-icons/fa'
 
 interface ButtonProps {
   children: string
@@ -9,6 +10,7 @@ interface ButtonProps {
   target?: '_blank'
   rel?: 'noreferrer noopener'
   href?: string
+  icon?: React.ReactElement
 }
 
 export default function Button({
@@ -20,6 +22,15 @@ export default function Button({
   target,
   href,
   rel,
+  icon = (
+    <FaArrowRight
+      className={
+        type === 'bordered'
+          ? 'text-primaryLight dark:text-primaryDark'
+          : 'text-white'
+      }
+    />
+  ),
 }: ButtonProps) {
   return (
     <a
@@ -28,23 +39,24 @@ export default function Button({
       target={target}
       rel={rel}
       className={
-        `px-4 ${
+        `inline-flex items-center px-4 py-2 ${
           type === 'bordered'
-            ? 'border bg-white dark:bg-black border-primaryLight dark:border-primaryDark py-1 '
-            : 'bg-primaryLight dark:bg-primaryDark border-0 py-2 '
-        } cursor-pointer rounded px-4` + className
+            ? 'border bg-white dark:bg-black border-primaryLight dark:border-primaryDark'
+            : 'bg-primaryLight dark:bg-primaryDark border-0'
+        } cursor-pointer rounded ` + className
       }
       onClick={onClick}
     >
       <span
-        className={`${
+        className={`text-lg ${
           type === 'bordered'
             ? 'text-primaryLight dark:text-primaryDark'
             : 'text-white'
-        }`}
+        } mr-2`}
       >
         {children}
       </span>
+      {icon}
     </a>
   )
 }

@@ -1,11 +1,11 @@
 {
     "title": "Hey, I'm Bruno. Nice to meet you!",
-    "description": "I'm a software developer, writer and passionate about reading and traveling. Always studying history and the most newest technologies from the Software World.",
-    "schedule": "Book a meeting with me",
+    "description": "I'm a software developer with focus on Mobile development, building world-class applications.",
+    "schedule": "Let's work together!",
     "latests": "Latest Writing",
     "all": "See all",
     "blogTitle": "Writing",
-    "blogDescription": "I started to writing in this blog about the most important technologies challenges that I've experienced. At this time I have {{ numberOfPosts }} articles about different subjects. Check it out.",
+    "blogDescription": "These blog posts were written as a way to study and share the acquired knowledge. Beyond that, it's really important to keep posts as reminders and notes for the future me. At this moment, I already written {{ numberOfPosts }} posts. You can check them below:",
     "notfound": "Sorry, but I couldn't found an article.",
     "allWriting": "All Writing",
     "search": "Search for some article"
