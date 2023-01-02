@@ -5,7 +5,7 @@
     "latests": "Latest Writing",
     "all": "See all",
     "blogTitle": "Writing",
-    "blogDescription": "These blog posts were written as a way to study and share the acquired knowledge. Beyond that, it's really important to keep posts as reminders and notes for the future me. At this moment, I already written {{ numberOfPosts }} posts. You can check them below:",
+    "blogDescription": "These blog posts were written as a way to study and share the acquired knowledge. Beyond that, it's really important to keep posts as reminders and notes for the future me. At this moment, I already wrote {{ numberOfPosts }} posts. You can check them below:",
     "notfound": "Sorry, but I couldn't found an article.",
     "allWriting": "All Writing",
     "search": "Search for some article"

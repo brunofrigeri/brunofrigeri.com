@@ -4,6 +4,7 @@ import Container from '../containers/Container'
 import { FaArrowRight } from 'react-icons/fa'
 import Link from 'next/link'
 import { Project } from '../lib/types'
+import { useTranslation } from 'react-i18next'
 
 const Projects = () => {
   const projects: Project[] = [
@@ -20,10 +21,12 @@ const Projects = () => {
     },
   ]
 
+  const { t } = useTranslation('projects')
+
   return (
     <Container>
       <div className="flex flex-col">
-        <h1 className="text-black dark:text-white">Projects</h1>
+        <h1 className="text-black dark:text-white">{t('title')}</h1>
 
         <div className="grid md:grid-cols-2 grid-cols-1 my-4">
           {projects?.map((project, index) => {
@@ -47,9 +50,9 @@ const Projects = () => {
                 </div>
 
                 <div className="flex flex-row items-center">
-                  <a className="mr-2 group-hover:mr-4 font-medium dark:text-white text-black">
+                  <div className="mr-2 group-hover:mr-4 font-medium dark:text-white text-black">
                     Read more
-                  </a>
+                  </div>
                   <FaArrowRight
                     className="dark:text-white text-black group-hover:text-primaryLight dark:group-hover:text-primaryDark group-hover:animate-bounceHorizontal"
                     size={14}
@@ -67,7 +70,7 @@ const Projects = () => {
 export const getStaticProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common'])),
+      ...(await serverSideTranslations(locale, ['projects', 'common'])),
     },
   }
 }
