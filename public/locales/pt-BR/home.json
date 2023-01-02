@@ -1,11 +1,11 @@
 {
-    "title": "Olá, eu sou Bruno. Prazer em te conhecer!",
-    "description": "Sou um Desenvolvedor de Software, escritor e leitor assíduo. Atualmente trabalhando com desenvolvimento Mobile, e, estudando as novas tecnologias Web/Mobile.",
-    "schedule": "Fale comigo",
+    "title": "Olá, sou Bruno. É um prazer te conhecer!",
+    "description": "Sou um desenvolvedor de software com foco em aplicativos Mobile, construindo aplicações de alto nível.",
+    "schedule": "Vamos trabalhar juntos!",
     "latests": "Últimos artigos",
     "all": "Ver todos",
     "blogTitle": "Artigos",
-    "blogDescription": "Comecei a escrever artigos nesse blog como uma forma de me empurrar aos estudos e desenvolvimento. Estudando tecnologias as quais me expus à experiência, e, contando sobre elas aqui. Nesse momento já escrevi {{ numberOfPosts }} artigos sobre diferentes assuntos. Veja!",
+    "blogDescription": "Esses artigos foram/são escritos como forma de estudos e compartilhamento do conhecimento adquirido. Além disso, é muito importante manter artigos como lembres e notas. Até o presente momento, foram escritos {{ numberOfPosts }} postagens. Você pode vê-los abaixo:",
     "notfound": "Desculpe, mas não pude encontrar um artigo.",
     "allWriting": "Todos artigos",
     "search": "Procure por um artigo"

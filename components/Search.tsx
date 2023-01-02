@@ -21,7 +21,7 @@ export default function Search({ value, setValue }: SearchProps) {
       <input
         value={value}
         onChange={(e) => setValue(e.currentTarget.value)}
-        className="w-full font-light placeholder-searchLight dark:placeholder-searchDark"
+        className="w-full font-light text-searchLight dark:text-searchDark"
         placeholder={t('search')}
       ></input>
     </div>

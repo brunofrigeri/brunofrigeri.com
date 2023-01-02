@@ -27,7 +27,7 @@ const ThemeButton = ({
     }, 300)
   }
 
-  const className = `w-7 h-7 flex justify-center items-center ${
+  const className = `rounded flex justify-center items-center ${
     clicked ? 'animate-spin' : ''
   }`
 
@@ -36,7 +36,7 @@ const ThemeButton = ({
       aria-label="Toggle Theme"
       type="button"
       onClick={onThemeChangeClick}
-      className="w-7 h-7 bg-toggleLight dark:bg-toggleDark rounded mx-8"
+      className="w-7 h-7 bg-toggleLight dark:bg-toggleDark rounded mx-8 hover:border border-gray-300 dark:border-gray-500"
     >
       <div className={className}>
         {mounted &&

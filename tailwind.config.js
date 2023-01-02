@@ -20,7 +20,7 @@ module.exports = {
       descriptionDark: '#DBDBDB',
       toggleLight: '#F6F6F6',
       toggleDark: '#344159',
-      searchLight: '#CDCDCD',
+      searchLight: '#808080',
       searchDark: '#EDEDED',
       greenToken: '#63A8A4',
       current: 'currentColor',

@@ -34,5 +34,8 @@ module.exports = withMDX({
     }
   },
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
+  images: {
+    domains: ['cdn.jsdelivr.net'],
+  },
   i18n,
 })
