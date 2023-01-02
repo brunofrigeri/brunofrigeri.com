@@ -24,11 +24,11 @@ export default function Button({
   rel,
   icon = (
     <FaArrowRight
-      className={
+      className={`${
         type === 'bordered'
           ? 'text-primaryLight dark:text-primaryDark'
           : 'text-white'
-      }
+      }`}
     />
   ),
 }: ButtonProps) {
@@ -39,7 +39,7 @@ export default function Button({
       target={target}
       rel={rel}
       className={
-        `inline-flex items-center px-4 py-2 ${
+        `group hover:opacity-80 inline-flex items-center px-4 py-2 ${
           type === 'bordered'
             ? 'border bg-white dark:bg-black border-primaryLight dark:border-primaryDark'
             : 'bg-primaryLight dark:bg-primaryDark border-0'

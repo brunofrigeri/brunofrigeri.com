@@ -11,6 +11,7 @@ import resolveConfig from 'tailwindcss/resolveConfig'
 import tailwindConfig from '../tailwind.config.js'
 import { Config } from 'tailwindcss/types/config'
 import ThemeButton from '../components/ThemeButton'
+import { flagsURL } from '../constants/flags'
 
 interface ContainerProps extends Partial<useLinkProps> {
   children?: React.ReactNode[] | React.ReactNode
@@ -141,22 +142,22 @@ export default function Container({
         <div className="flex flex-column">
           <Link href={ptBRHref ?? '/'} locale="pt-BR">
             <Image
-              className="cursor-pointer pr-1"
-              src={images.brazil.src}
+              className="border border-primaryDark dark:primaryLight rounded-lg cursor-pointer"
+              src={flagsURL('BR')}
               priority
               alt="brazil-locale"
-              height={36}
-              width={36}
+              height={32}
+              width={32}
             />
           </Link>
           <Link href={enHref ?? '/'} locale="en">
             <Image
-              className="cursor-pointer pl-1"
-              src={images.usa.src}
+              className="border border-primaryDark dark:primaryLight rounded-lg cursor-pointer  ml-1"
+              src={flagsURL('US')}
               alt="en-locale"
               priority
-              height={36}
-              width={36}
+              height={32}
+              width={32}
             />
           </Link>
         </div>
