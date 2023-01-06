@@ -24,3 +24,9 @@ export type Post = {
   featuredImage?: string
   views?: number
 }
+
+export type Project = {
+  title: string
+  description: string
+  href: string
+}

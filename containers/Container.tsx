@@ -37,7 +37,7 @@ export default function Container({
 
   const { t } = useTranslation('common')
 
-  const menuOptions: Array<MenuOption> = [
+  const menuOptions: MenuOption[] = [
     {
       name: t('home'),
       path: '/',
@@ -45,6 +45,10 @@ export default function Container({
     {
       name: t('about'),
       path: '/about',
+    },
+    {
+      name: t('projects'),
+      path: '/projects',
     },
   ]
 
