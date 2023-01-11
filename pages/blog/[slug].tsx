@@ -55,7 +55,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params, locale }) {
-  const data: Post = await getPostBySlug(params.slug, locale)
+  const data: Post = await getPostBySlug(params.slug)
   const source = await markdownToHtml(data.content)
 
   return {
