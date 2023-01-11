@@ -24,3 +24,8 @@ export type Post = {
   featuredImage?: string
   views?: number
 }
+
+export type File = {
+  fileName: string
+  locale: string
+}
