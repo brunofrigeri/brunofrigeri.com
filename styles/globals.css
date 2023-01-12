@@ -63,6 +63,10 @@ button:focus {
   @apply my-4
 }
 
+.prose p > strong {
+  @apply font-bold
+}
+
 .prose p > code {
   @apply border rounded-sm m-1 p-1 bg-primaryLight bg-opacity-50 dark:bg-primaryDark dark:bg-opacity-50
 }

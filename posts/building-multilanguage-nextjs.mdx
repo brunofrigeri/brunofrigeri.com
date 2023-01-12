@@ -1,38 +1,44 @@
 ---
-title: Building a multi language website with Next.js
-excerpt: Build from zero a application that supports multiple languages.
+title: How to build multi-language website with Next.js (PART 1)
+excerpt: Building from scratch an application that supports multiple languages.
 date: 04/06/2021
+updated_at: 01/12/2023
 author: Bruno Frigeri
 stacks: [REACT, NEXT, JAVASCRIPT]
 locale: en
 ---
-A lot of people, like me, are trying to get jobs outside their own country so to be able to do that we need to learn and master our mother language and, in my case, English.
+A lot of people, like me, are trying to get jobs outside their own country so to be able to do that we need to learn and master other languages.
+In the programming world (and to be honest, in almost all areas that involve technology in some degree), the universal language is the english.
 
-With that said we need to do all our articles, resume, I mean everything in two languages, so today I'll be teaching you guys how to manage to get two or more languages using React/Next.js.
+With that, beyond mastering communicating (which I mean, talking and listening) in those languages, we need to write our CV, blog posts and copies in this universal language.
+So, today I'll be writing about how to manage a multi-language website using Next.js.
 
-## Introduction
+## Setting up the Project
 
-First and formals we'll need to setup our next project:
+Let's set up our Next.js project using the `create-next-app` lib, which give us a pretty good template (you can follow up to see options in [here](https://nextjs.org/docs/api-reference/create-next-app))
 
-```javascript
-npx create-next-app
+```bash
+npx create-next-app@latest
 # or
 yarn create next-app
-```
-
-After that we need to install the dependencies that we'll need for this project `next-i18next`:
-
-```javascript
-yarn add next-i18next
 # or
-npm install --save next-i18next
+pnpm create next-app
 ```
 
-## Configuration
+Altought Next.js providers internationalised routing, it doesn't handle management of translation content, so to be able to achieve that we're going to install `next-i18next` dependency for our project:
 
-With all that managed, we need to move forward in config our files. So with that been said, let's move in to that:
+```bash
+yarn add next-i18next react-i18next i18next
+# or
+npm install --save next-i18next react-i18next i18next
+```
 
-- At first, we need to create a next-i18config file, that we're going to name by `next-i18next.config.js`, inside it we'll put our locale configuration, based on our locales, in my case:
+## Configuring Next.js with I18n
+
+Following the `next-i18next` documentation, we need set up the project for it:
+
+1. First, create a `next-i18next.config.js` file in the root of your project. 
+- Inside it we need to add the locales configuration, based on your locale languages, which in my case is:
 
 ```javascript
   module.exports = {
@@ -43,7 +49,7 @@ With all that managed, we need to move forward in config our files. So with that
   }
 ```
 
-- Now we'll create a file named `next.config.js` or open the existing one and added our i18n file to be exported as well.
+2. Next, we're going to modify the `next.config.js` file, by passing the i18n config that we previously set up on our `next-i18next.config.js` file.
 
 ```javascript
 const { i18n } = require('./next-i18next.config')
@@ -54,13 +60,18 @@ module.exports = {
 }
 ```
 
-- Now we need to create a `locales` folder in our public folder and inside it create our different languages folder with a `common.json` file each:
+3. Now we need to create a `locales` folder inside `public` and create our different languages folder with a `common.json` file each. It's important to say that the `common.json` it's basically a set of texts that will be used for all components, but you can create others for specific components)
 
-![Screen Shot 2021-04-05 at 19.09.19](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/orrssbh6svn09gpm7yd3.png)
+```
+└── public
+    └── locales
+        ├── en
+        |   └── common.json
+        └── pt-BR
+            └── common.json
+```
 
-**PS**: It's important and will not work without the `common.json` file.
-
-- Last but not least, we'll connect the i18n with our app, open the `pages/_app.js` directory and do the following:
+4. Mostly important and the last step of the configuration, we need to connect the I18n with our app. Open the `pages/_app.js` directory and wrap the default export with `appWithTranslation` from `next-i18next`, following as below:
 
 ```javascript
 import '../styles/globals.css'
@@ -74,50 +85,62 @@ function MyApp({ Component, pageProps }) {
 export default appWithTranslation(MyApp)
 ```
 
-Voilá, now we can start to using our different locales into our app.
+That's all! Now we have all configuration set up and we can start using it.
 
-## Implementing different languages
+## Implementing different languages in components using SSR
 
-Next we'll implement the different languages visually:
+It's important to know that `next-i18next` added support for using SSR, which basically can be done by using the `getStaticProps` or `getServerSideProps` from Next.js. But let's continue:
 
-- Here we need to define some text for example to change per locale, so in each `locale/{...}/common.json` folder we'll create a property name ``title``:
+1. Let's define some example text in all our different locale folders, I will be creating a __title__ field:
 
 ```javascript
 // locale/en/common.json
 {
-    "title": "Building a multi language website with Next.js"
+    "title": "Building a multi-language website with Next.js"
 }
 ```
 
 ```javascript
 // locale/pt-BR/common.json
 {
-    "title": "Construindo um website com suporte a multi linguagem, utilizando Next.js"
+    "title": "Construindo um website com suporte a diversas linguagens, utilizando Next.js"
 }
 ```
 
-- Now, to use this information in our page we need to getStaticProps in use, we'll need to import `serverSideTranslations` from next-i18next:
+2. As mentioned above, to have Next.js support, we need to use `getStaticProps`or `getServerSideProps` (you can check usage details of each [here](https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props)). With the decision in place, we're going to import `serverSideTranslations` from `next-i18next` and add to our choosen method.
 
+**getStaticProps**
 ```javascript
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 export const getStaticProps = async ({ locale }) => {
   return {
     props: {
-      {...},
       ...(await serverSideTranslations(locale, ['common'])),
     }
   }
 }
 ```
 
-**PS**: At this point, you'll need to add the `common.json` in this array always, even if you need to use other json file, for example:
+**getServerSideProps**
+```javascript
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
+export const getServerSideProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+    }
+  }
+}
+```
+
+Another really important thing to remember is that we can have specific translations (as I mentioned prior) for each component. Let's say I created a new file in our locales named `example.json`, and we want to add the translation to the same component. We would do:
 
 ```javascript
 export const getStaticProps = async ({ locale }) => {
   return {
     props: {
-      {...},
       ...(await serverSideTranslations(locale, ['common',
       'example']))
     }
@@ -125,7 +148,7 @@ export const getStaticProps = async ({ locale }) => {
 }
 ```
 
-- Now the nicest part, adding our translation in to the visual code. First we need to import `useTranslations` from react-i18next (react-i18next will be installed with create-next-app don't worry), then, we'll disrupt the useTranslation to get the property `t`, that will directly used for our translations:
+3. Last, the display!! Let's add the translation itself to our Component. Let's import `useTranslations` from `react-i18next` dependency and destructure it to get property `t` (which will be then used for translating):
 
 ```javascript
 import { useTranslation } from 'react-i18next'
@@ -134,38 +157,12 @@ export default function Home() {
   const { t } = useTranslation('common')
 
   return (
-    <div className={styles.container}>
-      {...}
-      <main className={styles.main}>
-        <h1 className={styles.title}>
+    <div>
+      <main>
+        <h1>
           {t('title')}
         </h1>
       </main>
-      {...}
-    </div>
-  )
-}
-
-{...}
-```
-
-**PS**: The main difference between the getStaticProps using and the useTranslation is that, in the getStaticProps we need to always include common.json in the array, but in the useTranslation we'll add only the file that we need. In your `common.json` and `example.json` example, we would have:
-
-```javascript
-import { useTranslation } from 'react-i18next'
-
-export default function Home() {
-  const { t } = useTranslation('example')
-
-  return (
-    <div className={styles.container}>
-      {...}
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          {t('title')}
-        </h1>
-      </main>
-      {...}
     </div>
   )
 }
@@ -173,67 +170,26 @@ export default function Home() {
 export const getStaticProps = async ({ locale }) => {
   return {
     props: {
-      {...},
-      ...(await serverSideTranslations(locale, ['common',
-      'example'])),
+      ...(await serverSideTranslations(locale, ['common']))
     }
   }
 }
 ```
 
-## Result
+## Seeing the Results
 
-```bash
-http://localhost:3000/en
-```
-![Screen Shot 2021-04-06 at 14.28.54](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/cot23ec7lsnfb77r646h.png)
+Accessing your `YOUR_URL/$LANGUAGE`, which in my case is `http://localhost:3000/${CURRENT_LANGUAGE}`.
 
-```bash
-http://localhost:3000/pt-BR
-```
-![Screen Shot 2021-04-06 at 14.29.03](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/040y7yaotw14do3oow8y.png)
+**English -** `http://localhost:3000/en`
 
-## PLUS
+![MY_WEBSITE_IN_ENGLISH](/assets/_uploaded/building-multilanguage-nextjs-1.png)
 
-If you're wonder on how to change the language by pressing a button, I'll solve your question right now. To be able to change the locale onPress a button for example, we need to import Link from next/link. Link have a property named ``locale`` that could be use for change our language, so you can create how many locales do you want and do like the following:
+**Portuguese -** `http://localhost:3000/pt-BR`
 
-```javascript
-{...}
-import Link from 'next/link'
-{...}
+![MY_WEBSITE_IN_PORTUGUESE](/assets/_uploaded/building-multilanguage-nextjs-2.png)
 
-export default function Home() {
-  {...}
-  return (
-      {...}
-      <main className={styles.main}>
-        {...}
-        <div className={styles.container}>
-          <div className={styles.locale}>
-            <Link href={'/'} locale={'en'}>
-              <p>EN</p>
-            </Link>
-          </div>
-          <div className={styles.locale}>
-            <Link href={'/'} locale={'pt-BR'}>
-              <p>PT-BR</p>
-            </Link>
-          </div>
-        </div>
-      </main>
-      {...}
-    </div>
-  )
-}
+## Conclusion
 
-export const getStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-});
-```
+There we have it! I hope the post it's clear and you guys were able to follow. Feel free to tag me into any doubts and providing any feedbacks. In **part 2**, we're going to understand on how to build a simple toggle for changing languages! Stay tuned
 
-And we're ready to go !!!
-
-Check the github repository for this article right here:
-[GitHub Repository](https://github.com/brunofrigeri/multi-language-nextjs)
+To check all the work done here, you can go to the [GitHub Repository](https://github.com/brunofrigeri/multi-language-nextjs)
