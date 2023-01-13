@@ -8,9 +8,13 @@ export default function Post({
   readingTime,
 }: PostType) {
   return (
-    <Link href={`/blog/${slug}`} className="flex flex-row my-8">
+    <Link href={`/blog/${slug}`} className="group flex flex-row my-8">
       <div className="mx-6">
-        {title && <h3 className="text-black dark:text-white">{title}</h3>}
+        {title && (
+          <h3 className="text-black dark:text-white group-hover:text-primaryLight dark:group-hover:text-primaryDark">
+            {title}
+          </h3>
+        )}
         {excerpt && (
           <h4 className="my-1 text-descriptionLight dark:text-descriptionDark">
             {excerpt}
