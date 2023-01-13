@@ -1,27 +1,36 @@
 ---
 title: Curved Bottom Tab in React Native using SVG and D3-Shape
-excerpt: Creating a curved bottomTab with a really cool deep effect.
+excerpt: Creating a curved bottom tab with a really cool deep effect.
 date: 04/24/2021
+updated_at: 01/13/2023
 author: Bruno Frigeri
 stacks: [REACT, REACT-NATIVE, JAVASCRIPT]
 locale: en
 ---
-At some point, every developer need to fulfill the desire of some design work in a application to built a curved bottom tab. With me wasnt so difference, I cross this path once my design team asks for it, my major difficult was trying to understand how to do it.
+Every developer have to follow prototypes coming from design work. The thing is not always said is that sometimes the designer perceive something that it's hard for developers. I have a similar comparison that I like to do: Imagine an architect that architects a house in some weird or hard way, pretty, but hard. The engineer needs to overcome the issues, and, if possible delivery the architect solution. 
+Getting back to ours, we are the engineer (metaphoric and specifically saying) that needs to deliver the awkward, pretty and hard structure.
 
-In this point I was searching and understanding two ways out: Doing with Views only (we can enter in this subject in another day) or using svg and d3-shape. Using just views is not easy but at the same time not some monster, but I found more easy and more clean building it with svg, so let's do it.
+For me, it was on my way working on a fintech, the need of a curved tab navigation arrived, and me, as a developer that have never done it, struggled.
+So today, I'll try, hope with success, explain in details how I could achieve the desired behavior with performance, low and clean code.
 
-## Getting Started
 
+## Introduction
+The first step of the way was understanding the ways to do it, my finds were divided in:
+- Creating a curved bottom navigation using Views only.
+- Using SVG forms and trying to shape them the way we need (fyi, we can create awesome forms by shaping them).
+
+Moving on, I decided to go with the most beautiful, performant and cleaner solution I encounter, which was using SVGs and shaping them accordingly. So let's code!!
+
+## Setting up Project and Installing dependencies
+
+1. Let's start our react-native app, I'm going to use a bare `react-native-cli` installation, but you can go with `expo` too:
 First and formals we need to create a react native app:
+
 ```bash
-npx react-native init myExample
+yarn react-native init curved-bottom-tab-rn
 ```
 
-ps: In my case you'll realize that I use typescript, but is not mandatory.
-
-Now we'll need to install all the react-navigation dependencies, at this tutorial I'll be using react-navigation v5, so you'll track easily to move with me in that version.
-
-Follow the react navigation [Documentation](https://reactnavigation.org/docs/getting-started/) to install all dependencies well
+2. Moving on we need to install the needed `react-navigation` dependencies for a bottom tab use. At this tutrial, I'm using `v5` of `react-navigation` which it's completely your choice.
 
 ```bash
 yarn add @react-navigation/native
@@ -30,22 +39,18 @@ yarn add @react-navigation/stack
 yarn add @react-navigation/bottom-tabs
 ```
 
-With all this dependencies installed as following the documentation we're ready to move forward.
+**PS:** You should follow react-navigation [documentation](https://reactnavigation.org/docs/getting-started/) for better documentation on installing all dependencies and settings. All of them are made for this project and can be encountered in the repository at the final of this post.
 
-## Introduction
-
-Now, moving in to the code, we'll need to create a navigation file that I called `navigation.js` inside ``src/*``.
+## Using React Navigation
+Here, for test purposes, I'm going to create different Stacks, which are going to be used as an entry point to different Tabs. So with no more delay, let's create our first file `navigation.{ts,js}` inside our `src/*` folder.
+In my case here's the example below:
 
 ```javascript
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import TabBar from './components/TabBar';
-import First from './screens/First';
-import Third from './screens/Third';
-import Secondary from './screens/Secondary';
-import TabBarButton from './components/TabBarButton';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { First, Second, Third } from './screens'
 
 const Stack = createStackNavigator();
 
@@ -54,15 +59,15 @@ const Tab = createBottomTabNavigator();
 export function FirstStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name={'First'} component={First} />
+      <Stack.Screen name="First" component={First} />
     </Stack.Navigator>
   );
 }
 
-export function SecondaryStack() {
+export function SecondStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name={'Secondary'} component={Secondary} />
+      <Stack.Screen name="Second" component={Secondary} />
     </Stack.Navigator>
   );
 }
@@ -70,7 +75,7 @@ export function SecondaryStack() {
 export function ThirdStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name={'Third'} component={Third} />
+      <Stack.Screen name="Third" component={Third} />
     </Stack.Navigator>
   );
 }
@@ -79,22 +84,26 @@ export default function Navigation() {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name={'First'} component={FirstStack} />
-        <Tab.Screen name={'Secondary'} component={SecondaryStack}/>
-        <Tab.Screen name={'Third'} component={ThirdStack} />
+        <Tab.Screen name="First" component={FirstStack} />
+        <Tab.Screen name="Secondary" component={SecondaryStack}/>
+        <Tab.Screen name="Third" component={ThirdStack} />
       </Tab.Navigator>
     </NavigationContainer>
   );
 }
 ```
 
-In this file you can realize that I have already 3 screens: First, Secondary and Third. This three screens are only flex components with different colors to show the result. And at this point we have:
+For more information on this piece of code, here are the things we're doing and the result of it below:
+- Adding `Screens`: we added three different screens (First, Second and Third) which just exists for test purposes, and are just flex components with different background colors. 
+- Creating `Stacks`, which, as the name suggests, it's a stack of screens.
+- Creating a `TabNavigator`: the `TabNavigator` is basically a Tab that keeps at the bottom of the screen, in which, in our case, will be always visible for all screens no matter the current Stack. 
 
-![Screen Shot 2021-04-24 at 17.10.23](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vyg24xibt4v5h2x34ew9.png)
+
+![Screen Shot 2021-04-24 at 17.10.23](/assets/_uploaded/curved-bottom-tab-react-native-1.png)
 
 ## Building a Custom TabBar
-
-Here, we'll follow the react navigation documentation once again, for getting a implementation of a Custom TabBar:
+For customizing a TabBar, `react-navigation` give us a full documentation that can be really self explainer, so I'll leave you guys with that [here](https://reactnavigation.org/docs/5.x/bottom-tab-navigator/#tabbar).
+Following, let's create a file for this custom tabBar, I'm going to name it `MyTabBar`, inside `components` folder.
 
 ```javascript
 import { View, Text, TouchableOpacity } from 'react-native';
@@ -159,29 +168,29 @@ function MyTabBar({ state, descriptors, navigation }) {
 }
 ```
 
-Then in our `src/navigation.js` file, we have in the TabNavigator a prop named `tabBar` that we'll return our Custom TabBar the we created:
+1. Now, let's get to work. In our `src/navigation.{ts,js}` file, we have in the TabNavigator a prop named `tabBar` that returns a function with props, those props are what we need for our custom tab navigator, so we can receive those props and return our custom component. So let's import our component `MyTabBar` and in our `navigation.{ts,js}` file we're going to use the property `tabBar` mentioned prior:
 
 ```javascript
-{...}
+import { MyTabBar } from './components'
 
 export default function Navigation() {
   return (
     <NavigationContainer>
       <Tab.Navigator tabBar={props => <MyTabBar {...props} />}>
-        {...}
+        <Tab.Screen name="First" component={FirstStack} />
+        <Tab.Screen name="Secondary" component={SecondaryStack}/>
+        <Tab.Screen name="Third" component={ThirdStack} />
       </Tab.Navigator>
     </NavigationContainer>
   );
 }
 ```
 
-## Creating a TabBarButton + Adding into our Custom TabBar
-
-Now we'll be creating a `components/TabBarButton.js` that will be responsible for having the style of our float button:
+2. Now, you can realize that all three tabs has the same shape, but we want the middle one with a different display. For that we're going to create a `TabBarButton.{tsx,jsx}` component, which will be used only for the middle tab.
 
 ```javascript
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 export default function TabBarButton() {
   return (
@@ -196,7 +205,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 55,
     height: 55,
-    borderRadius: 999,
+    borderRadius: 999, // full radius
     bottom: 10,
     justifyContent: 'center',
     alignItems: 'center',
@@ -209,18 +218,23 @@ const styles = StyleSheet.create({
 });
 ```
 
-Now we have to do 2 things to see the TabBarButton component in our CustomTabBar:
-
-- First we need to add in our desired TabScreen component the prop named `options`, in my case I want to add this in to my 'Secondary' screen:
+3. Let's add the `TabBarButton` to our `TabNavigator`, using a prop called `options.tabBarButton` which receives an Component instead of the current tabBarButton component:
 
 ```javascript
-      <Tab.Screen
-        name={'Secondary'}
-        options={{tabBarButton: () => <TabBarButton />}}
-        component={SecondaryStack}
-      />
+  export default function Navigation() {
+    return (
+      <NavigationContainer>
+        <Tab.Navigator>
+          <Tab.Screen name="First" component={FirstStack} />
+          <Tab.Screen name="Secondary" component={SecondaryStack} options={{ tabBarButton: () => <TabBarButton /> }} />
+          <Tab.Screen name="Third" component={ThirdStack} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    );
+  }
 ```
-- Last but not least we need to do a ternary condition in our Custom TabBar to, if a options.tabBarButton exists show this component but otherwise show the default one:
+
+4. Things are not working correctly just yet, as we created a custom tabBar, the option `tabBarButton` is not being accessed. For accessing it, we can add a condition like the following:
 
 ```javascript
 import { View, Text, TouchableOpacity } from 'react-native';
@@ -288,19 +302,22 @@ function MyTabBar({ state, descriptors, navigation }) {
 }
 ```
 
-We have at this point:
-![Screen Shot 2021-04-24 at 17.32.31](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/29ge4uxqv1s1spoiofo5.png)
+Let's look what we have at this moment:
+![Screen Shot 2021-04-24 at 17.32.31](/assets/_uploaded/curved-bottom-tab-react-native-2.png)
 
-## Curving our TabBar
-
-Last and most important (and probably the reason that you're reading this article), we'll add the curve in our tabBar, for this we'll need to install two dependencies:
+## Using D3-Shape to Shape our TabBar
+1. Mostly important, and probably why you're here to be honest, we're going to shape our TabBar. For that we're going to use [d3-shape](https://github.com/d3/d3-shape) and [react-native-svg](https://github.com/software-mansion/react-native-svg), so let's add them:
 
 ```bash
 yarn add d3-shape react-native-svg
+```
+
+If using **IOS**, run:
+```bash
 cd ios/ && pod install && cd ..
 ```
 
-Let's built our component that will be responsible for having the curves, I'll name him TabShape:
+2. Now, we're going to build a component that will be called `TabShape.{tsx,jsx}` which will be responsible for shaping our tabBar:
 
 ```javascript
 import React from 'react';
@@ -308,9 +325,9 @@ import {Dimensions} from 'react-native';
 import {curveBasis, line} from 'd3-shape';
 import Svg, {Path} from 'react-native-svg';
 
-const TAB_HEIGHT = 80;
+const TAB_HEIGHT = 80; // This fixed height can be as you wish.
 
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const lineGenerator = line();
 
@@ -335,15 +352,17 @@ const d = `${center} ${rect}`;
 export default function TabShape() {
   return (
     <Svg width={width} height={TAB_HEIGHT}>
-      <Path fill={'white'} {...{d}} />
+      <Path fill="white" {...{d}} />
     </Svg>
   );
 }
 ```
 
-Okay, let's run in to this code so you can understand it:
+Okay, let's run into this code so you can understand it:
 
-First, we use a function named `line` of d3-shape, this function will be responsible for create lines based on coordinates that we give to it. In the `rect` we can do a basically calculation and realize that I just build a rectangle:
+- `Svg` and `Path` from `react-native-svg` are responsible for creating an SVG through something, which in this case are shapes generated from d3-shape.
+- The `line` function is responsible for generating lines based on giving coordinates.
+- The `rect` constant uses the `lineGenerator` to build a rectangle, as the following:
 
 ```javascript
 const rect = lineGenerator([
@@ -354,15 +373,19 @@ const rect = lineGenerator([
   [0, TAB_HEIGHT],
   [0, 0],
 ]);
-
-[0,0] --------- [width/2, 0] -------- [width, 0]
-  |                  |                    |
-  |                  |                    |
-  |                  |                    |
-  ---------------------------------- [width, TAB_HEIGHT]
 ```
 
-The most difficult part is to understand the curve part, but follows the same path, the start of the curve, the deepness of it and then the end of the curve:
+Translates to that in the reality:
+
+```
+    [0,0] ─────────────── [width / 2, 0] ───────────────────── [width, 0]         
+       │                         │                                │              
+       │                         │                                │             
+       │                         │                                │              
+ [0,TAB_HEIGHT] ────────────────────────────────────── [width, TAB_HEIGHT]
+```
+
+- Last and most importantly, the `curve`, which follows the exact same idea of the `rect`, but by curving it:
 
 ```javascript
 const center = lineGenerator.curve(curveBasis)([
@@ -373,21 +396,37 @@ const center = lineGenerator.curve(curveBasis)([
 ]);
 ```
 
-Now that we have our TabShape ready we need to do:
+- Check the whole explanation with this excalindraw Draw:
+
+![CURVED_TAB_EXPLANATION](/assets/_uploaded/curved-bottom-tab-react-native-3.png#light-mode-only)
+![CURVED_TAB_EXPLANATION](/assets/_uploaded/curved-bottom-tab-react-native-4.png#dark-mode-only)
+
+- Now that we have our TabShape ready we need to turn our `TabBar` into an absolute component, so we can add a shape to it:
 
 ```javascript
+import { Dimensions } from 'react-native'
 import TabShape from './TabShape'
 const TAB_HEIGHT = 80;
 
-const MyTabBar = ({...}) => {
-{...}
-return (
-    <View style={{ position: 'absolute', height: TAB_HEIGHT, width: Dimensions.get('window').width, shadowOffset: {
+const { width } = Dimensions.get('window')
+
+const styles = StyleSheet.create({
+  myTabBarContainer: {
+    position: 'absolute',
+    height: TAB_HEIGHT,
+    width,
+    shadowOffset: {
       width: 0,
       height: 0,
     },
     shadowOpacity: 0.2,
-    elevation: 5, }}>
+    elevation: 5,
+  }
+})
+
+const MyTabBar = ({...}) => {
+return (
+    <View style={styles.myTabBarContainer}>
       <TabShape />
       <View style={StyleSheet.absoluteFill}>
         <View style={{ flexDirection: 'row', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -448,11 +487,11 @@ return (
 }
 ```
 
-And here we have:
-![Screen Shot 2021-04-24 at 17.49.31](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/eo18008a5ag2x2o9bqeg.png)
+## Results
+Finally, we have our goal done!!! Take a look at that:
+![Screen Shot 2021-04-24 at 17.49.31](/assets/_uploaded/curved-bottom-tab-react-native-5.png)
 
 ## Conclusion
+It was definitely a challenge that we've faced, but we made it! Thanks to you, as I'm seeing you reached the end of it, hope you understood the whole tutorial without problems. Let me know if you have doubts or encountered issues. Stay tuned!
 
-Thanks for reading until here, I really appreciate. Any doubts or questions just reach me in my email or open a issue/PR in the github example:
-
-[Repository example](https://github.com/brunofrigeri/curved-bottom-tab)
+You can check the [repository example](https://github.com/brunofrigeri/curved-bottom-tab) for the full implementation.
