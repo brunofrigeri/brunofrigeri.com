@@ -23,6 +23,7 @@ module.exports = {
       searchLight: '#808080',
       searchDark: '#EDEDED',
       greenToken: '#63A8A4',
+      textCodeColor: '#657B83',
       current: 'currentColor',
       black: '#333333',
       white: colors.white,
