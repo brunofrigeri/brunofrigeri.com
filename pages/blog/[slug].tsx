@@ -2,36 +2,29 @@ import { getAllPostSlugs, getPostBySlug } from '../../lib/posts'
 import Container from '../../containers/Container'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import markdownToHtml from '../../lib/markdown'
-import { useRouter } from 'next/router'
-import { useLink } from '../../hooks/useLink'
-import { useEffect } from 'react'
-import { usePostViewsBySlug } from '../../hooks/usePostViewsBySlug'
 import Article from '../../components/Article'
 import { Post } from '../../lib/types'
+import Head from '../../containers/Head'
+import { useFirebaseRTDB } from '../../hooks/useFirebaseRTDB'
+import { useEffect } from 'react'
 
-interface IBlogBySlugProps {
+interface BlogBySlugProps {
   source: string
   post: Post
 }
 
-const BlogBySlug: React.FC<IBlogBySlugProps> = ({ source, post }) => {
-  const router = useRouter()
-
-  const { ptBRHref, enHref } = useLink(router)
-  const { postView } = usePostViewsBySlug()
-
+const BlogBySlug: React.FC<BlogBySlugProps> = ({ source, post }) => {
+  const { increaseSlugView } = useFirebaseRTDB()
   const { frontMatter } = post
 
   useEffect(() => {
-    postView(frontMatter.slug, router.locale)
-  }, [frontMatter.slug, postView, router.locale])
+    const { slug, locale } = frontMatter
+    increaseSlugView(slug, locale)
+  }, [frontMatter, increaseSlugView])
 
   return (
-    <Container
-      meta_description={frontMatter.title}
-      ptBRHref={ptBRHref}
-      enHref={enHref}
-    >
+    <Container>
+      <Head title={frontMatter.title} description={frontMatter.excerpt} />
       <Article frontMatter={frontMatter} content={source} />
     </Container>
   )

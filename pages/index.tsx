@@ -1,6 +1,6 @@
 import Button from '../components/Button'
 import Container from '../containers/Container'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { getAllPosts } from '../lib/posts'
 import Posts from '../components/Posts'
 import Fuse from 'fuse.js'
@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next'
 import Search from '../components/Search'
 import { SSRConfig } from 'next-i18next'
 import { Post } from '../lib/types'
+import Head from '../containers/Head'
 
 interface HomeProps extends SSRConfig {
   posts: Post[]
@@ -31,27 +32,19 @@ export default function Home({ posts }: HomeProps) {
   const { t } = useTranslation('home')
 
   const [search, setSearch] = useState<string>('')
-  const [filteredPosts, setFilteredPosts] = useState<Post[]>([])
 
-  const setPosts = useCallback(() => {
-    if (search.length > 0) {
-      const fuse = new Fuse(posts, options)
-      const postsFound = fuse.search(search)
+  const getFilteredPosts = (search: string) => {
+    const fuse = new Fuse(posts, options)
+    const postsFound = fuse.search(search)
 
-      setFilteredPosts(
-        postsFound.length > 0 ? postsFound.map((post) => post.item) : []
-      )
-    } else {
-      setFilteredPosts(posts)
-    }
-  }, [search, setFilteredPosts, posts])
+    return postsFound.length > 0 ? postsFound.map((post) => post.item) : []
+  }
 
-  useEffect(() => {
-    setPosts()
-  }, [setPosts])
+  const filteredPosts = search.length > 0 ? getFilteredPosts(search) : posts
 
   return (
     <Container>
+      <Head title="Bruno Frigeri" description={t('description')} />
       <div>
         <div className="inline-block pb-8">
           <h1 className="md:text-4xl text-black dark:text-white">

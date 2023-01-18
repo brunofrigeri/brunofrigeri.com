@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import Container from '../containers/Container'
 import Button from '../components/Button'
 import { useTranslation } from 'react-i18next'
@@ -12,23 +12,21 @@ import {
   SiGraphql,
   SiGatsby,
 } from 'react-icons/si'
+import Head from '../containers/Head'
 
 export default function About() {
   const skillsClassName = 'text-toggleDark dark:text-toggleLight'
 
-  const skills: Array<React.ReactElement> = useMemo(
-    () => [
-      <FaReact key="react" size={50} className={skillsClassName} />,
-      <FaNode key="node" size={50} className={skillsClassName} />,
-      <SiTypescript key="ts" size={50} className={skillsClassName} />,
-      <SiJavascript key="js" size={50} className={skillsClassName} />,
-      <SiNextdotjs key="next" size={50} className={skillsClassName} />,
-      <SiApollographql key="apollo" size={50} className={skillsClassName} />,
-      <SiGraphql key="graphql" size={50} className={skillsClassName} />,
-      <SiGatsby key="gatsby" size={50} className={skillsClassName} />,
-    ],
-    []
-  )
+  const skills: Array<React.ReactElement> = [
+    <FaReact key="react" size={50} className={skillsClassName} />,
+    <FaNode key="node" size={50} className={skillsClassName} />,
+    <SiTypescript key="ts" size={50} className={skillsClassName} />,
+    <SiJavascript key="js" size={50} className={skillsClassName} />,
+    <SiNextdotjs key="next" size={50} className={skillsClassName} />,
+    <SiApollographql key="apollo" size={50} className={skillsClassName} />,
+    <SiGraphql key="graphql" size={50} className={skillsClassName} />,
+    <SiGatsby key="gatsby" size={50} className={skillsClassName} />,
+  ]
 
   const onEmailSentPress = () => {
     const email = 'bpiraja97@gmail.com'
@@ -39,7 +37,8 @@ export default function About() {
   const { t } = useTranslation('about')
 
   return (
-    <Container meta_description={t('intro-description')}>
+    <Container>
+      <Head title="Bruno Frigeri" description={t('intro-description')} />
       <div>
         <div>
           <h1 className="text-black dark:text-white">{t('introduction')}</h1>
@@ -47,8 +46,8 @@ export default function About() {
             {t('intro-description')}
           </h2>
           <Button
-            target={'_blank'}
-            rel={'noreferrer noopener'}
+            target="_blank"
+            rel="noreferrer noopener"
             onClick={onEmailSentPress}
           >
             {t('schedule')}
@@ -69,7 +68,7 @@ export default function About() {
           <h2 className="font-light my-2 mb-8 text-descriptionLight dark:text-descriptionDark">
             {t('experiences')}
           </h2>
-          <Button href={'/cv.pdf'} target={'_blank'} type={'bordered'}>
+          <Button href="/cv.pdf" target="_blank" type="bordered">
             {t('resume')}
           </Button>
         </div>
