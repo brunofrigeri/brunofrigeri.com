@@ -1,9 +1,7 @@
 {
-    "introduction": "Who am I?",
-    "intro-description": "I'm Bruno, working with software development for the past ~4 years, with focus on Mobile development, and experience in development for web and desktop applications.",
-    "schedule": "Let's work together!",
-    "skills": "Skills and Technologies",
-    "resume-title": "Resume",
-    "experiences": "Want to know more about my experiences, projects and companies? Check the resume below!",
-    "resume": "See Resume"
+  "introduction": "Who am I?",
+  "intro_description": "Hello, I'm Bruno, a 26 yo software developer with a knack for crafting innovative applications. Over the past four years, I've dedicated myself to mastering various technologies, specializing in React Native, React, GraphQL, Apollo Client, and React Relay. The challenges that come with software development excite me, and I'm constantly on the lookout for ways to enhance my skills and refine my craft.\n\nIn addition to my passion for coding, I have a profound love for traveling and exploring new destinations. I firmly believe that immersing oneself in diverse cultures and environments fuels creativity and broadens horizons. Drawing inspiration from my journeys, I'm enthusiastic about contributing to the open source community. I understand the value of collaboration and the power of shared knowledge, which is why I actively seek opportunities to give back to the developer community by sharing my expertise and contributing to open source projects. With my skills, unwavering passion, and insatiable thirst for knowledge, I am confident that I can make significant contributions not only in the software development industry but also in various other realms.",
+  "schedule": "Let's work together!",
+  "challenges": "What are my upcoming challenges?",
+  "challenges_answer": "Lately I had leaning extremely towards pushing the boundaries of React Native development. I've been diving deep into React Native Skia and JSI modules, exploring their potential to unlock new possibilities in mobile app development. But it doesn't stop there—I'm also excited to venture into the realm of Android native development. I firmly believe that by bridging the gap between React Native and the Android platform, we can make remarkable strides in enhancing the experience of Android users and optimizing React Native apps for this vibrant ecosystem. Together, we can create innovative solutions that bring the best of both worlds to the table."
 }

@@ -1,15 +1,15 @@
-import type { ImageProps } from 'next/image'
+import type { ImageProps } from "next/image";
 
 enum Images {
-  AVATAR = 'avatar',
+  AVATAR = "avatar",
 }
 
-type Image = Pick<ImageProps, 'src'>
+type Image = Pick<ImageProps, "src">;
 
 const images: { [key in Images]: Image } = {
   [Images.AVATAR]: {
-    src: '/assets/avatar.jpg',
+    src: "/assets/UPDATED_PHOTO.jpg",
   },
-}
+};
 
-export default images
+export default images;

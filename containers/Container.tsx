@@ -1,44 +1,43 @@
-import React, { PropsWithChildren, useEffect, useState } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import images from '../public/assets/images'
-import { useRouter } from 'next/dist/client/router'
-import { useTheme } from 'next-themes'
-import { useTranslation } from 'react-i18next'
-import resolveConfig from 'tailwindcss/resolveConfig'
-import tailwindConfig from '../tailwind.config.js'
-import { Config } from 'tailwindcss/types/config'
-import ThemeButton from '../components/ThemeButton'
-import { flagsURL } from '../constants/flags'
+import React, { PropsWithChildren, useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import images from "../public/assets/images";
+import { useRouter } from "next/dist/client/router";
+import { useTheme } from "next-themes";
+import { useTranslation } from "react-i18next";
+import resolveConfig from "tailwindcss/resolveConfig";
+import tailwindConfig from "../tailwind.config.js";
+import { Config } from "tailwindcss/types/config";
+import ThemeButton from "../components/ThemeButton";
 
 type MenuOption = {
-  name: string
-  path: string
-}
+  name: string;
+  path: string;
+};
 
 export default function Container({ children }: PropsWithChildren) {
-  const currentYear = new Date().getFullYear()
-  const router = useRouter()
-  const [mounted, setMounted] = useState<boolean>(false)
-  const { theme, setTheme } = useTheme()
-  const fullConfig = resolveConfig(tailwindConfig as Config)
+  const currentYear = new Date().getFullYear();
+  const router = useRouter();
+  const [mounted, setMounted] = useState<boolean>(false);
+  const { theme, setTheme } = useTheme();
+  const fullConfig = resolveConfig(tailwindConfig as Config);
 
-  const { t } = useTranslation('common')
+  const { t } = useTranslation("common");
 
   const menuOptions: Array<MenuOption> = [
     {
-      name: t('home'),
-      path: '/',
+      name: t("home"),
+      path: "/",
     },
     {
-      name: t('about'),
-      path: '/about',
+      name: t("about"),
+      path: "/about",
     },
-  ]
+  ];
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
   return (
     <div
@@ -60,14 +59,14 @@ export default function Container({ children }: PropsWithChildren) {
               Bruno Frigeri
             </h2>
             <p className="text-descriptionLight dark:text-descriptionDark">
-              {t('description')}
+              {t("description")}
             </p>
           </div>
         </Link>
         <div className="flex items-center">
           {menuOptions?.length &&
             menuOptions.map((option) => {
-              const isCurrentOption = router.pathname === option.path
+              const isCurrentOption = router.pathname === option.path;
 
               return (
                 <div
@@ -77,19 +76,19 @@ export default function Container({ children }: PropsWithChildren) {
                   <Link
                     href={option.path}
                     className={`md:text-base text-black dark:text-white ${
-                      isCurrentOption ? 'font-bold' : 'opacity-70'
+                      isCurrentOption ? "font-bold" : "opacity-70"
                     }`}
                   >
                     {option.name}
                   </Link>
                 </div>
-              )
+              );
             })}
           <ThemeButton
             theme={theme}
             setTheme={setTheme}
-            lightColor={fullConfig.theme.colors['toggleDark']}
-            darkColor={fullConfig.theme.colors['toggleLight']}
+            lightColor={fullConfig.theme.colors["toggleDark"]}
+            darkColor={fullConfig.theme.colors["toggleLight"]}
             mounted={mounted}
           />
         </div>
@@ -99,34 +98,12 @@ export default function Container({ children }: PropsWithChildren) {
       </main>
       <footer className="max-w-4xl flex flex-row justify-between text-black dark:text-white mx-auto items-center w-full my-8">
         <span className="md:text-sm">
-          © {currentYear}. {t('madeBy')}&nbsp;
+          © {currentYear}. {t("madeBy")}&nbsp;
           <span className="md:text-sm text-primaryLight dark:text-primaryDark">
-            {t('me')}.
+            {t("me")}.
           </span>
         </span>
-        <div className="flex flex-column">
-          <Link href="/" locale="pt-BR">
-            <Image
-              className="border border-primaryDark dark:primaryLight rounded-lg cursor-pointer"
-              src={flagsURL('BR')}
-              priority
-              alt="brazil-locale"
-              height={32}
-              width={32}
-            />
-          </Link>
-          <Link href="/" locale="en">
-            <Image
-              className="border border-primaryDark dark:primaryLight rounded-lg cursor-pointer  ml-1"
-              src={flagsURL('US')}
-              alt="en-locale"
-              priority
-              height={32}
-              width={32}
-            />
-          </Link>
-        </div>
       </footer>
     </div>
-  )
+  );
 }
