@@ -53,22 +53,24 @@ const readFile = (fileName: string) => {
   return fileContents;
 };
 
-const getFileNames = (): File[] => {
+const getFileNames = (locale?: "pt-BR" | "en"): File[] => {
   if (fs.existsSync(postDirectory)) {
     const fileNames = fs.readdirSync(postDirectory);
 
-    return fileNames.map((fileName) => {
-      const fileContents = readFile(fileName);
-      const { data } = matter(fileContents);
+    return fileNames
+      .map((fileName) => {
+        const fileContents = readFile(fileName);
+        const { data } = matter(fileContents);
 
-      return { fileName, locale: data.locale };
-    });
+        return { fileName, locale: data.locale };
+      })
+      .filter((file) => file.locale === locale);
   }
 };
 
 export const getAllPosts = (locale: string): Post[] => {
   if (fs.existsSync(postDirectory)) {
-    const fileNames = getFileNames();
+    const fileNames = getFileNames("en");
 
     if (fileNames.length === 0) return [];
 
@@ -98,7 +100,7 @@ export const getAllPosts = (locale: string): Post[] => {
 
 export const getAllPostSlugs = () => {
   if (fs.existsSync(postDirectory)) {
-    const fileNames = getFileNames();
+    const fileNames = getFileNames("en");
 
     const slugs = fileNames.map(({ fileName, locale }) => {
       return {
