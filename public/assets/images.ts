@@ -8,7 +8,7 @@ type Image = Pick<ImageProps, "src">;
 
 const images: { [key in Images]: Image } = {
   [Images.AVATAR]: {
-    src: "/assets/UPDATED_PHOTO.jpg",
+    src: "/assets/logo-h-bars-512.png",
   },
 };
 

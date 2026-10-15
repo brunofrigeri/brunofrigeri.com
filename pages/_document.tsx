@@ -14,7 +14,8 @@ export default function Document() {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=DM+Mono:wght@400;500&display=swap"
         />
-        <link rel="icon" href="/assets/UPDATED_PHOTO.jpg" />
+        <link rel="icon" href="/assets/logo-h-bars.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/assets/logo-h-bars-512.png" />
         <meta
           name="google-site-verification"
           content="2H60FxwYAVnCGNBHtl_e4D3MqIXSDc8YRgjhpfjxczg"

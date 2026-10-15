@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="Bruno Frigeri bars mark">
+  <title>Bruno Frigeri</title>
+  <rect width="120" height="120" fill="#C6F135"/>
+  <g fill="#0A0A0A">
+    <rect x="18" y="24" width="40" height="20" rx="10"/>
+    <rect x="18" y="50" width="64" height="20" rx="10"/>
+    <rect x="18" y="76" width="84" height="20" rx="10"/>
+  </g>
+</svg>
