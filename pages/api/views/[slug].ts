@@ -13,6 +13,9 @@ export default async (
   if (req.method === 'POST') {
     const locale = JSON.parse(req.body).locale as string
     const ref = db.ref('views').child(locale).child(slug)
+    // Prime the local cache: without it the transaction first runs against
+    // null and briefly exposes an optimistic value of 1 to concurrent reads.
+    await ref.once('value')
     const { snapshot } = await ref.transaction((currentViews) => {
       if (currentViews === null) {
         return 1

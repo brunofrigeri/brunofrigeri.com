@@ -7,6 +7,7 @@ import { Post } from "../../lib/types";
 import Head from "../../containers/Head";
 import { useFirebaseRTDB } from "../../hooks/useFirebaseRTDB";
 import { useEffect } from "react";
+import { mutate } from "swr";
 
 interface BlogBySlugProps {
   source: string;
@@ -16,11 +17,17 @@ interface BlogBySlugProps {
 const BlogBySlug: React.FC<BlogBySlugProps> = ({ source, post }) => {
   const { increaseSlugView } = useFirebaseRTDB();
   const { frontMatter } = post;
+  const { slug, locale } = frontMatter;
 
   useEffect(() => {
-    const { slug, locale } = frontMatter;
-    increaseSlugView(slug, locale);
-  }, [frontMatter, increaseSlugView]);
+    // Record the view once per post, then show the confirmed total.
+    increaseSlugView(slug, locale)
+      .then((data) =>
+        mutate(`/api/views/${slug}?locale=${locale}`, data, false)
+      )
+      .catch(() => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slug, locale]);
 
   return (
     <Container>
