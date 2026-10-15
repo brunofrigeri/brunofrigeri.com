@@ -1,9 +1,10 @@
 {
-    "description": "Software Developer",
-    "home": "Home",
-    "about": "About",
-    "blog": "Blog",
-    "madeBy": "Made by",
-    "me": "myself",
-    "views": "{{ views }} views"
+  "description": "Senior Software Engineer",
+  "home": "Home",
+  "about": "About",
+  "blog": "Blog",
+  "madeBy": "Made by",
+  "me": "myself",
+  "views": "{{ views }} views",
+  "viewsLabel": "views"
 }

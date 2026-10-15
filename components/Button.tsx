@@ -1,5 +1,4 @@
 import React from 'react'
-import { FaArrowRight } from 'react-icons/fa'
 
 interface ButtonProps {
   children: string
@@ -13,50 +12,42 @@ interface ButtonProps {
   icon?: React.ReactElement
 }
 
+const ArrowIcon = (
+  <svg
+    aria-hidden="true"
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="square"
+  >
+    <path d="M3 10h14M11 4l6 6-6 6" />
+  </svg>
+)
+
 export default function Button({
   children,
   onClick = () => {},
   type = 'fill',
-  className,
+  className = '',
   buttonType = 'button',
-  target,
-  href,
-  rel,
-  icon = (
-    <FaArrowRight
-      className={`${
-        type === 'bordered'
-          ? 'text-primaryLight dark:text-primaryDark'
-          : 'text-white'
-      }`}
-    />
-  ),
+  icon = ArrowIcon,
 }: ButtonProps) {
+  const variant =
+    type === 'bordered'
+      ? 'bg-paper text-ink border border-ink'
+      : 'bg-ink text-paper border-0'
+
   return (
-    <a
+    <button
       type={buttonType}
-      href={href}
-      target={target}
-      rel={rel}
-      className={
-        `group hover:opacity-80 inline-flex items-center px-4 py-2 ${
-          type === 'bordered'
-            ? 'border bg-white dark:bg-black border-primaryLight dark:border-primaryDark'
-            : 'bg-primaryLight dark:bg-primaryDark border-0'
-        } cursor-pointer rounded ` + className
-      }
       onClick={onClick}
+      className={`cursor-pointer transition-colors duration-200 hover:bg-accent hover:text-onAccent inline-flex items-center justify-center gap-[14px] min-h-[56px] px-8 rounded-full text-[17px] font-semibold ${variant} ${className}`}
     >
-      <span
-        className={`text-lg ${
-          type === 'bordered'
-            ? 'text-primaryLight dark:text-primaryDark'
-            : 'text-white'
-        } mr-2`}
-      >
-        {children}
-      </span>
+      <span>{children}</span>
       {icon}
-    </a>
+    </button>
   )
 }

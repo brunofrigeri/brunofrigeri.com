@@ -19,16 +19,14 @@ export default function ViewCounter({ slug }: ViewCounterProps) {
 
   const views = data?.total
 
-  const LoadingViews = (
-    <div className="h-px w-4 bg-descriptionLight dark:bg-descriptionDark mr-2" />
-  )
-
   return (
-    <div className="flex items-center justify-center">
-      <h5 className="flex flex-row items-center justify-center text-descriptionLight dark:text-descriptionDark">
-        {!data && LoadingViews}
-        {t('views', { views })}
-      </h5>
+    <div className="flex items-center gap-3">
+      <span className="bg-accent text-onAccent px-3 py-0.5 text-[28px] font-bold tracking-[-0.03em] leading-[1.15]">
+        {typeof views === 'number' ? views.toLocaleString(locale) : '–'}
+      </span>
+      <span className="font-mono text-[13px] font-medium tracking-[0.08em] uppercase">
+        {t('viewsLabel')}
+      </span>
     </div>
   )
 }

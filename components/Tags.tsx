@@ -13,20 +13,15 @@ export default function Tags({ stacks }: TagsProps) {
   }
 
   return (
-    <div className="flex flex-row my-2">
+    <div className="flex flex-wrap gap-2">
       {stacks &&
         stacks.map((stack, index) => (
-          <div
+          <span
             key={index}
-            className={`bg-toggleLight dark:bg-toggleDark p-1.5 rounded-xl  mr-2`}
+            className="border border-ink px-3.5 py-1.5 font-mono text-[13px] font-normal"
           >
-            <p
-              key={index}
-              className="text-xs font-medium text-black dark:text-white"
-            >
-              {getTagName(stack)}
-            </p>
-          </div>
+            {getTagName(stack)}
+          </span>
         ))}
     </div>
   )

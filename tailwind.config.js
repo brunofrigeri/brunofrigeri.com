@@ -25,7 +25,13 @@ module.exports = {
       greenToken: "#63A8A4",
       textCodeColor: "#657B83",
       current: "currentColor",
-      black: "#333333",
+      black: "#0A0A0A",
+      paper: "#FAFAF8",
+      ink: "#0A0A0A",
+      muted: "#4A4A47",
+      accent: "#C6F135",
+      onAccent: "#0A0A0A",
+      cardMuted: "#C9C9C4",
       white: colors.white,
       gray: colors.neutral,
       indigo: colors.indigo,
@@ -38,7 +44,14 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        custom: ["Inter", ...defaultTheme.fontFamily.sans],
+        custom: [
+          "Bricolage Grotesque",
+          "system-ui",
+          "-apple-system",
+          "Segoe UI",
+          "sans-serif",
+        ],
+        mono: ["DM Mono", "ui-monospace", "monospace"],
       },
       keyframes: {
         bounceHorizontal: {

@@ -1,12 +1,14 @@
 {
-    "title": "Olá, sou Bruno. É um prazer te conhecer!",
-    "description": "Sou um desenvolvedor de software com foco em aplicativos Mobile, construindo aplicações de alto nível.",
-    "schedule": "Vamos trabalhar juntos!",
-    "latests": "Últimos artigos",
-    "all": "Ver todos",
-    "blogTitle": "Artigos",
-    "blogDescription": "Esses artigos foram/são escritos como forma de estudos e compartilhamento do conhecimento adquirido. Além disso, é muito importante manter artigos como lembres e notas. Até o presente momento, foram escritos {{ numberOfPosts }} postagens. Você pode vê-los abaixo:",
-    "notfound": "Desculpe, mas não pude encontrar um artigo.",
-    "allWriting": "Todos artigos",
-    "search": "Procure por um artigo"
+  "title": "Olá, sou Bruno.",
+  "titleHighlight": "É um prazer te conhecer!",
+  "description": "Sou engenheiro de software sênior com {{years}} anos construindo apps para o consumidor final em React Native, React e TypeScript. Hoje, na Coinbase, sou responsável por fluxos de login e conta usados por milhões de pessoas todos os meses.",
+  "schedule": "Vamos trabalhar juntos!",
+  "latests": "Últimos artigos",
+  "all": "Ver todos",
+  "blogTitle": "Artigos",
+  "blogDescription": "Anotações sobre React Native, arquitetura frontend e as lições que aprendo pelo caminho. {{ numberOfPosts }} artigos até agora.",
+  "notfound": "Desculpe, não consegui encontrar um artigo.",
+  "allWriting": "Todos os artigos",
+  "featuredWriting": "Destaque",
+  "search": "Procure por um artigo"
 }

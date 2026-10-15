@@ -10,9 +10,11 @@ import Search from "../components/Search";
 import { SSRConfig } from "next-i18next";
 import { Post } from "../lib/types";
 import Head from "../containers/Head";
+import { getYearsOfExperience } from "../helpers/dates";
 
 interface HomeProps extends SSRConfig {
   posts: Post[];
+  years: number;
 }
 
 const options = {
@@ -22,7 +24,7 @@ const options = {
   keys: ["frontMatter.title", "frontMatter.excerpt"],
 };
 
-export default function Home({ posts }: HomeProps) {
+export default function Home({ posts, years }: HomeProps) {
   const onEmailSentPress = () => {
     const email = "bpiraja97@gmail.com";
 
@@ -42,39 +44,48 @@ export default function Home({ posts }: HomeProps) {
 
   const filteredPosts = search.length > 0 ? getFilteredPosts(search) : posts;
 
+  const description = t("description", { years });
+
   return (
     <Container>
-      <Head title="Bruno Frigeri" description={t("description")} />
-      <div>
-        <div className="inline-block pb-8">
-          <h1 className="text-black dark:text-white">{t("title")}</h1>
-          <h4 className="font-light my-2 mb-8 text-descriptionLight dark:text-descriptionDark">
-            {t("description")}
-          </h4>
+      <Head title="Bruno Frigeri – Senior Software Engineer" description={description} />
+      <section className="border-t-[3px] border-ink pt-12 md:pt-[clamp(48px,7vw,96px)] pb-16 md:pb-[clamp(64px,9vw,120px)] flex flex-col gap-12">
+        <h1 className="m-0 font-bold text-[52px] md:text-[clamp(52px,10.5vw,150px)] leading-[0.92] tracking-[-0.045em] [text-wrap:balance]">
+          <span className="block">{t("title")}</span>
+          <span className="highlight">
+            {t("titleHighlight")}
+          </span>
+        </h1>
+        <div className="flex flex-wrap items-center justify-between gap-x-12 gap-y-8">
+          <p className="m-0 flex-[1_1_360px] max-w-[560px] text-[20px] md:text-[clamp(19px,2vw,26px)] leading-[1.35] font-normal tracking-[-0.01em] [text-wrap:pretty]">
+            {description}
+          </p>
           <Button
-            target="_blank"
-            rel="noreferrer noopener"
             onClick={onEmailSentPress}
+            className="w-full md:w-auto"
           >
             {t("schedule")}
           </Button>
         </div>
-        <div className="flex flex-col">
-          <div>
-            <h1 className="text-black dark:text-white">{t("blogTitle")}</h1>
-            <h4 className="my-2 mb-8 text-descriptionLight dark:text-descriptionDark">
-              {t("blogDescription", { numberOfPosts: posts.length })}
-            </h4>
-          </div>
-          <Search value={search} setValue={setSearch} />
+      </section>
 
-          <Posts
-            title={t("allWriting")}
-            posts={filteredPosts}
-            hasButton={false}
-          />
+      <section
+        id="writing"
+        className="border-t-[3px] border-ink pt-8 md:pt-[clamp(32px,5vw,64px)] pb-14 md:pb-[clamp(56px,8vw,112px)] flex flex-col gap-12"
+      >
+        <div className="flex flex-wrap items-end justify-between gap-x-12 gap-y-5">
+          <h2 className="m-0 font-bold text-[44px] md:text-[clamp(44px,6vw,84px)] leading-[0.95] tracking-[-0.04em]">
+            {t("blogTitle")}
+          </h2>
+          <p className="m-0 max-w-[420px] text-[17px] leading-[1.5] font-normal text-muted [text-wrap:pretty]">
+            {t("blogDescription", { numberOfPosts: posts.length })}
+          </p>
         </div>
-      </div>
+        <div className="flex flex-col gap-6">
+          <Search value={search} setValue={setSearch} />
+          <Posts title={t("allWriting")} posts={filteredPosts} />
+        </div>
+      </section>
     </Container>
   );
 }
@@ -85,7 +96,9 @@ export const getStaticProps = async ({ locale }) => {
   return {
     props: {
       posts,
+      years: getYearsOfExperience(),
       ...(await serverSideTranslations(locale, ["common", "home"])),
     },
+    revalidate: 86400,
   };
 };

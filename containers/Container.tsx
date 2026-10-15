@@ -1,14 +1,7 @@
-import React, { PropsWithChildren, useEffect, useState } from "react";
-import Image from "next/image";
+import React, { PropsWithChildren } from "react";
 import Link from "next/link";
-import images from "../public/assets/images";
-import { useRouter } from "next/dist/client/router";
-import { useTheme } from "next-themes";
+import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
-import resolveConfig from "tailwindcss/resolveConfig";
-import tailwindConfig from "../tailwind.config.js";
-import { Config } from "tailwindcss/types/config";
-import ThemeButton from "../components/ThemeButton";
 
 type MenuOption = {
   name: string;
@@ -18,91 +11,64 @@ type MenuOption = {
 export default function Container({ children }: PropsWithChildren) {
   const currentYear = new Date().getFullYear();
   const router = useRouter();
-  const [mounted, setMounted] = useState<boolean>(false);
-  const { theme, setTheme } = useTheme();
-  const fullConfig = resolveConfig(tailwindConfig as Config);
-
   const { t } = useTranslation("common");
 
   const menuOptions: Array<MenuOption> = [
-    {
-      name: t("home"),
-      path: "/",
-    },
-    {
-      name: t("about"),
-      path: "/about",
-    },
+    { name: t("home"), path: "/" },
+    { name: t("about"), path: "/about" },
   ];
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   return (
     <div
       id="container"
-      className="flex flex-col min-h-screen transition-colors bg-white dark:bg-black"
+      className="flex flex-col min-h-screen bg-paper text-ink font-custom"
     >
-      <nav className="max-w-4xl flex flex-row justify-between bg-white transition-colors dark:bg-black mx-auto items-center w-full my-8">
-        <Link href="/" className="cursor-pointer flex flex-row items-center">
-          <Image
-            className="rounded-full"
-            src={images.avatar.src}
-            alt="BF"
-            priority
-            height={48}
-            width={48}
-          />
-          <div id="avatar-description" className="flex flex-col px-4">
-            <h2 className="text-lg text-black dark:text-white">
+      <header className="w-full max-w-[1280px] mx-auto box-border px-6 md:px-[clamp(24px,4vw,48px)] py-5 md:py-7 flex flex-wrap items-center justify-between gap-3 md:gap-4">
+        <Link href="/" className="flex items-center gap-3 md:gap-[14px]">
+          <span
+            aria-hidden="true"
+            className="w-11 h-11 bg-ink text-paper flex items-center justify-center text-[17px] font-bold tracking-[-0.03em]"
+          >
+            BF
+          </span>
+          <span className="flex flex-col gap-px">
+            <span className="text-base font-bold tracking-[-0.01em]">
               Bruno Frigeri
-            </h2>
-            <p className="text-descriptionLight dark:text-descriptionDark">
-              {t("description")}
-            </p>
-          </div>
+            </span>
+            <span className="text-[13px] text-muted">{t("description")}</span>
+          </span>
         </Link>
-        <div className="flex items-center">
-          {menuOptions?.length &&
-            menuOptions.map((option) => {
-              const isCurrentOption = router.pathname === option.path;
+        <nav
+          aria-label="Main"
+          className="flex items-center gap-1 md:gap-4 text-base font-medium"
+        >
+          {menuOptions.map((option) => {
+            const isCurrentOption = router.pathname === option.path;
 
-              return (
-                <div
-                  key={option.path}
-                  className="rounded hover:bg-gray-100 hover:dark:bg-gray-600 transition-all px-2 py-1 mx-2"
+            return (
+              <Link
+                key={option.path}
+                href={option.path}
+                className="min-h-[44px] box-border flex items-center"
+                aria-current={isCurrentOption ? "page" : undefined}
+              >
+                <span
+                  className={`px-2 py-[3px] border-b-2 border-transparent hover:border-ink ${
+                    isCurrentOption ? "bg-accent text-onAccent" : ""
+                  }`}
                 >
-                  <Link
-                    href={option.path}
-                    className={`md:text-base text-black dark:text-white ${
-                      isCurrentOption ? "font-bold" : "opacity-70"
-                    }`}
-                  >
-                    {option.name}
-                  </Link>
-                </div>
-              );
-            })}
-          <ThemeButton
-            theme={theme}
-            setTheme={setTheme}
-            lightColor={fullConfig.theme.colors["toggleDark"]}
-            darkColor={fullConfig.theme.colors["toggleLight"]}
-            mounted={mounted}
-          />
-        </div>
-      </nav>
-      <main className="flex-grow transition-colors mx-auto max-w-3xl bg-white dark:bg-black">
+                  {option.name}
+                </span>
+              </Link>
+            );
+          })}
+        </nav>
+      </header>
+      <main className="flex-1 w-full max-w-[1280px] mx-auto box-border px-6 md:px-[clamp(24px,4vw,48px)] flex flex-col">
         {children}
       </main>
-      <footer className="max-w-4xl flex flex-row justify-between text-black dark:text-white mx-auto items-center w-full my-8">
-        <span className="md:text-sm">
-          © {currentYear}. {t("madeBy")}&nbsp;
-          <span className="md:text-sm text-primaryLight dark:text-primaryDark">
-            {t("me")}.
-          </span>
-        </span>
+      <footer className="w-full max-w-[1280px] mx-auto box-border px-6 md:px-[clamp(24px,4vw,48px)] pt-5 md:pt-6 pb-10 md:pb-12 border-t border-ink font-mono text-xs font-normal text-muted">
+        © {currentYear}. {t("madeBy")} {t("me")}.
       </footer>
     </div>
   );

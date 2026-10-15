@@ -1,13 +1,14 @@
 {
-  "title": "Hey, I'm Bruno. Nice to meet you!",
-  "description": "I'm a software developer with focus on Mobile development, building world-class applications.",
+  "title": "Hey, I'm Bruno.",
+  "titleHighlight": "Nice to meet you!",
+  "description": "I'm a senior software engineer with {{years}} years building consumer apps in React Native, React and TypeScript. Today at Coinbase, I own sign-in and account flows used by millions of people every month.",
   "schedule": "Let's work together!",
   "latests": "Latest Writing",
   "all": "See all",
   "blogTitle": "Writing",
-  "blogDescription": "These blog posts were written as a way to study and share the acquired knowledge. Beyond that, it's really important to keep posts as reminders and notes for the future me. At this moment, I already written {{ numberOfPosts }} posts. You can check them below:",
-  "notfound": "Sorry, but I couldn't found an article.",
+  "blogDescription": "Notes on React Native, frontend architecture and the lessons I pick up along the way. {{ numberOfPosts }} posts so far.",
+  "notfound": "Sorry, I couldn't find an article.",
   "allWriting": "All Writing",
   "featuredWriting": "Featured",
-  "search": "Search for some article"
+  "search": "Search articles"
 }

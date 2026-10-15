@@ -1,9 +1,12 @@
 {
-    "introduction": "Quem sou eu?",
-    "intro-description": "Me chamo Bruno, desenvolvedor de software há ~4 anos, com foco principal no desenvolvimento Mobile, todavia, com experiência de trabalho em aplicações web e desktop.",
-    "schedule": "Vamos trabalhar juntos!",
-    "skills": "Habilidades e Tecnologias",
-    "resume-title": "Currículo",
-    "experiences": "Quer saber detalhadamente sobre minha experiência, projetos e empresas? Veja o currículo abaixo!",
-    "resume": "Ver currículo"
+  "introduction": "Quem sou",
+  "introductionHighlight": "eu?",
+  "years_label": "Anos de experiência",
+  "intro_lead": "Sou engenheiro de software sênior com {{years}} anos de experiência construindo apps para o consumidor final em React Native, React e TypeScript.",
+  "intro_body": "Comecei como estagiário em 2019 e já passei de startups em estágio inicial até a Coinbase, onde sou responsável pelos fluxos de login, cadastro e conta usados por milhões de pessoas todos os meses. Elevei a cobertura de testes de pacotes críticos de autenticação de 60% para 86% e criei ferramentas de IA adotadas por cerca de 90 engenheiros. Tenho {{age}} anos, adoro viajar e gosto de compartilhar o que aprendo por meio de artigos e open source.",
+  "schedule": "Vamos trabalhar juntos!",
+  "challenges": "Quais são meus próximos desafios?",
+  "challenge_1": "Construir ferramentas nativas de IA, como agentes, skills e contexto compartilhado, que ajudem times de engenharia a trabalhar mais rápido.",
+  "challenge_2": "Crescer em backend e arquitetura, para projetar e entregar funcionalidades full-stack de ponta a ponta.",
+  "challenge_3": "Aprofundar meu conhecimento em Android e iOS nativos para criar melhores experiências mobile."
 }

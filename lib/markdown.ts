@@ -8,5 +8,8 @@ export default async function markdownToHtml(markdown) {
     .use(remarkPrism)
     .process(markdown)
 
-  return result.toString()
+  // Bold-led "Ps:" notes become callouts (styled in globals.css).
+  return result
+    .toString()
+    .replace(/<p>(<strong>\s*(?:ps|ios)\b)/gi, '<p class="callout">$1')
 }

@@ -1,9 +1,10 @@
 {
-    "description": "Desenvolvedor de Software",
-    "home": "Home",
-    "about": "Sobre",
-    "blog": "Blog",
-    "madeBy": "Feito por",
-    "me": "mim",
-    "views": "{{ views }} visualizações"
+  "description": "Engenheiro de Software Sênior",
+  "home": "Home",
+  "about": "Sobre",
+  "blog": "Blog",
+  "madeBy": "Feito por",
+  "me": "mim",
+  "views": "{{ views }} visualizações",
+  "viewsLabel": "visualizações"
 }

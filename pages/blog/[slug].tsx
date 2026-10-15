@@ -25,7 +25,11 @@ const BlogBySlug: React.FC<BlogBySlugProps> = ({ source, post }) => {
   return (
     <Container>
       <Head title={frontMatter.title} description={frontMatter.excerpt} />
-      <Article frontMatter={frontMatter} content={source} />
+      <Article
+        frontMatter={frontMatter}
+        content={source}
+        readingTime={post.readingTime}
+      />
     </Container>
   );
 };
