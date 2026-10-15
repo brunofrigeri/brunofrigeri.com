@@ -2,9 +2,6 @@
   "name": "brunofrigeri.com",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-    "node": "24.x"
-  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -24,7 +21,6 @@
     "gray-matter": "^4.0.2",
     "next": "^13.0.6",
     "next-i18next": "^12.0.0",
-    "next-mdx-remote": "^4.1.0",
     "next-seo": "^4.23.0",
     "next-themes": "^0.2.0",
     "react": "^18.2.0",
