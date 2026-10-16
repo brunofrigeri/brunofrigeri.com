@@ -102,6 +102,5 @@ export const getStaticProps = async ({ locale }) => {
       age: getAge(),
       ...(await serverSideTranslations(locale, ["common", "about"])),
     },
-    revalidate: 86400,
   };
 };

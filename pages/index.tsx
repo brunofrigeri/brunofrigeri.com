@@ -99,6 +99,5 @@ export const getStaticProps = async ({ locale }) => {
       years: getYearsOfExperience(),
       ...(await serverSideTranslations(locale, ["common", "home"])),
     },
-    revalidate: 86400,
   };
 };
