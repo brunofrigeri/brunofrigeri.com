@@ -1,0 +1,93 @@
+---
+title: Your AI Should Ask Your Team Before It Asks the Model
+excerpt: What I learned building Team Context Intelligence at Coinbase, and why I'm rebuilding it in the open.
+date: 10/15/2026
+author: Bruno Frigeri
+stacks: [AI, RAG, JAVASCRIPT, OPEN-SOURCE]
+locale: en
+---
+This February, I noticed something odd about how my team was using AI.
+
+Every one of us was getting better at it. We wrote better prompts, pasted in better context, and got better answers. But every conversation started cold. The decision we made last Tuesday about why a component works the way it does lived in one person's chat history, on one person's laptop, and nowhere else. The AI was learning nothing about us. It was only ever answering the person in front of it.
+
+That's the gap I tried to close with a project I called Team Context Intelligence, or TCI. I built it at Coinbase, where I was a software engineer, over February and March of this year. I no longer have the code, because it lived on a laptop I handed back when I left. But the idea has stayed with me, so I'm rebuilding it as an open-source project. This post is the argument for why, plus what I learned the first time.
+
+### The problem: context dies in private conversations
+AI assistants have quietly become a place where engineering context gets created. We debug in them, we weigh trade-offs in them, and we reach conclusions like "we can't do X because of Y, so we did Z." Then the tab closes.
+
+Compare that to how knowledge used to travel. A decision lived in a PR description, a design doc, a Slack thread, or someone's head. All of those were imperfect, but they were shared. A teammate could find them.
+
+Local AI conversations are different. They're private by default and fragmented by nature, so the most thoughtful reasoning on the team is also the least discoverable. Two consequences follow:
+
+- **Handoffs are lossy.** When someone moves teams or goes on leave, what transfers is the code and maybe a document. The reasoning, the dead ends, and the "we tried that" are gone.
+- **Working in unfamiliar territory is slow.** If you pick up a component you don't know, you're starting from scratch, even though three of your colleagues have already spent hours thinking about it with an AI.
+
+I didn't want a better chatbot. I wanted the team's accumulated thinking to be available at the moment someone asks a question.
+
+### The idea: check the team first
+TCI's premise is simple: **before a prompt goes to the model, ask the team.**
+
+Instead of going straight to the AI, a query first hits a shared store of summaries written by people on your team or at your company. The most relevant ones come back and are attached to the AI's response, so the person gets the model's answer together with "here's what your colleagues already figured out about this."
+
+It had three parts.
+
+**1. Signals.** TCI listens for moments that mean a unit of work just happened. I treated three things as signals: a commit, a push, and an explicit save by the user. These are natural boundaries, because something just changed, or someone decided it was worth keeping. Nobody has to remember to write documentation.
+
+**2. Summaries.** When a signal fires, an LLM generates a summary of what happened and why. That summary, rather than the raw diff or the full chat, is what goes into the shared store. Summaries are small, readable, and easy to rank. They also keep the private details of a raw conversation out of the team's view while preserving the conclusions.
+
+**3. Retrieval.** When someone asks a question, TCI searches the store and fuses several rankings with Reciprocal Rank Fusion (RRF). I combined:
+
+- **Keyword search (BM25)**, which is good at exact terms like function names, error strings, and service names.
+- **Vector embeddings**, which find summaries that are semantically close even when the words differ.
+- **Recency**, because a decision from last week is usually more relevant than one from two years ago.
+
+RRF is a nice fit here because you don't have to reconcile incompatible score scales. A BM25 score and a cosine similarity aren't comparable numbers, but their *ranks* are. Each summary gets credit for how high it placed in each list, the credits are summed, and the top results win. It's cheap, robust, and surprisingly hard to beat for a first version.
+
+One more design choice mattered to me: **TCI was AI-agnostic.** It wasn't a plugin for one assistant. It sat beside whichever tool people already used. That's important because teams don't standardize on one model, and the context shouldn't be held hostage by any single vendor.
+
+### What happened: the technology wasn't the hard part
+I'll be honest about how it went. The retrieval worked well enough, and the idea held up. The thing that hurt was **adoption**.
+
+Here's the trouble. TCI asks each person to take part in a system whose payoff is mostly *someone else's* benefit and *later*. When I save a summary, I get nothing right now. The win shows up when a teammate asks a related question next month. The cost is immediate, even if it's small: one more tool, one more habit, one more thing in the workflow.
+
+That's a classic shared-resource problem, and it's hard to solve from the bottom up. A knowledge base is worthless when empty and valuable when full, and nobody wants to be the one pouring into an empty one. Without enough contributions, retrieval returns little. When retrieval returns little, nobody sees the win, so nobody contributes.
+
+I came away with a fairly firm belief: **a tool like this works much better when a team, or the company, commits to it.** Not as a mandate for its own sake, but because the value is a network effect, and network effects don't start by themselves. One team that decides "we all do this" would probably get more out of it than a hundred individually curious engineers.
+
+TCI stopped when I left Coinbase. I hadn't kept maintaining it there, and adoption was never what it needed to be to justify someone else picking it up. That's a fair outcome, and I'd rather say so than dress it up.
+
+### Why I still think the idea is right
+Even with that result, the problem hasn't gone away. It has grown. People use AI more now than they did when I started, which means more reasoning is happening in places no teammate can see.
+
+I also think the framing matters. Most of the conversation about AI at work is about *generation*: write the code, draft the doc, summarize the meeting. TCI is about *memory*. It treats the team's collective thinking as an asset that compounds, and it asks a different question: not "what can the model produce?" but "what does our team already know?"
+
+Some of the instincts I'd defend:
+
+- **Retrieve before you generate.** An answer grounded in your team's actual decisions beats a generic answer every time.
+- **Capture at natural boundaries.** A commit or a push is already a moment where someone has finished a thought. That's the cheapest time to ask for a summary, and a model can do the writing.
+- **Keep it private to the organization.** Context about how your systems work shouldn't leave the company. Self-hosting and team-level visibility aren't extras, they're the reason people will trust it.
+- **Make visibility a feature.** Not everything should go to everyone. Team-scoped context is the difference between a useful memory and a liability.
+
+### What I'm building now
+I'm rebuilding TCI as an open-source project, written in JavaScript. It's still at the documentation stage, which I'm treating as a feature rather than an apology. The first time, I built first and wrote the design afterward, and I lost both when the laptop went. This time I'm writing down the contracts first: what a signal looks like, what a summary contains, how scoping works, and how retrieval results get attached to a response.
+
+Here's what I'm aiming for:
+
+- A signal listener that works with the events engineers already produce: commits, pushes, and explicit saves.
+- LLM-generated summaries, with a clear shape and the ability to review or redact before they're shared.
+- A retrieval layer that fuses keyword, vector, and recency signals with RRF.
+- Team-level visibility, designed in from the start rather than bolted on.
+- No dependence on a particular AI assistant.
+
+And I want to learn from the adoption failure directly. That means the design has to show a win *now*, not only later: for example, surfacing relevant context for the person who just saved something, so contributing is immediately useful to them as well. I don't know yet whether that's enough. That's the part I most want to test.
+
+### What I'd like from you
+If you've felt this problem, I'd love to hear about it. Specifically:
+
+- Where does your team's AI-generated context get lost today?
+- What would make you willing to contribute a summary when the payoff isn't yours?
+- What would make you *not* trust a shared memory like this?
+
+I'll share the repository in a future blog post, once the documentation is in a state I'm happy to share. Until then, you can reach me on LinkedIn.
+
+The models will keep getting better at answering questions. The harder and more interesting question is whether our teams get better at remembering what they've already answered.

@@ -1,0 +1,76 @@
+---
+title: How I Built the Most Used Repo in Identity Platform at Coinbase
+excerpt: Three agents, one markdown file each, and a CI rule. How identity/claude took frontend test coverage from under 60% to over 80%.
+date: 10/15/2026
+author: Bruno Frigeri
+stacks: [AI, TYPESCRIPT, TESTING]
+locale: en
+---
+In January 2026, "agent orchestration" was not really a thing yet. You had one assistant, one chat, and one very long prompt. I wanted something different: multiple agents working on different things at the same time, each with a clear purpose.
+
+That idea became `identity/claude`, a private repository inside Coinbase's Identity Platform. The name came from the fact that we were using Claude a lot, but it was designed from day one to work with whatever AI the user preferred. A few months later, roughly 90 engineers were using it or contributing to it every day, and it had become the source of truth for everything AI-related in the org.
+
+This is how it started, what worked, and the one thing I would do differently.
+
+## The problem
+
+The `identity/frontend` repository holds every frontend surface of the Identity Platform. Its test coverage sat below 60%, and the usual approaches were not moving it: nobody wakes up wanting to write tests for files they did not touch, and a single AI assistant given "increase coverage" will happily generate tests that execute lines without verifying anything.
+
+Coverage is a number. What I wanted was meaningful tests, and a way to keep them meaningful.
+
+## Three agents, three jobs
+
+Instead of one assistant doing everything, I split the work the way a good team would:
+
+- **The Architect** takes the decisions closer to product and engineering cost. What is worth doing, how big should it be, what is the cheapest design that solves the problem.
+- **The Tester** makes sure every test is meaningful. It owns edge cases: empty states, failures, race conditions, the inputs nobody thinks about.
+- **The Engineer** does the raw implementation. It takes the structure produced by the other two and turns it into code.
+
+Each one lives in its own markdown file with its own rules: what it is responsible for, what it must never do, what "done" looks like. Today these would simply be called agents, but at the time they were a set of well-written instructions that I pointed the AI at.
+
+## The orchestration
+
+The part that made this feel like orchestration was the workflow, not the prompts.
+
+For any task, I asked the AI to break the work into steps, and every step had exactly one of those markdown files as its owner. The agents worked side by side, with blocking where it mattered: if the Architect was working, no agent that depended on its output would start. The Tester would not move until the Architect had defined the shape, and the Engineer would not write a line until the Tester had defined what proof looked like.
+
+That ordering is the whole trick. Most "AI wrote bad code" problems are really "AI started coding before anyone decided what to build and how to verify it".
+
+## A surprise: the Architect on small work
+
+I assumed the Architect would be overkill for small features and bug fixes. It was the opposite.
+
+Even on a tiny change, it started thinking more broadly about the files being touched: what could be improved, simplified, or documented for the sake of the next engineer who would open them. Small PRs left the code a little better than they found it, without turning into large refactors, because the same agent was also responsible for engineering cost.
+
+## The result
+
+Over about one month, with a single engineer (me) driving it, this touched roughly 1,000 files across more than 100 PRs. Coverage in `identity/frontend` went from under 60% to over 80%.
+
+Getting there was only half of it. Coverage that is not defended decays, so I added a CI check that made you accountable whenever code was merged with less coverage than `master`. We rolled it out in two phases: first it only warned, so people could see it and adjust, and later it blocked the merge. Nobody was surprised by the block, because everyone had already seen the warning for weeks.
+
+## Adoption
+
+It started with a couple of commits from my core team, `identity/frontend`. Then people from other teams started adding their own rules and workflows, and it grew into the repo everyone reached for when they wanted to do something with AI. Eventually managers and leadership were hands-on too, contributing to it.
+
+The hardest adoption problem was other AI tools. A repo built around one tool's conventions does not carry over to Cursor for free, and making the instructions portable took real work.
+
+## How to do this at your company
+
+You do not need a platform to start. What worked for me:
+
+1. **Split by role, not by task.** Pick two or three distinct responsibilities (decide, verify, implement) and write one file for each.
+2. **Write what each agent must not do.** Boundaries make agents useful more than capabilities do.
+3. **Make steps single-owner.** Every step has exactly one agent responsible for it.
+4. **Block on dependencies.** Do not let the implementer start before the decider and the verifier have finished.
+5. **Enforce with CI, gradually.** Warn first, block later. Measure against your main branch rather than a fixed number so the bar only goes up.
+6. **Keep the instructions tool-agnostic.** Plain markdown travels. Tool-specific features do not.
+
+## What I would do differently
+
+Everything went smoothly, with one exception, and it is not technical.
+
+I created this project, but as it grew, other staff engineers and leaders took over its direction, and I was not in the room for it. I treated it like an open contribution space and stepped back. That is a mistake.
+
+If you build something that many people depend on, stay on top of it for as long as you can. Be its maintainer. Be present, review, answer questions, and make it visible that someone owns it. A shared repo with no clear keeper is not open source in the healthy sense. It is land with no owner, and the original idea drifts.
+
+I am proud of what `identity/claude` became. Next time, I will make sure I am still the one holding it.
