@@ -4,6 +4,7 @@ import Button from "../components/Button";
 import { useTranslation } from "react-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "../containers/Head";
+import { aboutJsonLd } from "../lib/seo";
 import { getAge, getYearsOfExperience } from "../helpers/dates";
 
 interface AboutProps {
@@ -26,7 +27,11 @@ export default function About({ years, age }: AboutProps) {
 
   return (
     <Container>
-      <Head title="About – Bruno Frigeri" description={lead} />
+      <Head
+        title="About – Bruno Frigeri"
+        description={lead}
+        jsonLd={aboutJsonLd(lead)}
+      />
       <section className="border-t-[3px] border-ink pt-10 md:pt-[clamp(48px,7vw,96px)] pb-12 md:pb-[clamp(56px,8vw,104px)] flex flex-col gap-9 md:gap-[clamp(40px,5vw,72px)]">
         <h1 className="m-0 font-bold text-[64px] md:text-[clamp(52px,10.5vw,150px)] leading-[0.92] tracking-[-0.045em]">
           {t("introduction")}{" "}

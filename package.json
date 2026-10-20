@@ -6,7 +6,11 @@
     "node": ">=24"
   },
   "scripts": {
+    "seo": "node scripts/generate-seo.js",
+    "og": "node scripts/generate-og.js",
+    "predev": "yarn seo",
     "dev": "next dev",
+    "prebuild": "yarn seo",
     "build": "next build",
     "start": "next start",
     "tsc": "tsc"

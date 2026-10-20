@@ -16,6 +16,13 @@ export default function Document() {
         />
         <link rel="icon" href="/assets/logo-h-bars.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/assets/logo-h-bars-512.png" />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="Bruno Frigeri – Writing"
+          href="/rss.xml"
+        />
+        <meta name="theme-color" content="#FAFAF8" />
         <meta
           name="google-site-verification"
           content="2H60FxwYAVnCGNBHtl_e4D3MqIXSDc8YRgjhpfjxczg"

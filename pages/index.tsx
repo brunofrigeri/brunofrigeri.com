@@ -11,6 +11,8 @@ import { SSRConfig } from "next-i18next";
 import { Post } from "../lib/types";
 import Head from "../containers/Head";
 import { getYearsOfExperience } from "../helpers/dates";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../constants/site";
+import { homeJsonLd } from "../lib/seo";
 
 interface HomeProps extends SSRConfig {
   posts: Post[];
@@ -48,7 +50,11 @@ export default function Home({ posts, years }: HomeProps) {
 
   return (
     <Container>
-      <Head title="Bruno Frigeri – Senior Software Engineer" description={description} />
+      <Head
+        title={SITE_TITLE}
+        description={SITE_DESCRIPTION}
+        jsonLd={homeJsonLd()}
+      />
       <section className="border-t-[3px] border-ink pt-12 md:pt-[clamp(48px,7vw,96px)] pb-16 md:pb-[clamp(64px,9vw,120px)] flex flex-col gap-12">
         <h1 className="m-0 font-bold text-[52px] md:text-[clamp(52px,10.5vw,150px)] leading-[0.92] tracking-[-0.045em] [text-wrap:balance]">
           <span className="block">{t("title")}</span>

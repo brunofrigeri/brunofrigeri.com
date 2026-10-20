@@ -23,6 +23,8 @@ export type Post = {
   readingTime: ReadTimeResults
   featuredImage?: string
   views?: number
+  draft?: boolean
+  date?: string
 }
 
 export type File = {
